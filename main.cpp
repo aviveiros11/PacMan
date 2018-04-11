@@ -1,14 +1,21 @@
 #include <iostream>
+#include "Game.h"
+#include "GamePiece.h"
+#include <vector>
+using namespace std;
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    std::cout << "Austin Viveiros" << std::endl;
-    std::cout << "Max Peck" << std::endl;
-    std::cout << "waz up liams test" << std::endl;
-    std::cout << "jb's test" << std::endl;
 
 
-    std::cout << "Thanks for that LIAM" << std::endl;
+
+    Game game();
+
+    cout << game.getLives() << endl;
+
+
+
+
+
 
     return 0;
 }
