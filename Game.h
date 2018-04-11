@@ -8,10 +8,6 @@
 
 
 class Game {
-private:
-    vector<vector<>>;
-    int highscore;
-public:
 
 };
 
