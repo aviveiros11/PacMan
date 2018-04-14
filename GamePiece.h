@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <iomanip>
-#include "Game.h"
 
 enum Type {ghost, wall, path, pacMan};
 
