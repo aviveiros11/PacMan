@@ -2,6 +2,8 @@
 // Created by Jean-Baptiste Bolh on 4/11/18.
 //
 
+using namespace std;
+
 #include "Game.h"
 
 Game::Game(){
@@ -29,4 +31,14 @@ void Game::setHighScore(double h){
 
 void Game::setLives(int lives){
         numLives = lives;
+}
+
+ostream& operator <<(ostream& outs, const Game &g) {
+    for (int x = 0; x < g.gameBoard.size(); x++) {
+        for (int y = 0; y < g.gameBoard[x].size(); y++) {
+            outs << g.gameBoard[x][y];
+        }
+        outs << endl;
+    }
+    return outs;
 }

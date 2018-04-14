@@ -6,20 +6,22 @@
 #ifndef PAC_GAME_H
 #define PAC_GAME_H
 
-
+#include <iomanip>
 #include <vector>
 #include "GamePiece.h"
 #include <iostream>
 
+using namespace std;
+
 class Game {
 
 private:
-
-    std::vector<std::vector<GamePiece>> gameBoard;
     double highscore;
     int numLives;
 
 public:
+
+    vector<vector<GamePiece>> gameBoard;
 
     /** Default Construct
      * Requires: Nothing
@@ -37,7 +39,7 @@ public:
 
 
     /** Getters
-     * Requires: Private Field Value
+     * Requires: nothing
      * Modifies: nothing
      * Effects: Gets the Highscore
      */
@@ -53,12 +55,7 @@ public:
     void setHighScore(double h);
     void setLives(int lives);
 
-    friend std::ostream& operator <<(std::ostream& outs, const Game &Game);
-
-
-
-
-
+    friend std::ostream& operator <<(std::ostream& outs, const Game &g);
 
 };
 
