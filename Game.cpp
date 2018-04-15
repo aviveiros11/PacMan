@@ -35,11 +35,11 @@ void Game::setLives(int lives){
 }
 
 ostream& operator <<(ostream& outs, const Game &g) {
-    for (int x = 0; x < g.gameBoard.size(); x++) {
-        for (int y = 0; y < g.gameBoard[x].size(); y++) {
-            outs << g.gameBoard[x][y];
+    for (int y = 0; y < g.gameBoard.size(); y++) {
+        for (int x = 0; x < g.gameBoard[y].size(); x++) {
+            outs << '|' << g.gameBoard[x][y];
         }
-        outs << endl;
+        outs << '|' << endl;
     }
     return outs;
 }

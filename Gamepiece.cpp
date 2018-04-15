@@ -36,7 +36,7 @@ void GamePiece::setType(Type type) {
 }
 
 std::ostream& operator <<(std::ostream& outs, const GamePiece &g) {
-    outs << "GP" << std::endl;
+    outs << "GP";
     return outs;
 }
 Wall::Wall(){

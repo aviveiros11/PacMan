@@ -14,7 +14,9 @@ int main() {
         GamePiece g1;
         vec2.push_back(g1);
     }
-    vec1.push_back(vec2);
+    for (int i = 0; i < 5; i++) {
+        vec1.push_back(vec2);
+    }
 
     Game g(vec1, 0);
 
@@ -22,7 +24,7 @@ int main() {
 
     //cout << g.getLives() << endl;
     cout << "Test" << endl;
-    cout << "Here you go MAX" << endl;
+
 
     return 0;
 }
