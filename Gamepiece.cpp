@@ -1,7 +1,7 @@
 //
 // Created by Jean-Baptiste Bolh on 4/11/18.
 //
-//using namespace std;
+using namespace std;
 
 #include "GamePiece.h"
 
@@ -36,29 +36,18 @@ void GamePiece::setType(Type type) {
 }
 
 std::ostream& operator <<(std::ostream& outs, const GamePiece &g) {
-    outs << "GP";
+    if (g.getType() == 0) {
+        outs << "Gho";
+    } else if (g.getType() == 1) {
+        outs << "Wal";
+    } else if (g.getType() == 2) {
+        outs << '   ';
+    } else {
+        outs << "Pac";
+    }
     return outs;
 }
+
 Wall::Wall(){
     type = wall;
-}
-
-int Wall::getXPos() const {
-    return xPos;
-}
-
-void Wall::setXPos(int xPos) {
-    Wall::xPos = xPos;
-}
-
-int Wall::getYPos() const {
-    return yPos;
-}
-
-Type Wall::getType() const {
-    return type;
-}
-
-void Wall::setYPos(int yPos) {
-    Wall::yPos = yPos;
 }

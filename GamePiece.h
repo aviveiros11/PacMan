@@ -54,24 +54,12 @@ public:
     friend std::ostream& operator <<(std::ostream& outs, const GamePiece &g);
 };
 
-class Wall{
-private:
-    int xPos;
-    int yPos;
-    Type type;
+class Wall : public GamePiece {
+
 public:
     Wall();
 
-    int getYPos() const;
-
-    void setYPos(int yPos);
-
-    int getXPos() const;
-
-    void setXPos(int xPos);
-
-    Type getType() const;
-
+    friend std::ostream& operator <<(std::ostream& outs, const GamePiece &g);
 };
 
 #endif //PAC_GAMEPIECE_H
