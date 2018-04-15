@@ -14,7 +14,7 @@ int main() {
         GamePiece g1;
         vec2.push_back(g1);
     }
-    for (int i = 0; i < 5; i++) {
+    for (int x = 0; x < 5; x++) {
         vec1.push_back(vec2);
     }
 
