@@ -8,7 +8,11 @@
 
 class ghost {
 
+
+
+
 };
+
 
 
 #endif //PAC_GHOST_H

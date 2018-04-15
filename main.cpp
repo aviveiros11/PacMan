@@ -21,7 +21,7 @@ int main() {
     cout << g << endl;
 
     //cout << g.getLives() << endl;
-
+    cout << "Test" << endl;
 
     return 0;
 }
