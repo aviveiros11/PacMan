@@ -5,7 +5,7 @@
 #ifndef PAC_GHOST_H
 #define PAC_GHOST_H
 
-
+//yeet
 class ghost {
 
 
