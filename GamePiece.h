@@ -9,7 +9,7 @@
 #include <iostream>
 #include <iomanip>
 
-enum Type {ghost, wall, path, pacMan, empty};
+enum Type {ghost, wall, pellet, pacMan, empty};
 
 class GamePiece {
 
@@ -66,15 +66,15 @@ class Path : public GamePiece{
 
 private:
 
-    bool pellet = true;
+    bool pelletStatus = true;
 
 public:
 
     Path();
 
-    bool getPellet() const;
+    bool getPelletStatus() const;
 
-    void setPellet(bool b);
+    void setPelletStatus(bool b);
 
 };
 

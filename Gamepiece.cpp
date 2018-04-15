@@ -36,15 +36,16 @@ void GamePiece::setType(Type type) {
 }
 
 std::ostream& operator <<(std::ostream& outs, const GamePiece &g) {
-    if (g.getType() == 0) {
+    if (g.getType() == ghost) {
         outs << "Gho";
-    } else if (g.getType() == 1) {
+    } else if (g.getType() == wall) {
         outs << "Wal";
-    } else if (g.getType() == 2) {
-        outs << "☉";
-    } else if (g.getType() == 4){
-        outs << "_";
+    } else if (g.getType() == pellet) {
+        outs << "_☉_";
+    } else if (g.getType() == pacMan){
         outs << "Pac";
+    } else if(g.getType() == empty){
+        outs << "___";
     }
     return outs;
 }
@@ -54,6 +55,14 @@ Wall::Wall(){
 }
 
 Path::Path(){
-    type = path;
-    pellet = true;
+    type = pellet;
+    pelletStatus = true;
+}
+
+void Path::setPelletStatus(bool b) {
+    pelletStatus = b;
+}
+
+bool Path::getPelletStatus() const {
+    return pelletStatus;
 }
