@@ -22,6 +22,7 @@ int main() {
 
     //cout << g.getLives() << endl;
     cout << "Test" << endl;
+    cout << "Here you go MAX" << endl;
 
     return 0;
 }
