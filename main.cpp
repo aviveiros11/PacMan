@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Game.h"
-#include "GamePiece.h"
 #include <vector>
 using namespace std;
 
@@ -8,24 +7,26 @@ int main() {
 
     GamePiece p;
 
-    vector<vector<GamePiece>> vec1;
-    vector<GamePiece> vec2;
+    vector<vector<GamePiece>> vec;
 
+    vecgp.push_back(p);
+
+    vector<GamePiece> vecgp;
+    vecgp.push_back(GamePiece p());
+    vertices.push_back(vv);
     for (int i = 0; i < 5; i++) {
-        GamePiece g1;
-        vec2.push_back(g1);
+        vec[i].push_back(vecgp);
+        vec[i].push_back(p);
+        vec[i].push_back(p);
+        vec[i].push_back(p);
+        vec[i].push_back(p);
     }
-    vec1.push_back(vec2);
 
-    Game g(vec1, 0);
+    Game g(vec, 0);
 
-    cout << g << endl;
+    cout << g;
 
     //cout << g.getLives() << endl;
-
-
-
-
 
 
     return 0;

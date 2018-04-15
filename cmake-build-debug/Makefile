@@ -123,6 +123,87 @@ paC/fast:
 	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/build
 .PHONY : paC/fast
 
+Game.o: Game.cpp.o
+
+.PHONY : Game.o
+
+# target to build an object file
+Game.cpp.o:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Game.cpp.o
+.PHONY : Game.cpp.o
+
+Game.i: Game.cpp.i
+
+.PHONY : Game.i
+
+# target to preprocess a source file
+Game.cpp.i:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Game.cpp.i
+.PHONY : Game.cpp.i
+
+Game.s: Game.cpp.s
+
+.PHONY : Game.s
+
+# target to generate assembly for a file
+Game.cpp.s:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Game.cpp.s
+.PHONY : Game.cpp.s
+
+Gamepiece.o: Gamepiece.cpp.o
+
+.PHONY : Gamepiece.o
+
+# target to build an object file
+Gamepiece.cpp.o:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Gamepiece.cpp.o
+.PHONY : Gamepiece.cpp.o
+
+Gamepiece.i: Gamepiece.cpp.i
+
+.PHONY : Gamepiece.i
+
+# target to preprocess a source file
+Gamepiece.cpp.i:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Gamepiece.cpp.i
+.PHONY : Gamepiece.cpp.i
+
+Gamepiece.s: Gamepiece.cpp.s
+
+.PHONY : Gamepiece.s
+
+# target to generate assembly for a file
+Gamepiece.cpp.s:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Gamepiece.cpp.s
+.PHONY : Gamepiece.cpp.s
+
+ghost.o: ghost.cpp.o
+
+.PHONY : ghost.o
+
+# target to build an object file
+ghost.cpp.o:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/ghost.cpp.o
+.PHONY : ghost.cpp.o
+
+ghost.i: ghost.cpp.i
+
+.PHONY : ghost.i
+
+# target to preprocess a source file
+ghost.cpp.i:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/ghost.cpp.i
+.PHONY : ghost.cpp.i
+
+ghost.s: ghost.cpp.s
+
+.PHONY : ghost.s
+
+# target to generate assembly for a file
+ghost.cpp.s:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/ghost.cpp.s
+.PHONY : ghost.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +240,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... paC"
+	@echo "... Game.o"
+	@echo "... Game.i"
+	@echo "... Game.s"
+	@echo "... Gamepiece.o"
+	@echo "... Gamepiece.i"
+	@echo "... Gamepiece.s"
+	@echo "... ghost.o"
+	@echo "... ghost.i"
+	@echo "... ghost.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

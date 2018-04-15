@@ -7,7 +7,8 @@
 
 
 GamePiece::GamePiece() {
-
+    xPos = 0;
+    yPos = 0;
 }
 
 int GamePiece::getXPos() const {

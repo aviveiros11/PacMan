@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "Game.h"
+#include "GamePiece.h"
 
 Game::Game(){
     highscore = 0;

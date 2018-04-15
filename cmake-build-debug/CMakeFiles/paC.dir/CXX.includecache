@@ -6,7 +6,45 @@
 
 #IncludeRegexTransform: 
 
+/Users/Liam/CLionProjects/paC/Game.cpp
+Game.h
+/Users/Liam/CLionProjects/paC/Game.h
+GamePiece.h
+/Users/Liam/CLionProjects/paC/GamePiece.h
+
+/Users/Liam/CLionProjects/paC/Game.h
+iomanip
+-
+vector
+-
+iostream
+-
+GamePiece.h
+/Users/Liam/CLionProjects/paC/GamePiece.h
+
+/Users/Liam/CLionProjects/paC/GamePiece.h
+iostream
+-
+iomanip
+-
+
+/Users/Liam/CLionProjects/paC/Gamepiece.cpp
+GamePiece.h
+/Users/Liam/CLionProjects/paC/GamePiece.h
+
+/Users/Liam/CLionProjects/paC/ghost.cpp
+ghost.h
+/Users/Liam/CLionProjects/paC/ghost.h
+
+/Users/Liam/CLionProjects/paC/ghost.h
+
 /Users/Liam/CLionProjects/paC/main.cpp
 iostream
+-
+Game.h
+/Users/Liam/CLionProjects/paC/Game.h
+GamePiece.h
+/Users/Liam/CLionProjects/paC/GamePiece.h
+vector
 -
 

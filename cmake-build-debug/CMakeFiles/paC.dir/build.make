@@ -81,17 +81,95 @@ CMakeFiles/paC.dir/main.cpp.o.provides: CMakeFiles/paC.dir/main.cpp.o.requires
 CMakeFiles/paC.dir/main.cpp.o.provides.build: CMakeFiles/paC.dir/main.cpp.o
 
 
+CMakeFiles/paC.dir/ghost.cpp.o: CMakeFiles/paC.dir/flags.make
+CMakeFiles/paC.dir/ghost.cpp.o: ../ghost.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/paC.dir/ghost.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/paC.dir/ghost.cpp.o -c /Users/Liam/CLionProjects/paC/ghost.cpp
+
+CMakeFiles/paC.dir/ghost.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/paC.dir/ghost.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Liam/CLionProjects/paC/ghost.cpp > CMakeFiles/paC.dir/ghost.cpp.i
+
+CMakeFiles/paC.dir/ghost.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/paC.dir/ghost.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Liam/CLionProjects/paC/ghost.cpp -o CMakeFiles/paC.dir/ghost.cpp.s
+
+CMakeFiles/paC.dir/ghost.cpp.o.requires:
+
+.PHONY : CMakeFiles/paC.dir/ghost.cpp.o.requires
+
+CMakeFiles/paC.dir/ghost.cpp.o.provides: CMakeFiles/paC.dir/ghost.cpp.o.requires
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/ghost.cpp.o.provides.build
+.PHONY : CMakeFiles/paC.dir/ghost.cpp.o.provides
+
+CMakeFiles/paC.dir/ghost.cpp.o.provides.build: CMakeFiles/paC.dir/ghost.cpp.o
+
+
+CMakeFiles/paC.dir/Game.cpp.o: CMakeFiles/paC.dir/flags.make
+CMakeFiles/paC.dir/Game.cpp.o: ../Game.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/paC.dir/Game.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/paC.dir/Game.cpp.o -c /Users/Liam/CLionProjects/paC/Game.cpp
+
+CMakeFiles/paC.dir/Game.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/paC.dir/Game.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Liam/CLionProjects/paC/Game.cpp > CMakeFiles/paC.dir/Game.cpp.i
+
+CMakeFiles/paC.dir/Game.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/paC.dir/Game.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Liam/CLionProjects/paC/Game.cpp -o CMakeFiles/paC.dir/Game.cpp.s
+
+CMakeFiles/paC.dir/Game.cpp.o.requires:
+
+.PHONY : CMakeFiles/paC.dir/Game.cpp.o.requires
+
+CMakeFiles/paC.dir/Game.cpp.o.provides: CMakeFiles/paC.dir/Game.cpp.o.requires
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Game.cpp.o.provides.build
+.PHONY : CMakeFiles/paC.dir/Game.cpp.o.provides
+
+CMakeFiles/paC.dir/Game.cpp.o.provides.build: CMakeFiles/paC.dir/Game.cpp.o
+
+
+CMakeFiles/paC.dir/Gamepiece.cpp.o: CMakeFiles/paC.dir/flags.make
+CMakeFiles/paC.dir/Gamepiece.cpp.o: ../Gamepiece.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/paC.dir/Gamepiece.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/paC.dir/Gamepiece.cpp.o -c /Users/Liam/CLionProjects/paC/Gamepiece.cpp
+
+CMakeFiles/paC.dir/Gamepiece.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/paC.dir/Gamepiece.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Liam/CLionProjects/paC/Gamepiece.cpp > CMakeFiles/paC.dir/Gamepiece.cpp.i
+
+CMakeFiles/paC.dir/Gamepiece.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/paC.dir/Gamepiece.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Liam/CLionProjects/paC/Gamepiece.cpp -o CMakeFiles/paC.dir/Gamepiece.cpp.s
+
+CMakeFiles/paC.dir/Gamepiece.cpp.o.requires:
+
+.PHONY : CMakeFiles/paC.dir/Gamepiece.cpp.o.requires
+
+CMakeFiles/paC.dir/Gamepiece.cpp.o.provides: CMakeFiles/paC.dir/Gamepiece.cpp.o.requires
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Gamepiece.cpp.o.provides.build
+.PHONY : CMakeFiles/paC.dir/Gamepiece.cpp.o.provides
+
+CMakeFiles/paC.dir/Gamepiece.cpp.o.provides.build: CMakeFiles/paC.dir/Gamepiece.cpp.o
+
+
 # Object files for target paC
 paC_OBJECTS = \
-"CMakeFiles/paC.dir/main.cpp.o"
+"CMakeFiles/paC.dir/main.cpp.o" \
+"CMakeFiles/paC.dir/ghost.cpp.o" \
+"CMakeFiles/paC.dir/Game.cpp.o" \
+"CMakeFiles/paC.dir/Gamepiece.cpp.o"
 
 # External object files for target paC
 paC_EXTERNAL_OBJECTS =
 
 paC: CMakeFiles/paC.dir/main.cpp.o
+paC: CMakeFiles/paC.dir/ghost.cpp.o
+paC: CMakeFiles/paC.dir/Game.cpp.o
+paC: CMakeFiles/paC.dir/Gamepiece.cpp.o
 paC: CMakeFiles/paC.dir/build.make
 paC: CMakeFiles/paC.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable paC"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable paC"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/paC.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -100,6 +178,9 @@ CMakeFiles/paC.dir/build: paC
 .PHONY : CMakeFiles/paC.dir/build
 
 CMakeFiles/paC.dir/requires: CMakeFiles/paC.dir/main.cpp.o.requires
+CMakeFiles/paC.dir/requires: CMakeFiles/paC.dir/ghost.cpp.o.requires
+CMakeFiles/paC.dir/requires: CMakeFiles/paC.dir/Game.cpp.o.requires
+CMakeFiles/paC.dir/requires: CMakeFiles/paC.dir/Gamepiece.cpp.o.requires
 
 .PHONY : CMakeFiles/paC.dir/requires
 

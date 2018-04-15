@@ -8,8 +8,8 @@
 
 #include <iomanip>
 #include <vector>
-#include "GamePiece.h"
 #include <iostream>
+#include "GamePiece.h"
 
 using namespace std;
 
@@ -36,7 +36,6 @@ public:
      * Effects: Creates a Game Object with a vector and a high score
      */
     Game(std::vector<std::vector<GamePiece>> gameBoard, double highscore);
-
 
     /** Getters
      * Requires: nothing
