@@ -16,12 +16,11 @@ using namespace std;
 class Game {
 
 private:
+    vector<vector<GamePiece>> gameBoard;
     double highscore;
     int numLives;
 
 public:
-
-    vector<vector<GamePiece>> gameBoard;
 
     /** Default Construct
      * Requires: Nothing
@@ -35,16 +34,17 @@ public:
      * Modifies: Vector, High Score
      * Effects: Creates a Game Object with a vector and a high score
      */
-    Game(std::vector<std::vector<GamePiece>> gameBoard, double highscore);
+    Game(std::vector<std::vector<GamePiece>> &gBoard, double h);
 
     /** Getters
      * Requires: nothing
      * Modifies: nothing
      * Effects: Gets the Highscore
      */
+
     double getHighScore() const;
     int getLives() const;
-
+    vector<vector<GamePiece>> getGameBoard() const;
 
     /** Setters
      * Requires: Nothing
@@ -53,6 +53,7 @@ public:
      */
     void setHighScore(double h);
     void setLives(int lives);
+    void setGameBoard(vector<vector<GamePiece>> &g);
 
     friend std::ostream& operator <<(std::ostream& outs, const Game &g);
 
