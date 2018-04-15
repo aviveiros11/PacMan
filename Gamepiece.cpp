@@ -41,8 +41,9 @@ std::ostream& operator <<(std::ostream& outs, const GamePiece &g) {
     } else if (g.getType() == 1) {
         outs << "Wal";
     } else if (g.getType() == 2) {
-        outs << '   ';
-    } else {
+        outs << "☉";
+    } else if (g.getType() == 4){
+        outs << "_";
         outs << "Pac";
     }
     return outs;
@@ -50,4 +51,9 @@ std::ostream& operator <<(std::ostream& outs, const GamePiece &g) {
 
 Wall::Wall(){
     type = wall;
+}
+
+Path::Path(){
+    type = path;
+    pellet = true;
 }

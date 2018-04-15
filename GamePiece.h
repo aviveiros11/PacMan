@@ -9,7 +9,7 @@
 #include <iostream>
 #include <iomanip>
 
-enum Type {ghost, wall, path, pacMan};
+enum Type {ghost, wall, path, pacMan, empty};
 
 class GamePiece {
 
@@ -60,6 +60,22 @@ public:
     Wall();
 
     friend std::ostream& operator <<(std::ostream& outs, const GamePiece &g);
+};
+
+class Path : public GamePiece{
+
+private:
+
+    bool pellet = true;
+
+public:
+
+    Path();
+
+    bool getPellet() const;
+
+    void setPellet(bool b);
+
 };
 
 #endif //PAC_GAMEPIECE_H
