@@ -5,12 +5,12 @@
 #ifndef PAC_GHOST_H
 #define PAC_GHOST_H
 
+#include "GamePiece.h"
+
 //yeet
-class ghost {
-
-
-
-
+class Ghost: public GamePiece {
+public:
+    Ghost();
 };
 
 

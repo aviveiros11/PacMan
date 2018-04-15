@@ -4,3 +4,7 @@
 
 #include "Ghost.h"
 //yeet
+
+Ghost::Ghost() {
+    type = ghost;
+}
