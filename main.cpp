@@ -24,5 +24,7 @@ int main() {
 
     cout << g << endl;
 
+    cout << "Test" << endl;
+
     return 0;
 }
