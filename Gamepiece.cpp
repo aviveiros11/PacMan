@@ -39,3 +39,26 @@ std::ostream& operator <<(std::ostream& outs, const GamePiece &g) {
     outs << "GP" << std::endl;
     return outs;
 }
+Wall::Wall(){
+    type = wall;
+}
+
+int Wall::getXPos() const {
+    return xPos;
+}
+
+void Wall::setXPos(int xPos) {
+    Wall::xPos = xPos;
+}
+
+int Wall::getYPos() const {
+    return yPos;
+}
+
+Type Wall::getType() const {
+    return type;
+}
+
+void Wall::setYPos(int yPos) {
+    Wall::yPos = yPos;
+}

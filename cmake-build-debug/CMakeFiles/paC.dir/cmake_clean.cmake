@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/paC.dir/ghost.cpp.o"
   "CMakeFiles/paC.dir/Game.cpp.o"
   "CMakeFiles/paC.dir/Gamepiece.cpp.o"
+  "CMakeFiles/paC.dir/Wall.cpp.o"
   "paC.pdb"
   "paC"
 )

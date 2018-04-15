@@ -177,6 +177,33 @@ Gamepiece.cpp.s:
 	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Gamepiece.cpp.s
 .PHONY : Gamepiece.cpp.s
 
+Wall.o: Wall.cpp.o
+
+.PHONY : Wall.o
+
+# target to build an object file
+Wall.cpp.o:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Wall.cpp.o
+.PHONY : Wall.cpp.o
+
+Wall.i: Wall.cpp.i
+
+.PHONY : Wall.i
+
+# target to preprocess a source file
+Wall.cpp.i:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Wall.cpp.i
+.PHONY : Wall.cpp.i
+
+Wall.s: Wall.cpp.s
+
+.PHONY : Wall.s
+
+# target to generate assembly for a file
+Wall.cpp.s:
+	$(MAKE) -f CMakeFiles/paC.dir/build.make CMakeFiles/paC.dir/Wall.cpp.s
+.PHONY : Wall.cpp.s
+
 ghost.o: ghost.cpp.o
 
 .PHONY : ghost.o
@@ -246,6 +273,9 @@ help:
 	@echo "... Gamepiece.o"
 	@echo "... Gamepiece.i"
 	@echo "... Gamepiece.s"
+	@echo "... Wall.o"
+	@echo "... Wall.i"
+	@echo "... Wall.s"
 	@echo "... ghost.o"
 	@echo "... ghost.i"
 	@echo "... ghost.s"

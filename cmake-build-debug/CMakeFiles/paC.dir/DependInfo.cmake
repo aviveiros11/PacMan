@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/Liam/CLionProjects/paC/Game.cpp" "/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles/paC.dir/Game.cpp.o"
   "/Users/Liam/CLionProjects/paC/Gamepiece.cpp" "/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles/paC.dir/Gamepiece.cpp.o"
+  "/Users/Liam/CLionProjects/paC/Wall.cpp" "/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles/paC.dir/Wall.cpp.o"
   "/Users/Liam/CLionProjects/paC/ghost.cpp" "/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles/paC.dir/ghost.cpp.o"
   "/Users/Liam/CLionProjects/paC/main.cpp" "/Users/Liam/CLionProjects/paC/cmake-build-debug/CMakeFiles/paC.dir/main.cpp.o"
   )

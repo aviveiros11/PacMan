@@ -54,4 +54,24 @@ public:
     friend std::ostream& operator <<(std::ostream& outs, const GamePiece &g);
 };
 
+class Wall{
+private:
+    int xPos;
+    int yPos;
+    Type type;
+public:
+    Wall();
+
+    int getYPos() const;
+
+    void setYPos(int yPos);
+
+    int getXPos() const;
+
+    void setXPos(int xPos);
+
+    Type getType() const;
+
+};
+
 #endif //PAC_GAMEPIECE_H

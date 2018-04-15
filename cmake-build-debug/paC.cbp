@@ -95,6 +95,12 @@
 		<Unit filename="/Users/Liam/CLionProjects/paC/Gamepiece.h">
 			<Option target="paC"/>
 		</Unit>
+		<Unit filename="/Users/Liam/CLionProjects/paC/Wall.cpp">
+			<Option target="paC"/>
+		</Unit>
+		<Unit filename="/Users/Liam/CLionProjects/paC/Wall.h">
+			<Option target="paC"/>
+		</Unit>
 		<Unit filename="/Users/Liam/CLionProjects/paC/ghost.cpp">
 			<Option target="paC"/>
 		</Unit>
