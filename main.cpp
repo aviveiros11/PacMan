@@ -10,6 +10,7 @@ int main() {
     cout << a << endl;
 
     cout << a.getPlayer() << endl;
+
     cout << a.getLives() << endl;
 
     a.saveHighScore(a.getHighScore(), a.getPlayer());

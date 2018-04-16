@@ -1,14 +1,12 @@
 //
 // Created by Jean-Baptiste Bolh on 4/11/18.
-//
-
-using namespace std;
-
 #include <fstream>
 #include "Game.h"
 #include "GamePiece.h"
 #include "Ghost.h"
 #include "PacMan.h"
+
+using namespace std;
 
 Game::Game(){
     highscore = 0;
