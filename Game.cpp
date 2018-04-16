@@ -287,7 +287,6 @@ void Game::saveHighScore(int highScore, string player) {
     if(highScores){
         highScores << player << endl;
         highScores << highScore << endl;
-
     }
     highScores.close();
 }
@@ -296,10 +295,8 @@ void Game::displayHighScore() {
     ifstream highScores("HighScores.txt");
     int score;
     string player;
-    while (!highScores.eof()) {
-        highScores >> player >> score;
-        cout << player << " - ";
-        cout << score << endl;
+    while (highScores >> player >> score) {
+        cout << player << " - " << score << endl;
     }
     highScores.close();
 }
