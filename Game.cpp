@@ -250,10 +250,13 @@ Game::Game(){
     player = "Lisa-Dion";
 }
 
-Game::Game(std::vector<std::vector<GamePiece>> &gBoard, double h) {
+Game::Game(std::string p, double h) {
+    Game tempGame;
+    gameBoard = tempGame.getGameBoard();
     highscore = h;
-    gameBoard = gBoard;
     numLives = 3;
+    player = p;
+
 }
 
 double Game::getHighScore() const{

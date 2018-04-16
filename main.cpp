@@ -1,19 +1,20 @@
 #include <iostream>
 #include "Game.h"
-#include "GamePiece.h"
-#include "PacMan.h"
-#include <vector>
+
 using namespace std;
 
 int main() {
 
-    Game g;
+    Game a("Austin", 0);
 
-    cout << g << endl;
+    cout << a << endl;
 
-    g.saveHighScore(g.getHighScore(), g.getPlayer());
+    cout << a.getPlayer() << endl;
+    cout << a.getLives() << endl;
 
-    g.displayHighScore();
+    a.saveHighScore(a.getHighScore(), a.getPlayer());
+
+    a.displayHighScore();
 
     return 0;
 }

@@ -34,7 +34,7 @@ public:
      * Modifies: Vector, High Score
      * Effects: Creates a Game Object with a gameBoard vector and a high score
      */
-    Game(std::vector<std::vector<GamePiece>> &gBoard, double h);
+    Game(std::string player, double h);
 
     /** Getters
      * Requires: nothing
