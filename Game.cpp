@@ -326,7 +326,7 @@ ostream& operator <<(ostream& outs, const Game &g) {
 }
 
 void Game::moveUp(GamePiece &g) {
-    if(g.getType() == pacMan) {
+    if (g.getType() == pacMan) {
         if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() != wall) {
             //Create copy of piece being moved
             GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
@@ -344,7 +344,127 @@ void Game::moveUp(GamePiece &g) {
                     gameBoard[g.getXPos()][g.getYPos()] = rep;
 
                 } else {
+                    Path rep(empty, false);
+                    gameBoard[g.getXPos()][(g.getYPos() - 1)] = pCopy;
+                    pCopy.setYPos(g.getYPos() - 1);
+                    gameBoard[g.getXPos()][g.getYPos()] = rep;
                     //starting state must be empty, so save in temp and then add when leave.
+                }
+
+            }
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+        }
+    }
+}
+
+void Game::moveLeft(GamePiece &g) {
+    if(g.getType() == pacMan) {
+        if (gameBoard[g.getXPos() - 1][g.getYPos()].getType() != wall) {
+            //Create copy of piece being moved
+            GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
+            if (gameBoard[g.getXPos() - 1][(g.getYPos())].getType() == ghost) {
+                //Need to decrease lives somehow
+                //send pacman back to his starting position
+            } else {
+                if (gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() == pellet) {
+                    Path rep(empty, false);
+                    //increase high score
+                    //delete the object being stored there, set the type to empty and store that as a temp object.
+                    //g.gameBoard[xPos][(yPos + 1)]= nullptr;
+                    gameBoard[(g.getXPos() - 1)][g.getYPos()] = pCopy;
+                    pCopy.setXPos(g.getXPos() - 1);
+                    gameBoard[g.getXPos()][g.getYPos()] = rep;
+
+                } else {
+                    Path rep(empty, false);
+                    gameBoard[(g.getXPos() - 1)][g.getYPos()] = pCopy;
+                    pCopy.setXPos(g.getXPos() - 1);
+                    gameBoard[g.getXPos()][g.getYPos()] = rep;
+                    //starting state must be empty, so save in temp and then add when leave.
+                }
+            }
+            for(int y = 0; y < gameBoard.size(); y++){
+                for (int x = 0; x < gameBoard[0].size(); x++){
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+        }
+    }
+}
+
+void Game::moveDown(GamePiece &g) {
+    if (g.getType() == pacMan) {
+        if (gameBoard[g.getXPos()][(g.getYPos() + 1)].getType() != wall) {
+            //Create copy of piece being moved
+            GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
+            if (gameBoard[g.getXPos()][(g.getYPos() + 1)].getType() == ghost) {
+                //Need to decrease lives somehow
+                //send pacman back to his starting position
+            } else {
+                if (gameBoard[g.getXPos()][(g.getYPos() + 1)].getType() == pellet) {
+                    Path rep(empty, false);
+                    //increase high score
+                    //delete the object being stored there, set the type to empty and store that as a temp object.
+                    //g.gameBoard[xPos][(yPos + 1)]= nullptr;
+                    gameBoard[g.getXPos()][(g.getYPos() + 1)] = pCopy;
+                    pCopy.setYPos(g.getYPos() + 1);
+                    gameBoard[g.getXPos()][g.getYPos()] = rep;
+
+                } else {
+                    Path rep(empty, false);
+                    gameBoard[g.getXPos()][(g.getYPos() + 1)] = pCopy;
+                    pCopy.setYPos(g.getYPos() + 1);
+                    gameBoard[g.getXPos()][g.getYPos()] = rep;
+                    //starting state must be empty, so save in temp and then add when leave.
+                }
+
+            }
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+        }
+    }
+}
+
+void Game::moveRight(GamePiece &g) {
+    if(g.getType() == pacMan) {
+        if (gameBoard[g.getXPos() + 1][g.getYPos()].getType() != wall) {
+            //Create copy of piece being moved
+            GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
+            if (gameBoard[g.getXPos() + 1][(g.getYPos())].getType() == ghost) {
+                //Need to decrease lives somehow
+                //send pacman back to his starting position
+            } else {
+                if (gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() == pellet) {
+                    Path rep(empty, false);
+                    //increase high score
+                    //delete the object being stored there, set the type to empty and store that as a temp object.
+                    //g.gameBoard[xPos][(yPos + 1)]= nullptr;
+                    gameBoard[(g.getXPos() + 1)][g.getYPos()] = pCopy;
+                    pCopy.setXPos(g.getXPos() + 1);
+                    gameBoard[g.getXPos()][g.getYPos()] = rep;
+
+                } else {
+                    Path rep(empty, false);
+                    gameBoard[(g.getXPos() + 1)][g.getYPos()] = pCopy;
+                    pCopy.setXPos(g.getXPos() + 1);
+                    gameBoard[g.getXPos()][g.getYPos()] = rep;
+                    //starting state must be empty, so save in temp and then add when leave.
+                }
+            }
+            for(int y = 0; y < gameBoard.size(); y++){
+                for (int x = 0; x < gameBoard[0].size(); x++){
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
                 }
             }
         }

@@ -81,6 +81,9 @@ public:
     */
 
     void moveUp(GamePiece &g);
+    void moveLeft(GamePiece &g);
+    void moveDown(GamePiece &g);
+    void moveRight(GamePiece &g);
 
 
 
