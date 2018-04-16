@@ -4,6 +4,7 @@
 
 using namespace std;
 
+#include <fstream>
 #include "Game.h"
 #include "GamePiece.h"
 #include "Ghost.h"
@@ -243,6 +244,9 @@ Game::Game(){
 
     //==================================================================================================================
 
+    highscore = 100;
+    gameBoard = gameBoard;
+    numLives = 3;
 }
 
 Game::Game(std::vector<std::vector<GamePiece>> &gBoard, double h) {
@@ -271,6 +275,14 @@ void Game::setLives(int lives){
 }
 void Game::setGameBoard(vector<vector<GamePiece>> &g){
     gameBoard = g;
+}
+
+void Game::saveHighScore(int highScore) {
+    ofstream highScores("HighScores.txt", ios::app);
+    if(highScores){
+        highScores << highScore << endl;
+    }
+    highScores.close();
 }
 
 ostream& operator <<(ostream& outs, const Game &g) {

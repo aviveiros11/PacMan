@@ -53,6 +53,8 @@ public:
     void setLives(int lives);
     void setGameBoard(std::vector<std::vector<GamePiece>> &g);
 
+    void saveHighScore(int highScore);
+
     /**
      * Overloaded Operator (binary)
      * Friend of the class (not a member)
