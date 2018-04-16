@@ -53,6 +53,12 @@ public:
     void setLives(int lives);
     void setGameBoard(std::vector<std::vector<GamePiece>> &g);
 
+    /**
+     * Saves the high scores to a file
+     * Requires: High Score
+     * Modifies: nothing
+     * Effects: the Highscore.txt file
+     */
     void saveHighScore(int highScore);
 
     /**
