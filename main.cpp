@@ -13,5 +13,7 @@ int main() {
 
     g.saveHighScore(g.getHighScore());
 
+    g.displayHighScore();
+
     return 0;
 }

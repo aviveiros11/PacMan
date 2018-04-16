@@ -285,6 +285,17 @@ void Game::saveHighScore(int highScore) {
     highScores.close();
 }
 
+void Game::displayHighScore() {
+    ifstream highScores("HighScores.txt");
+    int score;
+    if(highScores){
+        while(highScores){
+            highScores >> score;
+            cout << score << endl;
+        }
+    }
+}
+
 ostream& operator <<(ostream& outs, const Game &g) {
     for (int y = 0; y < g.gameBoard.size(); y++) {
         for (int x = 0; x < g.gameBoard[y].size(); x++) {

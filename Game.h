@@ -61,6 +61,15 @@ public:
      */
     void saveHighScore(int highScore);
 
+
+    /**
+     * Reads the high scores from a file
+     * Requires: Nothing
+     * Modifies: nothing
+     * Effects: the console output of highScores
+     */
+    void displayHighScore();
+
     /**
      * Overloaded Operator (binary)
      * Friend of the class (not a member)
