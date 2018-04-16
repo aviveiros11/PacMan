@@ -9,10 +9,15 @@
 
 //yeet
 class Ghost: public GamePiece {
+
 public:
+
+    /** Default Constructor
+     * Requires: Nothing
+     * Modifies: type
+     * Effects: Creates a Ghost Object
+     */
     Ghost();
 };
-
-
 
 #endif //PAC_GHOST_H

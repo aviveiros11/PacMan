@@ -1,10 +1,10 @@
 //
 // Created by Jean-Baptiste Bolh on 4/11/18.
 //
-using namespace std;
 
 #include "GamePiece.h"
 
+using namespace std;
 
 GamePiece::GamePiece() {
     xPos = 0;
@@ -19,6 +19,10 @@ int GamePiece::getYPos() const {
     return yPos;
 }
 
+Type GamePiece::getType() const {
+    return type;
+}
+
 void GamePiece::setXPos(int xPos) {
     GamePiece::xPos = xPos;
 }
@@ -27,25 +31,21 @@ void GamePiece::setYPos(int yPos) {
     GamePiece::yPos = yPos;
 }
 
-Type GamePiece::getType() const {
-    return type;
-}
-
 void GamePiece::setType(Type type) {
     GamePiece::type = type;
 }
 
 std::ostream& operator <<(std::ostream& outs, const GamePiece &g) {
     if (g.getType() == ghost) {
-        outs << "Gho";
+        outs << " ∩ ";
     } else if (g.getType() == wall) {
-        outs << "Wal";
+        outs << "☐☐☐";
     } else if (g.getType() == pellet) {
-        outs << "_☉_";
+        outs << " ☉ ";
     } else if (g.getType() == pacMan){
-        outs << "Pac";
+        outs << " C ";
     } else if(g.getType() == empty){
-        outs << "___";
+        outs << "   ";
     }
     return outs;
 }
@@ -57,6 +57,11 @@ Wall::Wall(){
 Path::Path(){
     type = pellet;
     pelletStatus = true;
+}
+
+Path::Path(Type typeIn, bool pelletStat) {
+    type = typeIn;
+    pelletStat = false;
 }
 
 void Path::setPelletStatus(bool b) {

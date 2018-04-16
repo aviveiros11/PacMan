@@ -19,7 +19,8 @@ protected:
     Type type;
 
 public:
-    /** Default Construct
+
+    /** Default Constructor
      * Requires: Nothing
      * Modifies: Nothing
      * Effects: Creates a GamePiece Object
@@ -29,40 +30,49 @@ public:
     /** Getters and Setters
      * Requires: nothing
      * Modifies: nothing
-     * Effects: Gets/Sets the x and y coordinates
+     * Effects: Gets/Sets the field values
      */
     int getXPos() const;
-
     int getYPos() const;
-
-    void setXPos(int xPos);
-
-    void setYPos(int yPos);
-
     Type getType() const;
-
+    void setXPos(int xPos);
+    void setYPos(int yPos);
     void setType(Type type);
 
-//    virtual void moveUp(int newX, int newY);
-//
-//    virtual void moveDown(int newX, int newY);
-//
-//    virtual void moveLeft(int newX, int newY);
-//
-//    virtual void moveRight(int newX, int newY);
+    /** Move Methods
+     * Requires: Nothing
+     * Modifies: gameBoard, xPos, yPos
+     * Effects: Checks to see if a move can be made depending on surrounding pieces, and make the move.
+     */
+//    virtual void moveUp();
+//    virtual void moveDown();
+//    virtual void moveLeft();
+//    virtual void moveRight();
 
+    /**
+     * Overloaded Operator (binary)
+     * Friend of the class (not a member)
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: Returns a text-based visualization of each GamePiece.
+    */
     friend std::ostream& operator <<(std::ostream& outs, const GamePiece &g);
 };
 
 class Wall : public GamePiece {
 
 public:
+
+    /** Default Constructor
+     * Requires: Nothing
+     * Modifies: type
+     * Effects: Creates a Wall Object
+     */
     Wall();
 
-    friend std::ostream& operator <<(std::ostream& outs, const GamePiece &g);
 };
 
-class Path : public GamePiece{
+class Path : public GamePiece {
 
 private:
 
@@ -70,10 +80,26 @@ private:
 
 public:
 
+    /** Default Constructor
+     * Requires: Nothing
+     * Modifies: type, pelletStatus
+     * Effects: Creates a Path Object
+     */
     Path();
 
-    bool getPelletStatus() const;
+    /** Non-Default Constructor
+     * Requires: Nothing
+     * Modifies: type, pelletStatus
+     * Effects: Creates a Path Object
+     */
+    Path(Type typeIn, bool pelletStat);
 
+    /** Getters and Setters
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: Gets/Sets field values
+     */
+    bool getPelletStatus() const;
     void setPelletStatus(bool b);
 
 };

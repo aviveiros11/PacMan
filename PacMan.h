@@ -11,11 +11,13 @@ class PacMan : public GamePiece {
 
 public:
 
+    /** Default Constructor
+     * Requires: Nothing
+     * Modifies: type
+     * Effects: Creates a PacMan Object
+     */
     PacMan();
 
 };
-
-
-
 
 #endif //PAC_PACMAN_H
