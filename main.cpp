@@ -11,7 +11,7 @@ int main() {
 
     cout << g << endl;
 
-    g.saveHighScore(g.getHighScore());
+    g.saveHighScore(g.getHighScore(), g.getPlayer());
 
     g.displayHighScore();
 

@@ -18,6 +18,7 @@ private:
     std::vector<std::vector<GamePiece>> gameBoard;
     double highscore;
     int numLives;
+    std::string player;
 
 public:
 
@@ -43,6 +44,7 @@ public:
     double getHighScore() const;
     int getLives() const;
     std::vector<std::vector<GamePiece>> getGameBoard() const;
+    std::string getPlayer() const;
 
     /** Setters
      * Requires: Nothing
@@ -59,7 +61,7 @@ public:
      * Modifies: nothing
      * Effects: the Highscore.txt file
      */
-    void saveHighScore(int highScore);
+    void saveHighScore(int highScore, std::string player);
 
 
     /**

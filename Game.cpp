@@ -247,6 +247,7 @@ Game::Game(){
     highscore = 100;
     gameBoard = gameBoard;
     numLives = 3;
+    player = "Lisa-Dion";
 }
 
 Game::Game(std::vector<std::vector<GamePiece>> &gBoard, double h) {
@@ -266,6 +267,10 @@ vector<vector<GamePiece>> Game::getGameBoard() const{
     return gameBoard;
 }
 
+string Game::getPlayer() const{
+    return player;
+}
+
 void Game::setHighScore(double h){
         highscore = h;
 }
@@ -277,10 +282,12 @@ void Game::setGameBoard(vector<vector<GamePiece>> &g){
     gameBoard = g;
 }
 
-void Game::saveHighScore(int highScore) {
+void Game::saveHighScore(int highScore, string player) {
     ofstream highScores("HighScores.txt", ios::app);
     if(highScores){
+        highScores << player << endl;
         highScores << highScore << endl;
+
     }
     highScores.close();
 }
@@ -288,13 +295,15 @@ void Game::saveHighScore(int highScore) {
 void Game::displayHighScore() {
     ifstream highScores("HighScores.txt");
     int score;
-    if(highScores){
-        while(highScores){
-            highScores >> score;
-            cout << score << endl;
-        }
+    string player;
+    while (!highScores.eof()) {
+        highScores >> player >> score;
+        cout << player << " - ";
+        cout << score << endl;
     }
+    highScores.close();
 }
+
 
 ostream& operator <<(ostream& outs, const Game &g) {
     for (int y = 0; y < g.gameBoard.size(); y++) {
