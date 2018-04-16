@@ -9,6 +9,7 @@
 #include <iostream>
 #include <iomanip>
 
+
 enum Type {ghost, wall, pellet, pacMan, empty};
 
 class GamePiece {
@@ -44,7 +45,7 @@ public:
      * Modifies: gameBoard, xPos, yPos
      * Effects: Checks to see if a move can be made depending on surrounding pieces, and make the move.
      */
-//    virtual void moveUp();
+    //virtual void moveUp(Game &g);
 //    virtual void moveDown();
 //    virtual void moveLeft();
 //    virtual void moveRight();

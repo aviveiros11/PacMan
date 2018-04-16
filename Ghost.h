@@ -18,6 +18,11 @@ public:
      * Effects: Creates a Ghost Object
      */
     Ghost();
+
+//  void moveUp() override;
+//    virtual void moveDown();
+//    virtual void moveLeft();
+//    virtual void moveRight();
 };
 
 #endif //PAC_GHOST_H

@@ -71,3 +71,4 @@ void Path::setPelletStatus(bool b) {
 bool Path::getPelletStatus() const {
     return pelletStatus;
 }
+

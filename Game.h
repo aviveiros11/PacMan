@@ -15,13 +15,13 @@
 class Game {
 
 private:
-    std::vector<std::vector<GamePiece>> gameBoard;
     double highscore;
     int numLives;
     std::string player;
 
 public:
 
+    std::vector<std::vector<GamePiece>> gameBoard;
     /** Default Construct
      * Requires: Nothing
      * Modifies: gameBoard
@@ -79,6 +79,11 @@ public:
      * Modifies: nothing
      * Effects: Returns a text-based visualization of the gameBoard vector.
     */
+
+    void moveUp(GamePiece &g);
+
+
+
     friend std::ostream& operator <<(std::ostream& outs, const Game &g);
 
 };

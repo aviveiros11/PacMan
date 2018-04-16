@@ -9,12 +9,22 @@ int main() {
 
     cout << a << endl;
 
-    cout << a.getPlayer() << endl;
-    cout << a.getLives() << endl;
+    a.moveUp(a.getGameBoard()[14][20]);
+    cout << a << endl;
+    a.moveUp(a.getGameBoard()[14][21]);
+    cout << a << endl;
 
-    a.saveHighScore(a.getHighScore(), a.getPlayer());
+    //cout << a.getPlayer() << endl;
+    //cout << a.getLives() << endl;
 
-    a.displayHighScore();
+    //a.saveHighScore(a.getHighScore(), a.getPlayer());
+
+    //a.displayHighScore();
+
+
+
+
+
 
     return 0;
 }

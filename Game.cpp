@@ -2,13 +2,11 @@
 // Created by Jean-Baptiste Bolh on 4/11/18.
 //
 
-using namespace std;
-
 #include <fstream>
 #include "Game.h"
-#include "GamePiece.h"
 #include "Ghost.h"
 #include "PacMan.h"
+using namespace std;
 
 Game::Game(){
     highscore = 0;
@@ -242,6 +240,18 @@ Game::Game(){
     PacMan pacMan;
     gameBoard[14][20] = pacMan;
 
+
+    for(int y = 0; y < gameBoard.size(); y++){
+        for (int x = 0; x < gameBoard[0].size(); x++){
+            gameBoard[x][y].setXPos(x);
+            gameBoard[x][y].setYPos(y);
+        }
+    }
+
+    //TODO DELETE THIS IN FUTURE
+    Path path1;
+    gameBoard[14][19] = path1;
+
     //==================================================================================================================
 
     highscore = 100;
@@ -313,4 +323,30 @@ ostream& operator <<(ostream& outs, const Game &g) {
         outs << endl;
     }
     return outs;
+}
+
+void Game::moveUp(GamePiece &g) {
+    if(g.getType() == pacMan) {
+        if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() != wall) {
+            //Create copy of piece being moved
+            GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
+            if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() == ghost) {
+                //Need to decrease lives somehow
+                //send pacman back to his starting position
+            } else {
+                if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() == pellet) {
+                    Path rep(empty, false);
+                    //increase high score
+                    //delete the object being stored there, set the type to empty and store that as a temp object.
+                    //g.gameBoard[xPos][(yPos + 1)]= nullptr;
+                    gameBoard[g.getXPos()][(g.getYPos() - 1)] = pCopy;
+                    pCopy.setYPos(g.getYPos() - 1);
+                    gameBoard[g.getXPos()][g.getYPos()] = rep;
+
+                } else {
+                    //starting state must be empty, so save in temp and then add when leave.
+                }
+            }
+        }
+    }
 }

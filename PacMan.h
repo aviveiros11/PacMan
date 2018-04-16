@@ -18,6 +18,8 @@ public:
      */
     PacMan();
 
+    //void moveUp(Game &g) override;
+
 };
 
 #endif //PAC_PACMAN_H
