@@ -243,13 +243,13 @@ Game::Game(){
     //TODO DELETE THIS IN FUTURE 123ertghjlkhgfdreszdxfcvbnjiuytredsxdgfhbnjkmiuy6t5r4edcv bnjkiouy7t6r5dcvbhuytrdcfgnvk
     Path path1;
     gameBoard[14][19] = path1;
-    Ghost ghost5;
+    Ghost ghost5(18, 20);
     gameBoard[18][20] = ghost5;
-    Ghost ghost6;
+    Ghost ghost6(10, 20);
     gameBoard[10][20] = ghost5;
-    Ghost ghost7;
+    Ghost ghost7(14, 18);
     gameBoard[14][18] = ghost5;
-    Ghost ghost8;
+    Ghost ghost8(14, 22);
     gameBoard[14][22] = ghost8;
     Path path2;
     gameBoard[14][21] = path2;
@@ -318,7 +318,11 @@ void Game::resetGameBoard() {
             } else if (gameBoard[x][y].getType() == ghost) {
                 GamePiece gCopy;
                 gCopy = gameBoard[x][y];
-                Path rep(empty, false);
+                Path rep;
+                if (gCopy.currentStatus == noPellet) {
+                    rep.setType(empty);
+                    rep.setPelletStatus(false);
+                }
                 gameBoard[x][y] = rep;
                 //delete the object being stored there, set the type to empty and store that as a temp object.
                 //g.gameBoard[xPos][(yPos + 1)]= nullptr;
