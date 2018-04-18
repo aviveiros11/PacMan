@@ -7,4 +7,12 @@
 
 Ghost::Ghost() {
     type = ghost;
+    currentStatus = noPellet;
+}
+
+Ghost::Ghost(int startXPosIn, int startYPosIn) {
+    type = ghost;
+    startXPos = startXPosIn;
+    startYPos = startYPosIn;
+    currentStatus = noPellet;
 }

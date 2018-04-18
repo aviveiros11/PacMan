@@ -12,14 +12,20 @@
 
 enum Type {ghost, wall, pellet, pacMan, empty};
 
+enum CurrentStatus {yesPellet, noPellet};
+
 class GamePiece {
 
 protected:
     int xPos;
     int yPos;
     Type type;
+    int startXPos;
+    int startYPos;
 
 public:
+
+    CurrentStatus currentStatus;
 
     /** Default Constructor
      * Requires: Nothing
@@ -36,6 +42,8 @@ public:
     int getXPos() const;
     int getYPos() const;
     Type getType() const;
+    int getStartXPos() const;
+    int getStartYPos() const;
     void setXPos(int xPos);
     void setYPos(int yPos);
     void setType(Type type);

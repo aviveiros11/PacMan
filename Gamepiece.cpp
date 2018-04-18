@@ -23,6 +23,14 @@ Type GamePiece::getType() const {
     return type;
 }
 
+int GamePiece::getStartXPos() const {
+    return startXPos;
+}
+
+int GamePiece::getStartYPos() const {
+    return startYPos;
+}
+
 void GamePiece::setXPos(int xPos) {
     GamePiece::xPos = xPos;
 }

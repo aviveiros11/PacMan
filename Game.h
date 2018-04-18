@@ -56,6 +56,14 @@ public:
     void setGameBoard(std::vector<std::vector<GamePiece>> &g);
 
     /**
+     * Resets gameBoard after ghost-PacMan collision
+     * Requires: nothing
+     * Modifies: gameBoard
+     * Effects: Places ghosts and PacMan back in starting x and y positions
+     */
+    void resetGameBoard();
+
+    /**
      * Saves the high scores to a file
      * Requires: High Score
      * Modifies: nothing
@@ -85,8 +93,13 @@ public:
     void moveDown(GamePiece &g);
     void moveRight(GamePiece &g);
 
-
-
+    /**
+     * Overloaded Operator (binary)
+     * Friend of the class (not a member)
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: Returns a text-based visualization of each gameBoard Vector.
+    */
     friend std::ostream& operator <<(std::ostream& outs, const Game &g);
 
 };

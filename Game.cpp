@@ -229,17 +229,30 @@ Game::Game(){
     //------------------------------------------------------------------------------------------------------------------
     ///Individually place ghosts and pacMan piece
 
-    Ghost ghost1;
-    Ghost ghost2;
-    Ghost ghost3;
-    Ghost ghost4;
-    gameBoard[12][14] = ghost1;
-    gameBoard[15][14] = ghost2;
-    gameBoard[11][11] = ghost3;
-    gameBoard[16][11] = ghost4;
+    Ghost ghost1(12, 14);
+    Ghost ghost2(15, 14);
+    Ghost ghost3(11, 11);
+    Ghost ghost4(16, 11);
+    gameBoard[ghost1.getStartXPos()][ghost1.getStartYPos()] = ghost1;
+    gameBoard[ghost2.getStartXPos()][ghost2.getStartYPos()] = ghost2;
+    gameBoard[ghost3.getStartXPos()][ghost3.getStartYPos()] = ghost3;
+    gameBoard[ghost4.getStartXPos()][ghost4.getStartYPos()] = ghost4;
     PacMan pacMan;
-    gameBoard[14][20] = pacMan;
+    gameBoard[pacMan.getStartXPos()][pacMan.getStartYPos()] = pacMan;
 
+    //TODO DELETE THIS IN FUTURE 123ertghjlkhgfdreszdxfcvbnjiuytredsxdgfhbnjkmiuy6t5r4edcv bnjkiouy7t6r5dcvbhuytrdcfgnvk
+    Path path1;
+    gameBoard[14][19] = path1;
+    Ghost ghost5;
+    gameBoard[18][20] = ghost5;
+    Ghost ghost6;
+    gameBoard[10][20] = ghost5;
+    Ghost ghost7;
+    gameBoard[14][18] = ghost5;
+    Ghost ghost8;
+    gameBoard[14][22] = ghost8;
+    Path path2;
+    gameBoard[14][21] = path2;
 
     for(int y = 0; y < gameBoard.size(); y++){
         for (int x = 0; x < gameBoard[0].size(); x++){
@@ -247,10 +260,6 @@ Game::Game(){
             gameBoard[x][y].setYPos(y);
         }
     }
-
-    //TODO DELETE THIS IN FUTURE
-    Path path1;
-    gameBoard[14][19] = path1;
 
     //==================================================================================================================
 
@@ -285,14 +294,38 @@ string Game::getPlayer() const{
 }
 
 void Game::setHighScore(double h){
-        highscore = h;
+    highscore = h;
 }
 
 void Game::setLives(int lives){
-        numLives = lives;
+    numLives = lives;
 }
 void Game::setGameBoard(vector<vector<GamePiece>> &g){
     gameBoard = g;
+}
+
+void Game::resetGameBoard() {
+    for(int y = 0; y < gameBoard.size(); y++){
+        for (int x = 0; x < gameBoard[0].size(); x++){
+            if (gameBoard[x][y].getType() == pacMan) {
+                GamePiece pCopy;
+                pCopy = gameBoard[x][y];
+                Path rep(empty, false);
+                gameBoard[x][y] = rep;
+                //delete the object being stored there, set the type to empty and store that as a temp object.
+                //g.gameBoard[xPos][(yPos + 1)]= nullptr;
+                gameBoard[pCopy.getStartXPos()][pCopy.getStartYPos()] = pCopy;
+            } else if (gameBoard[x][y].getType() == ghost) {
+                GamePiece gCopy;
+                gCopy = gameBoard[x][y];
+                Path rep(empty, false);
+                gameBoard[x][y] = rep;
+                //delete the object being stored there, set the type to empty and store that as a temp object.
+                //g.gameBoard[xPos][(yPos + 1)]= nullptr;
+                gameBoard[gCopy.getStartXPos()][gCopy.getStartYPos()] = gCopy;
+            }
+        }
+    }
 }
 
 void Game::saveHighScore(int highScore, string player) {
@@ -326,15 +359,45 @@ ostream& operator <<(ostream& outs, const Game &g) {
 }
 
 void Game::moveUp(GamePiece &g) {
-    if (g.getType() == pacMan) {
+    if (g.getType() == ghost && numLives >= 1) {
+        if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() != wall) {
+            //Create copy of piece being moved
+            if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() == pacMan) {
+                //send pacman back to his starting position
+                --numLives;
+                resetGameBoard();
+            } else {
+                if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() == pellet) {
+                    g.currentStatus = yesPellet;
+                } else {
+                    g.currentStatus = noPellet;
+                }
+                Path rep;
+                if (g.currentStatus == noPellet) {
+                    rep.setType(empty);
+                    rep.setPelletStatus(false);
+                }
+                GamePiece gCopy = gameBoard[g.getXPos()][g.getYPos()];
+                gameBoard[g.getXPos()][(g.getYPos() - 1)] = gCopy;
+                //gCopy.setYPos(g.getYPos() - 1);
+                gameBoard[g.getXPos()][g.getYPos()] = rep;
+                //starting state must be empty, so save in temp and then add when leave.
+
+            }
+        }
+    }
+    if (g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() != wall) {
             //Create copy of piece being moved
             GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
             if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() == ghost) {
                 //Need to decrease lives somehow
+                --numLives;
                 //send pacman back to his starting position
+                resetGameBoard();
             } else {
                 if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() == pellet) {
+                    highscore += 10;
                     Path rep(empty, false);
                     //increase high score
                     //delete the object being stored there, set the type to empty and store that as a temp object.
@@ -352,26 +415,30 @@ void Game::moveUp(GamePiece &g) {
                 }
 
             }
-            for (int y = 0; y < gameBoard.size(); y++) {
-                for (int x = 0; x < gameBoard[0].size(); x++) {
-                    gameBoard[x][y].setXPos(x);
-                    gameBoard[x][y].setYPos(y);
-                }
-            }
+
+        }
+    }
+    for (int y = 0; y < gameBoard.size(); y++) {
+        for (int x = 0; x < gameBoard[0].size(); x++) {
+            gameBoard[x][y].setXPos(x);
+            gameBoard[x][y].setYPos(y);
         }
     }
 }
 
 void Game::moveLeft(GamePiece &g) {
-    if(g.getType() == pacMan) {
+    if(g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos() - 1][g.getYPos()].getType() != wall) {
             //Create copy of piece being moved
             GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
             if (gameBoard[g.getXPos() - 1][(g.getYPos())].getType() == ghost) {
                 //Need to decrease lives somehow
+                --numLives;
                 //send pacman back to his starting position
+                resetGameBoard();
             } else {
                 if (gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() == pellet) {
+                    highscore += 10;
                     Path rep(empty, false);
                     //increase high score
                     //delete the object being stored there, set the type to empty and store that as a temp object.
@@ -399,15 +466,18 @@ void Game::moveLeft(GamePiece &g) {
 }
 
 void Game::moveDown(GamePiece &g) {
-    if (g.getType() == pacMan) {
+    if (g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos()][(g.getYPos() + 1)].getType() != wall) {
             //Create copy of piece being moved
             GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
             if (gameBoard[g.getXPos()][(g.getYPos() + 1)].getType() == ghost) {
                 //Need to decrease lives somehow
+                --numLives;
                 //send pacman back to his starting position
+                resetGameBoard();
             } else {
                 if (gameBoard[g.getXPos()][(g.getYPos() + 1)].getType() == pellet) {
+                    highscore += 10;
                     Path rep(empty, false);
                     //increase high score
                     //delete the object being stored there, set the type to empty and store that as a temp object.
@@ -436,15 +506,18 @@ void Game::moveDown(GamePiece &g) {
 }
 
 void Game::moveRight(GamePiece &g) {
-    if(g.getType() == pacMan) {
+    if(g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos() + 1][g.getYPos()].getType() != wall) {
             //Create copy of piece being moved
             GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
             if (gameBoard[g.getXPos() + 1][(g.getYPos())].getType() == ghost) {
                 //Need to decrease lives somehow
+                --numLives;
                 //send pacman back to his starting position
+                resetGameBoard();
             } else {
                 if (gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() == pellet) {
+                    highscore += 10;
                     Path rep(empty, false);
                     //increase high score
                     //delete the object being stored there, set the type to empty and store that as a temp object.
