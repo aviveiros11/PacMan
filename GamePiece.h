@@ -48,23 +48,6 @@ public:
     void setYPos(int yPos);
     void setType(Type type);
 
-    /** Move Methods
-     * Requires: Nothing
-     * Modifies: gameBoard, xPos, yPos
-     * Effects: Checks to see if a move can be made depending on surrounding pieces, and make the move.
-     */
-    //virtual void moveUp(Game &g);
-//    virtual void moveDown();
-//    virtual void moveLeft();
-//    virtual void moveRight();
-
-    /**
-     * Overloaded Operator (binary)
-     * Friend of the class (not a member)
-     * Requires: nothing
-     * Modifies: nothing
-     * Effects: Returns a text-based visualization of each GamePiece.
-    */
     friend std::ostream& operator <<(std::ostream& outs, const GamePiece &g);
 };
 

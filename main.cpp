@@ -11,14 +11,13 @@ int main() {
 
     a.moveUp(a.gameBoard[18][20]);
     cout << a << endl;
-    a.moveUp(a.getGameBoard()[18][19]);
+    a.moveDown(a.getGameBoard()[18][19]);
     cout << a << endl;
-    a.moveUp(a.getGameBoard()[18][18]);
+    a.moveRight(a.getGameBoard()[18][20]);
     cout << a << endl;
-    a.moveUp(a.getGameBoard()[18][17]);
+    a.moveLeft(a.getGameBoard()[19][20]);
     cout << a << endl;
-    a.moveUp(a.getGameBoard()[18][16]);
-    cout << a << endl;
+
 
     cout << "Lives: " << a.getLives() << endl;
 

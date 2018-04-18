@@ -427,6 +427,33 @@ void Game::moveUp(GamePiece &g) {
 }
 
 void Game::moveLeft(GamePiece &g) {
+    if (g.getType() == ghost && numLives >= 1) {
+        if (gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() != wall) { //If piece to the left is not wall
+            //Create copy of piece being moved
+            if (gameBoard[g.getXPos() - 1][g.getYPos()].getType() == pacMan) {
+                //send pacman back to his starting position
+                --numLives;
+                resetGameBoard();
+            } else {
+                if (gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() == pellet) {
+                    g.currentStatus = yesPellet;
+                } else {
+                    g.currentStatus = noPellet;
+                }
+                Path rep;
+                if (g.currentStatus == noPellet) {
+                    rep.setType(empty);
+                    rep.setPelletStatus(false);
+                }
+                GamePiece gCopy = gameBoard[g.getXPos()][g.getYPos()];
+                gameBoard[g.getXPos() - 1][(g.getYPos())] = gCopy;
+                //gCopy.setYPos(g.getYPos() - 1);
+                gameBoard[g.getXPos()][g.getYPos()] = rep;
+                //starting state must be empty, so save in temp and then add when leave.
+
+            }
+        }
+    }
     if(g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos() - 1][g.getYPos()].getType() != wall) {
             //Create copy of piece being moved
@@ -455,17 +482,45 @@ void Game::moveLeft(GamePiece &g) {
                     //starting state must be empty, so save in temp and then add when leave.
                 }
             }
-            for(int y = 0; y < gameBoard.size(); y++){
-                for (int x = 0; x < gameBoard[0].size(); x++){
-                    gameBoard[x][y].setXPos(x);
-                    gameBoard[x][y].setYPos(y);
-                }
-            }
+
+        }
+    }
+    for (int y = 0; y < gameBoard.size(); y++) {
+        for (int x = 0; x < gameBoard[0].size(); x++) {
+            gameBoard[x][y].setXPos(x);
+            gameBoard[x][y].setYPos(y);
         }
     }
 }
 
 void Game::moveDown(GamePiece &g) {
+    if (g.getType() == ghost && numLives >= 1) {
+        if (gameBoard[(g.getXPos())][g.getYPos() + 1].getType() != wall) { //If piece to the left is not wall
+            //Create copy of piece being moved
+            if (gameBoard[g.getXPos()][g.getYPos() + 1].getType() == pacMan) {
+                //send pacman back to his starting position
+                --numLives;
+                resetGameBoard();
+            } else {
+                if (gameBoard[(g.getXPos())][g.getYPos() + 1].getType() == pellet) {
+                    g.currentStatus = yesPellet;
+                } else {
+                    g.currentStatus = noPellet;
+                }
+                Path rep;
+                if (g.currentStatus == noPellet) {
+                    rep.setType(empty);
+                    rep.setPelletStatus(false);
+                }
+                GamePiece gCopy = gameBoard[g.getXPos()][g.getYPos()];
+                gameBoard[g.getXPos()][(g.getYPos() + 1)] = gCopy;
+                //gCopy.setYPos(g.getYPos() - 1);
+                gameBoard[g.getXPos()][g.getYPos()] = rep;
+                //starting state must be empty, so save in temp and then add when leave.
+
+            }
+        }
+    }
     if (g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos()][(g.getYPos() + 1)].getType() != wall) {
             //Create copy of piece being moved
@@ -495,17 +550,45 @@ void Game::moveDown(GamePiece &g) {
                 }
 
             }
-            for (int y = 0; y < gameBoard.size(); y++) {
-                for (int x = 0; x < gameBoard[0].size(); x++) {
-                    gameBoard[x][y].setXPos(x);
-                    gameBoard[x][y].setYPos(y);
-                }
-            }
+
+        }
+    }
+    for (int y = 0; y < gameBoard.size(); y++) {
+        for (int x = 0; x < gameBoard[0].size(); x++) {
+            gameBoard[x][y].setXPos(x);
+            gameBoard[x][y].setYPos(y);
         }
     }
 }
 
 void Game::moveRight(GamePiece &g) {
+    if (g.getType() == ghost && numLives >= 1) {
+        if (gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() != wall) { //If piece to the left is not wall
+            //Create copy of piece being moved
+            if (gameBoard[g.getXPos() + 1][g.getYPos()].getType() == pacMan) {
+                //send pacman back to his starting position
+                --numLives;
+                resetGameBoard();
+            } else {
+                if (gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() == pellet) {
+                    g.currentStatus = yesPellet;
+                } else {
+                    g.currentStatus = noPellet;
+                }
+                Path rep;
+                if (g.currentStatus == noPellet) {
+                    rep.setType(empty);
+                    rep.setPelletStatus(false);
+                }
+                GamePiece gCopy = gameBoard[g.getXPos()][g.getYPos()];
+                gameBoard[g.getXPos() + 1][(g.getYPos())] = gCopy;
+                //gCopy.setYPos(g.getYPos() - 1);
+                gameBoard[g.getXPos()][g.getYPos()] = rep;
+                //starting state must be empty, so save in temp and then add when leave.
+
+            }
+        }
+    }
     if(g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos() + 1][g.getYPos()].getType() != wall) {
             //Create copy of piece being moved
@@ -534,12 +617,13 @@ void Game::moveRight(GamePiece &g) {
                     //starting state must be empty, so save in temp and then add when leave.
                 }
             }
-            for(int y = 0; y < gameBoard.size(); y++){
-                for (int x = 0; x < gameBoard[0].size(); x++){
-                    gameBoard[x][y].setXPos(x);
-                    gameBoard[x][y].setYPos(y);
-                }
-            }
+
+        }
+    }
+    for (int y = 0; y < gameBoard.size(); y++) {
+        for (int x = 0; x < gameBoard[0].size(); x++) {
+            gameBoard[x][y].setXPos(x);
+            gameBoard[x][y].setYPos(y);
         }
     }
 }
