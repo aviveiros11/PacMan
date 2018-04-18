@@ -269,7 +269,7 @@ Game::Game(){
     player = "Lisa-Dion";
 }
 
-Game::Game(std::string p, double h) {
+Game::Game(std::string p, int h) {
     Game tempGame;
     gameBoard = tempGame.getGameBoard();
     highscore = h;
@@ -278,7 +278,7 @@ Game::Game(std::string p, double h) {
 
 }
 
-double Game::getHighScore() const{
+int Game::getHighScore() const{
     return highscore;
 }
 
@@ -293,7 +293,7 @@ string Game::getPlayer() const{
     return player;
 }
 
-void Game::setHighScore(double h){
+void Game::setHighScore(int h){
     highscore = h;
 }
 

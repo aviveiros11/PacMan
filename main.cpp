@@ -18,6 +18,9 @@ int main() {
     a.moveLeft(a.getGameBoard()[19][20]);
     cout << a << endl;
 
+    a.setHighScore(30);
+    a.saveHighScore(a.getHighScore(), a.getPlayer());
+    a.displayHighScore();
 
     cout << "Lives: " << a.getLives() << endl;
 

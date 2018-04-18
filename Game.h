@@ -15,7 +15,7 @@
 class Game {
 
 private:
-    double highscore;
+    int highscore;
     int numLives;
     std::string player;
 
@@ -34,14 +34,14 @@ public:
      * Modifies: Vector, High Score
      * Effects: Creates a Game Object with a gameBoard vector and a high score
      */
-    Game(std::string player, double h);
+    Game(std::string player, int h);
 
     /** Getters
      * Requires: nothing
      * Modifies: nothing
      * Effects: Gets the Field Values
      */
-    double getHighScore() const;
+    int getHighScore() const;
     int getLives() const;
     std::vector<std::vector<GamePiece>> getGameBoard() const;
     std::string getPlayer() const;
@@ -51,7 +51,7 @@ public:
      * Modifies: The Private Field Value
      * Effects: Sets the Field Values
      */
-    void setHighScore(double h);
+    void setHighScore(int h);
     void setLives(int lives);
     void setGameBoard(std::vector<std::vector<GamePiece>> &g);
 

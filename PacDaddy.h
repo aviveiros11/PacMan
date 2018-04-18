@@ -1,29 +1,29 @@
 //
-// Created by The Flash on 4/15/18.
+// Created by Jean-Baptiste Bolh on 4/18/18.
 //
 
-#ifndef PAC_PACMAN_H
-#define PAC_PACMAN_H
+#ifndef PAC_PACDADDY_H
+#define PAC_PACDADDY_H
 
-#include "PacDaddy.h"
+#include "GamePiece.h"
 
-class PacMan : public PacDaddy {
-
+class PacDaddy : public GamePiece{
 public:
-
     /** Default Constructor
      * Requires: Nothing
      * Modifies: type
      * Effects: Creates a PacMan Object
      */
-    PacMan();
+    PacDaddy();
 
     /** Pure Virtual makeNoise
      * Requires: nothing
      * Modifies: nothing
      * Effects: Emits noise
      */
-    void makeNoise() override;
+    virtual void makeNoise() = 0;
+
 };
 
-#endif //PAC_PACMAN_H
+
+#endif //PAC_PACDADDY_H

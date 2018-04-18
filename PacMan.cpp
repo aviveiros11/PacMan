@@ -9,3 +9,7 @@ PacMan::PacMan() {
     startXPos = 14;
     startYPos = 20;
 }
+
+void PacMan::makeNoise() {
+    std::cout << "BLOOP BLOOP BLOOP DEAD" << std::endl;
+}
