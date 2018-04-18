@@ -9,16 +9,11 @@ int main() {
 
     cout << a << endl;
 
-    a.moveUp(a.gameBoard[18][20]);
+    a.moveUp(a.gameBoard[14][22]);
     cout << a << endl;
-    a.moveUp(a.getGameBoard()[18][19]);
+    a.moveUp(a.gameBoard[14][21]);
     cout << a << endl;
-    a.moveUp(a.getGameBoard()[18][18]);
-    cout << a << endl;
-    a.moveUp(a.getGameBoard()[18][17]);
-    cout << a << endl;
-    a.moveUp(a.getGameBoard()[18][16]);
-    cout << a << endl;
+
 
     cout << "Lives: " << a.getLives() << endl;
 
