@@ -32,15 +32,41 @@ int GamePiece::getStartYPos() const {
 }
 
 void GamePiece::setXPos(int xPos) {
-    GamePiece::xPos = xPos;
+    if (xPos > 0){
+        GamePiece::xPos = xPos;
+    }
 }
 
 void GamePiece::setYPos(int yPos) {
-    GamePiece::yPos = yPos;
+    if (yPos > 0){
+        GamePiece::yPos = yPos;
+    }
 }
 
 void GamePiece::setType(Type type) {
-    GamePiece::type = type;
+    if(type == wall){
+        if(GamePiece::type == wall){
+            GamePiece::type = type;
+        }
+    }
+    if(GamePiece::type == pellet || GamePiece::type == empty){
+        if(type == pellet){
+            GamePiece::type = type;
+        }
+        if(type == empty){
+            GamePiece::type = type;
+        }
+    }
+    if(GamePiece::type == ghost){
+        if(type == ghost){
+            GamePiece::type = type;
+        }
+    }
+    if (GamePiece::type == pacMan){
+        if(type == pacMan){
+            GamePiece::type = type;
+        }
+    }
 }
 
 std::ostream& operator <<(std::ostream& outs, const GamePiece &g) {

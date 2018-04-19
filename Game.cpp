@@ -294,11 +294,21 @@ string Game::getPlayer() const{
 }
 
 void Game::setHighScore(int h){
-    highscore = h;
+    if(h < 0){
+        highscore = 0;
+    }
+    else {
+        highscore = h;
+    }
 }
 
 void Game::setLives(int lives){
-    numLives = lives;
+    if(lives < 0){
+        numLives = 0;
+    }
+    else {
+        numLives = lives;
+    }
 }
 void Game::setGameBoard(vector<vector<GamePiece>> &g){
     gameBoard = g;
