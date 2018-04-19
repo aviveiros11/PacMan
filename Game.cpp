@@ -438,6 +438,9 @@ void Game::moveUp(GamePiece &g) {
             gameBoard[x][y].setYPos(y);
         }
     }
+    if(g.getType() != ghost && g.getType() != pacMan){
+        cout << "Error: Cannot moveUp GamePiece objects other than PacMan or Ghost!" << endl;
+    }
 }
 
 void Game::moveLeft(GamePiece &g) {
@@ -468,7 +471,7 @@ void Game::moveLeft(GamePiece &g) {
             }
         }
     }
-    if(g.getType() == pacMan && numLives >= 1) {
+    if (g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos() - 1][g.getYPos()].getType() != wall) {
             //Create copy of piece being moved
             GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
@@ -504,6 +507,9 @@ void Game::moveLeft(GamePiece &g) {
             gameBoard[x][y].setXPos(x);
             gameBoard[x][y].setYPos(y);
         }
+    }
+    if(g.getType() != ghost && g.getType() != pacMan){
+        cout << "Error: Cannot moveLeft GamePiece objects other than PacMan or Ghost!" << endl;
     }
 }
 
@@ -573,6 +579,9 @@ void Game::moveDown(GamePiece &g) {
             gameBoard[x][y].setYPos(y);
         }
     }
+    if(g.getType() != ghost && g.getType() != pacMan){
+        cout << "Error: Cannot moveDown GamePiece objects other than PacMan or Ghost!" << endl;
+    }
 }
 
 void Game::moveRight(GamePiece &g) {
@@ -639,5 +648,8 @@ void Game::moveRight(GamePiece &g) {
             gameBoard[x][y].setXPos(x);
             gameBoard[x][y].setYPos(y);
         }
+    }
+    if(g.getType() != ghost && g.getType() != pacMan){
+        cout << "Error: Cannot moveRight GamePiece objects other than PacMan or Ghost!" << endl;
     }
 }
