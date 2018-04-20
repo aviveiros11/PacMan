@@ -24,10 +24,5 @@ int main() {
 
     cout << "Lives: " << a.getLives() << endl;
 
-
-
-
-
-
     return 0;
 }
