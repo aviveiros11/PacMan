@@ -6,7 +6,7 @@
 #include "Ghost.h"
 #include "PacMan.h"
 
-//I broke up Liams sections into these methods:
+//I broke up Liams sections into these methods
 bool testGame();
 bool testGamePiece();
 bool testGhost();
@@ -96,17 +96,17 @@ bool testGame() {
     g.moveDown(g.getGameBoard()[15][19]);
     g.moveLeft(g.getGameBoard()[15][20]);
 
-//    //Wall
-//    g.moveUp(g.gameBoard[2][2]);
-//    g.moveDown(g.getGameBoard()[2][2]);
-//    g.moveRight(g.getGameBoard()[2][2]);
-//    g.moveLeft(g.getGameBoard()[2][2]);
-//
-//    //Path
-//    g.moveUp(g.gameBoard[18][20]);
-//    g.moveDown(g.getGameBoard()[18][19]);
-//    g.moveRight(g.getGameBoard()[18][20]);
-//    g.moveLeft(g.getGameBoard()[19][20]);
+    //Wall
+    g.moveUp(g.gameBoard[2][2]);
+    g.moveDown(g.getGameBoard()[2][2]);
+    g.moveRight(g.getGameBoard()[2][2]);
+    g.moveLeft(g.getGameBoard()[2][2]);
+
+    //Path
+    g.moveUp(g.gameBoard[1][1]);
+    g.moveDown(g.getGameBoard()[1][1]);
+    g.moveRight(g.getGameBoard()[1][1]);
+    g.moveLeft(g.getGameBoard()[1][1]);
 
     //Ghost
     g.moveUp(g.getGameBoard()[18][20]);
