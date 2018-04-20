@@ -43,28 +43,28 @@ void GamePiece::setYPos(int yPos) {
     }
 }
 
-void GamePiece::setType(Type type) {
-    if(type == wall){
-        if(GamePiece::type == wall){
-            GamePiece::type = type;
+void GamePiece::setType(Type t) {
+    if(t == wall){
+        if(t == wall){
+            type = t;
         }
     }
-    if(GamePiece::type == pellet || GamePiece::type == empty){
-        if(type == pellet){
-            GamePiece::type = type;
+    else if(t == pellet || t == empty){
+        if(t == pellet){
+            type = t;
         }
-        if(type == empty){
-            GamePiece::type = type;
-        }
-    }
-    if(GamePiece::type == ghost){
-        if(type == ghost){
-            GamePiece::type = type;
+        if(t == empty){
+            type = t;
         }
     }
-    if (GamePiece::type == pacMan){
-        if(type == pacMan){
-            GamePiece::type = type;
+    else if(t == ghost){
+        if(t == ghost){
+            type = t;
+        }
+    }
+    else if (t == pacMan){
+        if(t == pacMan){
+            type = t;
         }
     }
 }

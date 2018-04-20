@@ -24,7 +24,7 @@ int main() {
 
     bool gamePieceClassTestResult = testGamePiece();
     if(gamePieceClassTestResult == false){
-        std::cout << "GamePiece Resting Failed!" << std::endl;
+        std::cout << "GamePiece Reseting Failed!" << std::endl;
     }
     else{
         std::cout << "GamePiece Testing Successful!" << std::endl;
@@ -123,7 +123,7 @@ bool testGamePiece(){
     bool passed = true;
 
     GamePiece gp;
-    if (gp.getXPos() != 0 && gp.getYPos() != 0){
+    if (gp.getXPos() != 0 || gp.getYPos() != 0){
         std::cout << "Gamepiece Deault Constructor Test Failed" << std::endl;
         passed = false;
     }
@@ -131,7 +131,8 @@ bool testGamePiece(){
     gp.setXPos(20);
     gp.setYPos(20);
     gp.setType(pacMan);
-    if (gp.getXPos() != 20 && gp.getYPos() != 20 && gp.getType() != pacMan){
+
+    if (gp.getXPos() != 20 || gp.getYPos() != 20 || gp.getType() != pacMan){
         std::cout << "Gampiece setters Test Failed" << std::endl;
         passed = false;
     }
@@ -147,9 +148,9 @@ bool testGamePiece(){
 
     w.setType(pellet);
     w.setXPos(20);
-    w.setXPos(20);
+    w.setYPos(20);
 
-    if (w.getType() != pellet && w.getXPos() != 20 && w.getYPos() != 20){
+    if (w.getType() != pellet || w.getXPos() != 20 || w.getYPos() != 20){
         std::cout << "Wall setter Test Failed" << std::endl;
         passed = false;
     }
@@ -158,7 +159,7 @@ bool testGamePiece(){
 
     Path p;
 
-    if (p.getType() != pellet && p.getPelletStatus() == false){
+    if (p.getType() != pellet || p.getPelletStatus() == false){
         std::cout << "Path Default Constructor Test Failed" << std::endl;
         passed = false;
     }
@@ -168,7 +169,7 @@ bool testGamePiece(){
     p.setType(empty);
     p.setPelletStatus(true);
 
-    if (p.getType() != empty && p.getPelletStatus() == true && p.getXPos() != 20 && p.getYPos() != 20){
+    if (p.getType() != empty || p.getPelletStatus() != true || p.getXPos() != 20 || p.getYPos() != 20){
         std::cout << "Path Setters Test Failed" << std::endl;
         passed = false;
     }
@@ -187,17 +188,17 @@ bool testGhost() {
             passed = false;
         }
 
-        gh.setType(pellet);
+        gh.setType(ghost);
         gh.setXPos(20);
         gh.setYPos(20);
 
-        if (gh.getType() != ghost && gh.getXPos() != 20 && gh.getYPos() != 20){
+        if (gh.getType() != ghost || gh.getXPos() != 20 || gh.getYPos() != 20){
             std::cout << "Ghost Setters Test Failed" << std::endl;
             passed = false;
         }
 
         Ghost ghn(20, 20);
-        if (ghn.getType() != ghost && ghn.getStartXPos() != 20 && ghn.getStartYPos() != 20){
+        if (ghn.getType() != ghost || ghn.getStartXPos() != 20 || ghn.getStartYPos() != 20){
             std::cout << "Ghost Non-Default Constructor Test Failed" << std::endl;
             passed = false;
         }
@@ -217,7 +218,7 @@ bool testPacMan() {
 
     pm.setXPos(25);
     pm.setYPos(25);
-    pm.setType(wall);
+    pm.setType(pacMan);
 
     if (pm.getType() != pacMan || pm.getXPos() != 25 || pm.getYPos() != 25) {
         std::cout << "PacMan Setters Test Failed" << std::endl;
