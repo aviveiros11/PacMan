@@ -91,24 +91,25 @@ bool testGame() {
 // Here I attempt to move pacman from his original pos. on the board.  Not working!  And triggering checks I added to the end of each move method.
     //Move Methods
     //Pacman
-    g.moveRight(g.gameBoard[14][20]);
+    g.moveRight(g.getGameBoard()[14][20]);
     std::cout << g << std::endl;
+    std:: cout << g.getGameBoard()[15][20].getType() << std::endl;
     g.moveUp(g.getGameBoard()[15][20]);
-    std::cout << g << std::endl;
+    std:: cout << g.getGameBoard()[15][19].getType() << std::endl;
     g.moveDown(g.getGameBoard()[15][19]);
     g.moveLeft(g.getGameBoard()[15][20]);
 
-    //Wall
-    g.moveUp(g.gameBoard[2][2]);
-    g.moveDown(g.getGameBoard()[2][2]);
-    g.moveRight(g.getGameBoard()[2][2]);
-    g.moveLeft(g.getGameBoard()[2][2]);
-
-    //Path
-    g.moveUp(g.gameBoard[18][20]);
-    g.moveDown(g.getGameBoard()[18][19]);
-    g.moveRight(g.getGameBoard()[18][20]);
-    g.moveLeft(g.getGameBoard()[19][20]);
+//    //Wall
+//    g.moveUp(g.gameBoard[2][2]);
+//    g.moveDown(g.getGameBoard()[2][2]);
+//    g.moveRight(g.getGameBoard()[2][2]);
+//    g.moveLeft(g.getGameBoard()[2][2]);
+//
+//    //Path
+//    g.moveUp(g.gameBoard[18][20]);
+//    g.moveDown(g.getGameBoard()[18][19]);
+//    g.moveRight(g.getGameBoard()[18][20]);
+//    g.moveLeft(g.getGameBoard()[19][20]);
 
     //Ghost
     g.moveUp(g.gameBoard[18][20]);
