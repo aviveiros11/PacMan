@@ -92,10 +92,7 @@ bool testGame() {
     //Move Methods
     //Pacman
     g.moveRight(g.getGameBoard()[14][20]);
-    std::cout << g << std::endl;
-    std:: cout << g.getGameBoard()[15][20].getType() << std::endl;
     g.moveUp(g.getGameBoard()[15][20]);
-    std:: cout << g.getGameBoard()[15][19].getType() << std::endl;
     g.moveDown(g.getGameBoard()[15][19]);
     g.moveLeft(g.getGameBoard()[15][20]);
 
@@ -112,10 +109,26 @@ bool testGame() {
 //    g.moveLeft(g.getGameBoard()[19][20]);
 
     //Ghost
-    g.moveUp(g.gameBoard[18][20]);
+    g.moveUp(g.getGameBoard()[18][20]);
     g.moveDown(g.getGameBoard()[18][19]);
     g.moveRight(g.getGameBoard()[18][20]);
     g.moveLeft(g.getGameBoard()[19][20]);
+
+    if(g.getGameBoard()[14][20].getType() != pacMan ){
+        std::cout<<"pacman moves failed" << std::endl;
+    }
+    else
+        std::cout<<"PacMan Moves Successful" << std::endl;
+
+    if(g.getGameBoard()[18][20].getType() != ghost ){
+        std::cout<<"ghost moves failed" << std::endl;
+    }
+    else
+        std::cout<<"Ghost Moves Successful" << std::endl;
+
+    std::cout<<"Reset board to original position after collision" << std::endl;
+
+    g.resetGameBoard();
 
     std::cout << "Testing File I/O" << std::endl;
 
@@ -123,6 +136,8 @@ bool testGame() {
     g.displayHighScore();
 
     std::cout << "File I/O Successful!" << std::endl;
+
+    g.resetGameBoard();
 
 
     return passed;
