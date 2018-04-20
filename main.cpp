@@ -9,13 +9,13 @@ int main() {
 
     cout << a << endl;
 
-    a.moveUp(a.gameBoard[18][20]);
+    a.moveUp(a.gameBoard[14][20]);
     cout << a << endl;
-    a.moveDown(a.getGameBoard()[18][19]);
+    a.moveDown(a.getGameBoard()[14][19]);
     cout << a << endl;
-    a.moveRight(a.getGameBoard()[18][20]);
+    a.moveRight(a.getGameBoard()[14][20]);
     cout << a << endl;
-    a.moveLeft(a.getGameBoard()[19][20]);
+    a.moveLeft(a.getGameBoard()[15][20]);
     cout << a << endl;
 
     a.setHighScore(30);

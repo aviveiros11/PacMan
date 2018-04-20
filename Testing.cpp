@@ -88,13 +88,14 @@ bool testGame() {
     std::cout << "Testing Move methods: " << std::endl;
     g.setLives(5);
 
-// Here I attempt to move pacman from his original pos. on the board.  Not working!  And triggering checks I added to the end of each move method.
     //Move Methods
     //Pacman
     g.moveRight(g.getGameBoard()[14][20]);
     g.moveUp(g.getGameBoard()[15][20]);
     g.moveDown(g.getGameBoard()[15][19]);
     g.moveLeft(g.getGameBoard()[15][20]);
+    g.moveLeft(g.getGameBoard()[14][20]);
+    g.moveLeft(g.getGameBoard()[13][20]);
 
     //Wall
     g.moveUp(g.gameBoard[2][2]);
@@ -109,36 +110,43 @@ bool testGame() {
     g.moveLeft(g.getGameBoard()[1][1]);
 
     //Ghost
-    g.moveUp(g.getGameBoard()[18][20]);
-    g.moveDown(g.getGameBoard()[18][19]);
-    g.moveRight(g.getGameBoard()[18][20]);
-    g.moveLeft(g.getGameBoard()[19][20]);
+    g.moveRight(g.getGameBoard()[11][11]);
+    g.moveUp(g.getGameBoard()[12][11]);
+    g.moveUp(g.getGameBoard()[12][10]);
+    g.moveUp(g.getGameBoard()[12][9]);
+    g.moveDown(g.getGameBoard()[12][8]);
+    g.moveUp(g.getGameBoard()[12][9]);
+    g.moveLeft(g.getGameBoard()[12][8]);
+    g.moveLeft(g.getGameBoard()[11][8]);
+    g.moveLeft(g.getGameBoard()[10][8]);
 
-    if(g.getGameBoard()[14][20].getType() != pacMan ){
+    if(g.getGameBoard()[12][20].getType() != pacMan ){
         std::cout<<"pacman moves failed" << std::endl;
     }
     else
         std::cout<<"PacMan Moves Successful" << std::endl;
 
-    if(g.getGameBoard()[18][20].getType() != ghost ){
+    if(g.getGameBoard()[9][8].getType() != ghost ){
         std::cout<<"ghost moves failed" << std::endl;
     }
     else
         std::cout<<"Ghost Moves Successful" << std::endl;
 
-    std::cout<<"Reset board to original position after collision" << std::endl;
+    std::cout<<"\nReset board to original position after collision:" << std::endl;
+    std::cout<<"Below should print the gameBoard with pacMan outside of its original start position, as well as the top left ghost." << std::endl;
+    std::cout << g << std::endl;
+    std::cout<<"Below should print the gameBoard with the pacMan and the ghosts in original starting positions." << std::endl;
 
     g.resetGameBoard();
 
-    std::cout << "Testing File I/O" << std::endl;
+    std::cout << g << std::endl;
+
+    std::cout << "Testing File I/O:" << std::endl;
 
     g.saveHighScore(g.getHighScore(), g.getPlayer());
-    g.displayHighScore();
+    g.displayHighScore(); //Should display "Lisa-Dion - 30"
 
     std::cout << "File I/O Successful!" << std::endl;
-
-    g.resetGameBoard();
-
 
     return passed;
 
@@ -206,28 +214,28 @@ bool testGamePiece(){
 // ========== Ghost Class Testing ==========
 bool testGhost() {
 
-        bool passed = true;
+    bool passed = true;
 
-        Ghost gh;
-        if (gh.getType() != ghost){
-            std::cout << "Ghost Default Constructor Test Failed" << std::endl;
-            passed = false;
-        }
+    Ghost gh;
+    if (gh.getType() != ghost){
+        std::cout << "Ghost Default Constructor Test Failed" << std::endl;
+        passed = false;
+    }
 
-        gh.setType(ghost);
-        gh.setXPos(20);
-        gh.setYPos(20);
+    gh.setType(ghost);
+    gh.setXPos(20);
+    gh.setYPos(20);
 
-        if (gh.getType() != ghost || gh.getXPos() != 20 || gh.getYPos() != 20){
-            std::cout << "Ghost Setters Test Failed" << std::endl;
-            passed = false;
-        }
+    if (gh.getType() != ghost || gh.getXPos() != 20 || gh.getYPos() != 20){
+        std::cout << "Ghost Setters Test Failed" << std::endl;
+        passed = false;
+    }
 
-        Ghost ghn(20, 20);
-        if (ghn.getType() != ghost || ghn.getStartXPos() != 20 || ghn.getStartYPos() != 20){
-            std::cout << "Ghost Non-Default Constructor Test Failed" << std::endl;
-            passed = false;
-        }
+    Ghost ghn(20, 20);
+    if (ghn.getType() != ghost || ghn.getStartXPos() != 20 || ghn.getStartYPos() != 20){
+        std::cout << "Ghost Non-Default Constructor Test Failed" << std::endl;
+        passed = false;
+    }
     return passed;
 };
 
@@ -236,6 +244,8 @@ bool testPacMan() {
 
     bool passed = true;
     PacMan pm;
+
+    PacDaddy* pd;
 
     if (pm.getType() != pacMan || pm.getStartXPos() != 14 || pm.getStartYPos() != 20) {
         std::cout << "PacMan Default Constructor Test Failed" << std::endl;
