@@ -92,7 +92,9 @@ bool testGame() {
     //Move Methods
     //Pacman
     g.moveRight(g.gameBoard[14][20]);
+    std::cout << g << std::endl;
     g.moveUp(g.getGameBoard()[15][20]);
+    std::cout << g << std::endl;
     g.moveDown(g.getGameBoard()[15][19]);
     g.moveLeft(g.getGameBoard()[15][20]);
 
@@ -113,6 +115,14 @@ bool testGame() {
     g.moveDown(g.getGameBoard()[18][19]);
     g.moveRight(g.getGameBoard()[18][20]);
     g.moveLeft(g.getGameBoard()[19][20]);
+
+    std::cout << "Testing File I/O" << std::endl;
+
+    g.saveHighScore(g.getHighScore(), g.getPlayer());
+    g.displayHighScore();
+
+    std::cout << "File I/O Successful!" << std::endl;
+
 
     return passed;
 
@@ -231,3 +241,4 @@ bool testPacMan() {
 
     std::cout << "Passed = " << std::boolalpha << passed << std::endl;
 }
+
