@@ -1,6 +1,18 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.7)
 project(paC)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wno-deprecated")
 
-add_executable(paC main.cpp Ghost.cpp Ghost.h Game.cpp Game.h Gamepiece.cpp GamePiece.h PacMan.cpp PacMan.h)
+find_package (OpenGL REQUIRED)
+find_package (GLUT REQUIRED)
+
+include_directories(${OPENGL_INCLUDE_DIR}  ${GLUT_INCLUDE_DIRS})
+
+file(GLOB SOURCE_FILES
+        *.cpp
+        *.h
+        )
+
+add_executable(main.cpp ${SOURCE_FILES})
+
+target_link_libraries (main.cpp ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})

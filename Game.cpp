@@ -4,11 +4,11 @@
 
 #include <fstream>
 #include "Game.h"
-#include "Ghost.h"
-#include "PacMan.h"
+//#include "Ghost.h"
+//#include "PacMan.h"
 using namespace std;
 
-Game::Game(){
+Game::Game() {//: pm(), ghost1(12, 14), ghost2(15, 14), ghost3(11, 11), ghost4(16, 11) {
     highscore = 0;
     numLives = 3;
 
@@ -237,8 +237,20 @@ Game::Game(){
     gameBoard[ghost2.getStartXPos()][ghost2.getStartYPos()] = ghost2;
     gameBoard[ghost3.getStartXPos()][ghost3.getStartYPos()] = ghost3;
     gameBoard[ghost4.getStartXPos()][ghost4.getStartYPos()] = ghost4;
-    PacMan pacMan;
-    gameBoard[pacMan.getStartXPos()][pacMan.getStartYPos()] = pacMan;
+    PacMan pm;
+    gameBoard[pm.getStartXPos()][pm.getStartYPos()] = pm;
+
+//    pacManPtr = &pm;
+//    ghost1Ptr = &ghost1;
+//    ghost2Ptr = &ghost2;
+//    ghost3Ptr = &ghost3;
+//    ghost4Ptr = &ghost4;
+
+//    pieces.push_back(pm);
+//    pieces.push_back(ghost1);
+//    pieces.push_back(ghost2);
+//    pieces.push_back(ghost3);
+//    pieces.push_back(ghost4);
 
     for(int y = 0; y < gameBoard.size(); y++){
         for (int x = 0; x < gameBoard[0].size(); x++){
@@ -337,7 +349,7 @@ void Game::saveHighScore(int highScore, string player) {
     highScores.close();
 }
 
-void Game::displayHighScore() {
+string Game::displayHighScore() {
     ifstream highScores("HighScores.txt");
     int score;
     string player;
@@ -345,6 +357,7 @@ void Game::displayHighScore() {
         cout << player << " - " << score << endl;
     }
     highScores.close();
+    return player;
 }
 
 
@@ -358,7 +371,9 @@ ostream& operator <<(ostream& outs, const Game &g) {
     return outs;
 }
 
-void Game::moveUp(GamePiece &g) {
+//======================================================================================================================
+
+bool Game::moveUp(GamePiece &g) {
     if (g.getType() == ghost && numLives >= 1) {
         if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() != wall) {
             //Create copy of piece being moved
@@ -383,9 +398,16 @@ void Game::moveUp(GamePiece &g) {
                 //gCopy.setYPos(g.getYPos() - 1);
                 gameBoard[g.getXPos()][g.getYPos()] = rep;
                 //starting state must be empty, so save in temp and then add when leave.
-
             }
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+            return true;
         }
+        return false;
     }
     if (g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() != wall) {
@@ -416,21 +438,24 @@ void Game::moveUp(GamePiece &g) {
                 }
 
             }
-
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+            return true;
         }
-    }
-    for (int y = 0; y < gameBoard.size(); y++) {
-        for (int x = 0; x < gameBoard[0].size(); x++) {
-            gameBoard[x][y].setXPos(x);
-            gameBoard[x][y].setYPos(y);
-        }
+        return false;
     }
 //    if(g.getType() != ghost && g.getType() != pacMan){
 //        cout << "Error: Cannot moveUp GamePiece objects other than PacMan or Ghost! " << g.getType() << endl;
 //    }
 }
 
-void Game::moveLeft(GamePiece &g) {
+//======================================================================================================================
+
+bool Game::moveLeft(GamePiece &g) {
     if (g.getType() == ghost && numLives >= 1) {
         if (gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() != wall) { //If piece to the left is not wall
             //Create copy of piece being moved
@@ -457,12 +482,20 @@ void Game::moveLeft(GamePiece &g) {
                 //starting state must be empty, so save in temp and then add when leave.
 
             }
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+            return true;
         }
+        return false;
     }
     if (g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos() - 1][g.getYPos()].getType() != wall) {
             //Create copy of piece being moved
-            GamePiece pCopy = gameBoard[g.getXPos()][g.getYPos()];
+            GamePiece pCopy = g;
             if (gameBoard[g.getXPos() - 1][(g.getYPos())].getType() == ghost) {
                 //Need to decrease lives somehow
                 --numLives;
@@ -487,21 +520,24 @@ void Game::moveLeft(GamePiece &g) {
                     //starting state must be empty, so save in temp and then add when leave.
                 }
             }
-
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+            return true;
         }
-    }
-    for (int y = 0; y < gameBoard.size(); y++) {
-        for (int x = 0; x < gameBoard[0].size(); x++) {
-            gameBoard[x][y].setXPos(x);
-            gameBoard[x][y].setYPos(y);
-        }
+        return false;
     }
 //    if(g.getType() != ghost && g.getType() != pacMan){
 //        cout << "Error: Cannot moveLeft GamePiece objects other than PacMan or Ghost!" << g.getType() << endl;
 //    }
 }
 
-void Game::moveDown(GamePiece &g) {
+//======================================================================================================================
+
+bool Game::moveDown(GamePiece &g) {
     if (g.getType() == ghost && numLives >= 1) {
         if (gameBoard[(g.getXPos())][g.getYPos() + 1].getType() != wall) { //If piece to the left is not wall
             //Create copy of piece being moved
@@ -526,9 +562,16 @@ void Game::moveDown(GamePiece &g) {
                 //gCopy.setYPos(g.getYPos() - 1);
                 gameBoard[g.getXPos()][g.getYPos()] = rep;
                 //starting state must be empty, so save in temp and then add when leave.
-
             }
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+            return true;
         }
+        return false;
     }
     if (g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos()][(g.getYPos() + 1)].getType() != wall) {
@@ -559,21 +602,24 @@ void Game::moveDown(GamePiece &g) {
                 }
 
             }
-
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+            return true;
         }
-    }
-    for (int y = 0; y < gameBoard.size(); y++) {
-        for (int x = 0; x < gameBoard[0].size(); x++) {
-            gameBoard[x][y].setXPos(x);
-            gameBoard[x][y].setYPos(y);
-        }
+        return false;
     }
 //    if(g.getType() != ghost && g.getType() != pacMan){
 //        cout << "Error: Cannot moveDown GamePiece objects other than PacMan or Ghost!" << g.getType() << endl;
 //    }
 }
 
-void Game::moveRight(GamePiece &g) {
+//======================================================================================================================
+
+bool Game::moveRight(GamePiece &g) {
     if (g.getType() == ghost && numLives >= 1) {
         if (gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() != wall) { //If piece to the left is not wall
             //Create copy of piece being moved
@@ -600,7 +646,15 @@ void Game::moveRight(GamePiece &g) {
                 //starting state must be empty, so save in temp and then add when leave.
 
             }
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+            return true;
         }
+        return false;
     }
     if(g.getType() == pacMan && numLives >= 1) {
         if (gameBoard[g.getXPos() + 1][g.getYPos()].getType() != wall) {
@@ -629,7 +683,15 @@ void Game::moveRight(GamePiece &g) {
                     //starting state must be empty, so save in temp and then add when leave.
                 }
             }
+            for (int y = 0; y < gameBoard.size(); y++) {
+                for (int x = 0; x < gameBoard[0].size(); x++) {
+                    gameBoard[x][y].setXPos(x);
+                    gameBoard[x][y].setYPos(y);
+                }
+            }
+            return true;
         }
+        return false;
     }
     for (int y = 0; y < gameBoard.size(); y++) {
         for (int x = 0; x < gameBoard[0].size(); x++) {

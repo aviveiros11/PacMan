@@ -3,26 +3,25 @@
 
 using namespace std;
 
-int main() {
-
-    Game a("Austin", 0);
-
-    cout << a << endl;
-
-    a.moveUp(a.gameBoard[14][20]);
-    cout << a << endl;
-    a.moveDown(a.getGameBoard()[14][19]);
-    cout << a << endl;
-    a.moveRight(a.getGameBoard()[14][20]);
-    cout << a << endl;
-    a.moveLeft(a.getGameBoard()[15][20]);
-    cout << a << endl;
-
-    a.setHighScore(30);
-    a.saveHighScore(a.getHighScore(), a.getPlayer());
-    a.displayHighScore();
-
-    cout << "Lives: " << a.getLives() << endl;
-
-    return 0;
-}
+//int main() {
+//
+//    Game g("Austin", 0);
+//
+//    cout << g << endl;
+//
+////    for (int y = 0; y < g.gameBoard.size(); y++) {
+////        for (int x = 0; x < g.gameBoard[0].size(); x++) {
+////            if (g.gameBoard[x][y].getType() == pacMan) {
+////                while (g.moveLeft(g.gameBoard[x][y])) {
+////                    x--;
+////                }
+////            }
+////        }
+////    }
+//
+//
+////
+//    cout << g << endl;
+//
+//    return 0;
+//}

@@ -11,6 +11,8 @@
 #include <iostream>
 
 #include "GamePiece.h"
+#include "PacMan.h"
+#include "ghost.h"
 
 class Game {
 
@@ -20,6 +22,13 @@ private:
     std::string player;
 
 public:
+    //std::vector<GamePiece> pieces;
+
+//    PacMan pm;
+//    Ghost ghost1;
+//    Ghost ghost2;
+//    Ghost ghost3;
+//    Ghost ghost4;
 
     std::vector<std::vector<GamePiece>> gameBoard;
     /** Default Construct
@@ -78,7 +87,7 @@ public:
      * Modifies: nothing
      * Effects: the console output of highScores
      */
-    void displayHighScore();
+    static std::string displayHighScore();
 
     /**
      * Overloaded Operator (binary)
@@ -88,10 +97,10 @@ public:
      * Effects: Returns a text-based visualization of the gameBoard vector.
     */
 
-    void moveUp(GamePiece &g);
-    void moveLeft(GamePiece &g);
-    void moveDown(GamePiece &g);
-    void moveRight(GamePiece &g);
+    bool moveUp(GamePiece &g);
+    bool moveLeft(GamePiece &g);
+    bool moveDown(GamePiece &g);
+    bool moveRight(GamePiece &g);
 
     /**
      * Overloaded Operator (binary)
