@@ -15,7 +15,7 @@ point::point(int xIn, int yIn) : x(xIn), y(yIn) { }
 /******************** Shape class ********************/
 
 Shape::Shape() : area(0), perimeter(0), center({0, 0}),
-                 fill({0, 0, 0}), border({0, 0, 0}) {
+                 fill({0, 0, 0}) {
     // color defaults to black
 }
 
@@ -212,19 +212,19 @@ void Tangle::draw() const {
     glVertex2i(center.x-(width/2.0), center.y+(length/2.0));
     glEnd();
 
-    glLineWidth((GLfloat)5.0);
-    // draw border
-    glColor3f(border.red, border.green, border.blue);
-    glBegin(GL_LINE_STRIP);
-    // top left
-    glVertex2i(center.x-(width/2.0), center.y-(length/2.0));
-    // top right
-    glVertex2i(center.x+(width/2.0), center.y-(length/2.0));
-    // bottom right
-    glVertex2i(center.x+(width/2.0), center.y+(length/2.0));
-    // bottom left
-    glVertex2i(center.x-(width/2.0), center.y+(length/2.0));
-    // top left
-    glVertex2i(center.x-(width/2.0), center.y-(length/2.0));
-    glEnd();
+//    glLineWidth((GLfloat)5.0);
+//    // draw border
+//    glColor3f(border.red, border.green, border.blue);
+//    glBegin(GL_LINE_STRIP);
+//    // top left
+//    glVertex2i(center.x-(width/2.0), center.y-(length/2.0));
+//    // top right
+//    glVertex2i(center.x+(width/2.0), center.y-(length/2.0));
+//    // bottom right
+//    glVertex2i(center.x+(width/2.0), center.y+(length/2.0));
+//    // bottom left
+//    glVertex2i(center.x-(width/2.0), center.y+(length/2.0));
+//    // top left
+//    glVertex2i(center.x-(width/2.0), center.y-(length/2.0));
+    //glEnd();
 }
