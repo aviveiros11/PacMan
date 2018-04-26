@@ -68,7 +68,6 @@ Tangle fifthQuadRec8;
 Tangle fifthQuadRec9;
 Tangle fifthQuadRec10;
 
-
 void init() {
     width = 560;
     height = 560;
@@ -379,6 +378,9 @@ void displayStart() {
 }
 
 void displayGame() {
+
+    Game g;
+
     //Draw Sides
     topWall.draw();
     leftWall.draw();
@@ -431,6 +433,20 @@ void displayGame() {
     fifthQuadRec8.draw();
     fifthQuadRec9.draw();
     fifthQuadRec10.draw();
+
+    string score = "Score: " + to_string(g.getHighScore());
+    glColor3f(1, 1, 1.0);
+    glRasterPos2i(210, 140);
+    for (char c : score) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+    string lives = "Lives: " + to_string(g.getLives());
+    glColor3f(1, 1, 1.0);
+    glRasterPos2i(300, 140);
+    for (char c : lives) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+
 
 }
 
@@ -570,8 +586,6 @@ void timer(int extra) {
 
 /* Main function: GLUT runs as a console application starting at main()  */
 int main(int argc, char** argv) {
-    Game g;
-    cout << g << endl;
 
     init();
 

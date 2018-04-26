@@ -261,7 +261,7 @@ Game::Game() {//: pm(), ghost1(12, 14), ghost2(15, 14), ghost3(11, 11), ghost4(1
 
     //==================================================================================================================
 
-    highscore = 100;
+    highscore = 0;
     gameBoard = gameBoard;
     numLives = 3;
     player = "Lisa-Dion";
