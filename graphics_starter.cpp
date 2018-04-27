@@ -563,8 +563,22 @@ void kbdS(int key, int x, int y) {
 }
 
 void cursor(int x, int y) {
-    if (screen == start) {
+    if (screen == start && y > 265 && y < 295 && x > 205 && x < 355) {
+        startBtn.setFillColor(255/255.0, 0, 0);
+    } else {
+        startBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    }
 
+    if (screen == start && y > 315 && y < 345 && x > 205 && x < 355) {
+        highScoBtn.setFillColor(255/255.0, 0, 0);
+    } else {
+        highScoBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    }
+
+    if (screen == highScore && y > 45 && y < 75 && x > 205 && x < 355) {
+        mainMenuBtn.setFillColor(255/255.0, 0, 0);
+    } else {
+        mainMenuBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
     }
 
     if (screen == game) {
