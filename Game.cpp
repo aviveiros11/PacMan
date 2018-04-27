@@ -351,15 +351,21 @@ void Game::saveHighScore(int highScore, string player) {
 
 string Game::displayHighScore() {
     ifstream highScores("HighScores.txt");
-    int score;
-    string player;
-    while (highScores >> player >> score) {
-        cout << player << " - " << score << endl;
+    bool addTwoNewLines = false;
+    string lineStr;
+    string fileStr;
+    while (highScores && highScores.peek() != EOF) {
+        getline(highScores, lineStr);
+        fileStr += '\n';
+        addTwoNewLines = !addTwoNewLines;
+        if (addTwoNewLines) {
+            fileStr += '\n';
+        }
+        fileStr += lineStr;
     }
     highScores.close();
-    return player;
+    return fileStr;
 }
-
 
 ostream& operator <<(ostream& outs, const Game &g) {
     for (int y = 0; y < g.gameBoard.size(); y++) {

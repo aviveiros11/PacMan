@@ -12,6 +12,7 @@ int wd;
 
 Tangle startBtn;
 Tangle highScoBtn;
+Tangle mainMenuBtn;
 
 //Side Walls
 Tangle topWall;
@@ -81,6 +82,10 @@ void init() {
     highScoBtn.setDimensions(30, 150);
     highScoBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
     highScoBtn.setCenter(280, 330);
+
+    mainMenuBtn.setDimensions(30, 150);
+    mainMenuBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    mainMenuBtn.setCenter(280, 60);
 
     //==============================================================================================================
 
@@ -456,12 +461,23 @@ void displayGameOver() {
 
 void displayHighScore() {
 
-    string test = "test";
+    mainMenuBtn.draw();
+    string mainMenuMsg = "Back to Menu";
+    glColor3f(0.0, 0.0, 0.0);
+    glRasterPos2i(225, 65);
+    for (char c : mainMenuMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
 
     glColor3f(1.0, 0.0, 0.0);
-    glRasterPos2i(233, 335);
+    int y = 90;
+    glRasterPos2i(233, y);
     for (char c : Game::displayHighScore()) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+        if (c == '\n') {
+            y += 25;
+            glRasterPos2i(233, y);
+        }
     }
 }
 
@@ -569,6 +585,10 @@ void mouse(int button, int state, int x, int y) {
 
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && screen == start && y > 315 && y < 345 && x > 205 && x < 355) {
         screen = highScore;
+    }
+
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && screen == highScore && y > 45 && y < 75 && x > 205 && x < 355) {
+        screen = start;
     }
 
     glutPostRedisplay();
