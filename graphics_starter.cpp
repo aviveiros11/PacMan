@@ -11,6 +11,11 @@ GLdouble width, height;
 int wd;
 Game g;
 Circle pacman(8);
+Circle blinky(8);
+Circle pinky(8);
+Circle inky(8);
+Circle clyde(8);
+
 
 Tangle startBtn;
 Tangle highScoBtn;
@@ -351,6 +356,19 @@ void init() {
 
     pacman.setCenter(280, 410);
     pacman.setFillColor(255,238,0);
+
+    blinky.setCenter(240,290);
+    blinky.setFillColor(1,0,0);
+
+    pinky.setCenter(300,290);
+    pinky.setFillColor(250/255.0,192/255.0,203/255.0);
+
+    inky.setCenter(220,230);
+    inky.setFillColor(0.5,1,1);
+
+    clyde.setCenter(320,230);
+    clyde.setFillColor(1,0.5,0);
+
 }
 /* Initialize OpenGL Graphics */
 void initGL() {
@@ -442,6 +460,10 @@ void displayGame() {
     fifthQuadRec10.draw();
 
     pacman.draw();
+    blinky.draw();
+    pinky.draw();
+    inky.draw();
+    clyde.draw();
 
     string score = "Score: " + to_string(g.getHighScore());
     glColor3f(1, 1, 1.0);
