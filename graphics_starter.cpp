@@ -72,7 +72,7 @@ Tangle fifthQuadRec9;
 Tangle fifthQuadRec10;
 
 void init() {
-    width = 560;
+    width = 540;
     height = 560;
 
     screen = start;
@@ -93,263 +93,263 @@ void init() {
 
     topWall.setDimensions(20, 560);
     topWall.setFillColor(0, 0, 1.0);
-    topWall.setCenter(280, 10);
+    topWall.setCenter(270, 10);
 
     //==================================================================================================================
 
     leftWall.setDimensions(560, 20);
     leftWall.setFillColor(0, 0, 1.0);
-    leftWall.setCenter(10, 280);
+    leftWall.setCenter(0, 280);
 
     //==================================================================================================================
 
     rightWall.setDimensions(560, 20);
     rightWall.setFillColor(0, 0, 1.0);
-    rightWall.setCenter(550, 280);
+    rightWall.setCenter(540, 280);
 
     //==================================================================================================================
 
     bottomWall.setDimensions(20, 560);
     bottomWall.setFillColor(0, 0, 1.0);
-    bottomWall.setCenter(280, 550);
+    bottomWall.setCenter(270, 550);
 
     //===START Q1===========================================================================================================
 
     firstQuadRec1.setDimensions(60, 80);
     firstQuadRec1.setFillColor(0, 0, 1.0);
-    firstQuadRec1.setCenter(80, 70);
+    firstQuadRec1.setCenter(70, 70);
 
     //==============================================================================================================
 
     firstQuadRec2.setDimensions(60, 100);
     firstQuadRec2.setFillColor(0, 0, 1.0);
-    firstQuadRec2.setCenter(190, 70);
+    firstQuadRec2.setCenter(180, 70);
 
     //==============================================================================================================
 
     firstQuadRec3.setDimensions(100, 40);
     firstQuadRec3.setFillColor(0, 0, 1.0);
-    firstQuadRec3.setCenter(280, 50);
+    firstQuadRec3.setCenter(270, 50);
 
     //=============================================================================================================
 
     firstQuadRec4.setDimensions(60, 100);
     firstQuadRec4.setFillColor(0, 0, 1.0);
-    firstQuadRec4.setCenter(370, 70);
+    firstQuadRec4.setCenter(360, 70);
 
     //==============================================================================================================
 
     firstQuadRec5.setDimensions(60, 80);
     firstQuadRec5.setFillColor(0, 0, 1.0);
-    firstQuadRec5.setCenter(480, 70);
+    firstQuadRec5.setCenter(470, 70);
 
     //=====START Q2==========================================================================================================
 
     secondQuadRec1.setDimensions(100, 80);
     secondQuadRec1.setFillColor(0, 0, 1.0);
-    secondQuadRec1.setCenter(80, 170);
+    secondQuadRec1.setCenter(70, 170);
 
     //================================================================================================================
 
     secondQuadRec2.setDimensions(100, 40);
     secondQuadRec2.setFillColor(0, 0, 1.0);
-    secondQuadRec2.setCenter(160, 170);
+    secondQuadRec2.setCenter(150, 170);
 
     //================================================================================================================
 
     secondQuadRec3.setDimensions(40, 100);
     secondQuadRec3.setFillColor(0, 0, 1.0);
-    secondQuadRec3.setCenter(190, 200);
+    secondQuadRec3.setCenter(180, 200);
 
     //================================================================================================================
 
     secondQuadRec4.setDimensions(40, 160);
     secondQuadRec4.setFillColor(0, 0, 1.0);
-    secondQuadRec4.setCenter(280, 140);
+    secondQuadRec4.setCenter(270, 140);
 
     //================================================================================================================
 
     secondQuadRec5.setDimensions(100, 40);                                                                            
     secondQuadRec5.setFillColor(0, 0, 1.0);
-    secondQuadRec5.setCenter(280, 170);
+    secondQuadRec5.setCenter(270, 170);
 
     //================================================================================================================
 
     secondQuadRec6.setDimensions(100, 40);
     secondQuadRec6.setFillColor(0, 0, 1.0);
-    secondQuadRec6.setCenter(400, 170);
+    secondQuadRec6.setCenter(390, 170);
 
     //================================================================================================================
 
     secondQuadRec7.setDimensions(40, 100);
     secondQuadRec7.setFillColor(0, 0, 1.0);
-    secondQuadRec7.setCenter(370, 200);
+    secondQuadRec7.setCenter(360, 200);
 
     //================================================================================================================
 
     secondQuadRec8.setDimensions(100, 80);
     secondQuadRec8.setFillColor(0, 0, 1.0);
-    secondQuadRec8.setCenter(480, 170);
+    secondQuadRec8.setCenter(470, 170);
 
     //========START Q3========================================================================================================
 
     thirdQuadRec1.setDimensions(80, 80);
     thirdQuadRec1.setFillColor(0, 0, 1.0);
-    thirdQuadRec1.setCenter(80, 280);
+    thirdQuadRec1.setCenter(70, 280);
 
     //================================================================================================================
 
     thirdQuadRec2.setDimensions(80, 40);
     thirdQuadRec2.setFillColor(0, 0, 1.0);
-    thirdQuadRec2.setCenter(160, 280);
+    thirdQuadRec2.setCenter(150, 280);
 
     //================================================================================================================
 
     thirdQuadRec3.setDimensions(80, 20);
     thirdQuadRec3.setFillColor(0, 0, 1.0);
-    thirdQuadRec3.setCenter(210, 280);
+    thirdQuadRec3.setCenter(200, 280);
 
     //================================================================================================================
 
     thirdQuadRec4.setDimensions(20, 160);
     thirdQuadRec4.setFillColor(0, 0, 1.0);
-    thirdQuadRec4.setCenter(280, 310);
+    thirdQuadRec4.setCenter(270, 310);
 
     //================================================================================================================
 
     thirdQuadRec5.setDimensions(20, 60);
     thirdQuadRec5.setFillColor(0, 0, 1.0);
-    thirdQuadRec5.setCenter(230, 250);
+    thirdQuadRec5.setCenter(220, 250);
 
     //================================================================================================================
 
     thirdQuadRec6.setDimensions(80, 20);
     thirdQuadRec6.setFillColor(0, 0, 1.0);                                                                            
-    thirdQuadRec6.setCenter(350, 280);
+    thirdQuadRec6.setCenter(340, 280);
 
     //================================================================================================================
 
     thirdQuadRec7.setDimensions(20, 60);
     thirdQuadRec7.setFillColor(0, 0, 1.0);
-    thirdQuadRec7.setCenter(330, 250);
+    thirdQuadRec7.setCenter(320, 250);
 
     //================================================================================================================
 
     thirdQuadRec8.setDimensions(80, 40);                                                                              
     thirdQuadRec8.setFillColor(0, 0, 1.0);
-    thirdQuadRec8.setCenter(400, 280);
+    thirdQuadRec8.setCenter(390, 280);
 
     //================================================================================================================
 
     thirdQuadRec9.setDimensions(80, 80);
     thirdQuadRec9.setFillColor(0, 0, 1.0);
-    thirdQuadRec9.setCenter(480, 280);
+    thirdQuadRec9.setCenter(470, 280);
 
     //========START Q4========================================================================================================
 
     fourthQuadRec1.setDimensions(60, 80);
     fourthQuadRec1.setFillColor(0, 0, 1.0);
-    fourthQuadRec1.setCenter(80, 370);
+    fourthQuadRec1.setCenter(70, 370);
 
     //================================================================================================================
 
     fourthQuadRec2.setDimensions(60, 40);
     fourthQuadRec2.setFillColor(0, 0, 1.0);
-    fourthQuadRec2.setCenter(160, 370);
+    fourthQuadRec2.setCenter(150, 370);
 
     //================================================================================================================
 
     fourthQuadRec3.setDimensions(60, 40);
     fourthQuadRec3.setFillColor(0, 0, 1.0);                                                                           
-    fourthQuadRec3.setCenter(220, 370);
+    fourthQuadRec3.setCenter(210, 370);
 
     //================================================================================================================
 
     fourthQuadRec4.setDimensions(60, 40);
     fourthQuadRec4.setFillColor(0, 0, 1.0);
-    fourthQuadRec4.setCenter(280, 370);
+    fourthQuadRec4.setCenter(270, 370);
 
     //================================================================================================================
 
     fourthQuadRec5.setDimensions(60, 40);
     fourthQuadRec5.setFillColor(0, 0, 1.0);
-    fourthQuadRec5.setCenter(340, 370);
+    fourthQuadRec5.setCenter(330, 370);
 
     //================================================================================================================
 
     fourthQuadRec6.setDimensions(60, 40);
     fourthQuadRec6.setFillColor(0, 0, 1.0);
-    fourthQuadRec6.setCenter(400, 370);
+    fourthQuadRec6.setCenter(390, 370);
 
     //================================================================================================================
 
     fourthQuadRec7.setDimensions(60, 80);
     fourthQuadRec7.setFillColor(0, 0, 1.0);                                                                           
-    fourthQuadRec7.setCenter(480, 370);
+    fourthQuadRec7.setCenter(470, 370);
 
     //======START Q5==========================================================================================================
 
     fifthQuadRec1.setDimensions(40, 40);
     fifthQuadRec1.setFillColor(0, 0, 1.0);
-    fifthQuadRec1.setCenter(40, 440);
+    fifthQuadRec1.setCenter(30, 440);
 
     //================================================================================================================
 
     fifthQuadRec2.setDimensions(40, 80);
     fifthQuadRec2.setFillColor(0, 0, 1.0);
-    fifthQuadRec2.setCenter(80, 500);
+    fifthQuadRec2.setCenter(70, 500);
 
     //================================================================================================================
 
     fifthQuadRec3.setDimensions(80, 40);
     fifthQuadRec3.setFillColor(0, 0, 1.0);
-    fifthQuadRec3.setCenter(100, 460);
+    fifthQuadRec3.setCenter(90, 460);
 
     //================================================================================================================
 
     fifthQuadRec4.setDimensions(40, 280);
     fifthQuadRec4.setFillColor(0, 0, 1.0);
-    fifthQuadRec4.setCenter(280, 440);
+    fifthQuadRec4.setCenter(270, 440);
 
     //================================================================================================================
 
     fifthQuadRec5.setDimensions(40, 100);
     fifthQuadRec5.setFillColor(0, 0, 1.0);
-    fifthQuadRec5.setCenter(190, 500);
+    fifthQuadRec5.setCenter(180, 500);
 
     //================================================================================================================
 
     fifthQuadRec6.setDimensions(80, 40);
     fifthQuadRec6.setFillColor(0, 0, 1.0);
-    fifthQuadRec6.setCenter(280, 520);
+    fifthQuadRec6.setCenter(270, 520);
 
     //================================================================================================================
 
     fifthQuadRec7.setDimensions(40, 100);
     fifthQuadRec7.setFillColor(0, 0, 1.0);
-    fifthQuadRec7.setCenter(370, 500);
+    fifthQuadRec7.setCenter(360, 500);
 
     //================================================================================================================
 
     fifthQuadRec8.setDimensions(40, 80);
     fifthQuadRec8.setFillColor(0, 0, 1.0);
-    fifthQuadRec8.setCenter(480, 500);
+    fifthQuadRec8.setCenter(470, 500);
 
     //================================================================================================================
 
     fifthQuadRec9.setDimensions(80, 40);
     fifthQuadRec9.setFillColor(0, 0, 1.0);
-    fifthQuadRec9.setCenter(460, 460);
+    fifthQuadRec9.setCenter(450, 460);
 
     //================================================================================================================
 
     fifthQuadRec10.setDimensions(40, 40);
     fifthQuadRec10.setFillColor(0, 0, 1.0);
-    fifthQuadRec10.setCenter(520, 440);
+    fifthQuadRec10.setCenter(510, 440);
 
     //================================================================================================================
 
-    pacman.setCenter(280, 400);
+    pacman.setCenter(280, 410);
     pacman.setFillColor(255,238,0);
 }
 /* Initialize OpenGL Graphics */
