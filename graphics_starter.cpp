@@ -9,6 +9,8 @@ enum mode {start, game, gameOver, highScore};
 mode screen;
 GLdouble width, height;
 int wd;
+Game g;
+Circle pacman(8);
 
 Tangle startBtn;
 Tangle highScoBtn;
@@ -347,6 +349,8 @@ void init() {
 
     //================================================================================================================
 
+    pacman.setCenter(280, 400);
+    pacman.setFillColor(255,238,0);
 }
 /* Initialize OpenGL Graphics */
 void initGL() {
@@ -383,8 +387,6 @@ void displayStart() {
 }
 
 void displayGame() {
-
-    Game g;
 
     //Draw Sides
     topWall.draw();
@@ -438,6 +440,8 @@ void displayGame() {
     fifthQuadRec8.draw();
     fifthQuadRec9.draw();
     fifthQuadRec10.draw();
+
+    pacman.draw();
 
     string score = "Score: " + to_string(g.getHighScore());
     glColor3f(1, 1, 1.0);
@@ -540,19 +544,41 @@ void kbd(unsigned char key, int x, int y)
 }
 
 void kbdS(int key, int x, int y) {
+    x = pacman.getCenter().x;
+    y = pacman.getCenter().y;
     if (screen == game) {
         switch (key) {
             case GLUT_KEY_DOWN:
-                //myRectangle.move(0, 10);
+                x = x/20;
+                y = y/20;
+                if(g.gameBoard[x][y].getType() == pacMan && g.moveDown(g.gameBoard[x][y])){
+                    g.moveDown(g.gameBoard[x][y]);
+                    pacman.move(0,20);
+                }
                 break;
             case GLUT_KEY_LEFT:
-                //myRectangle.move(-10, 0);
+                x = x/20;
+                y = y/20;
+                if(g.moveLeft(g.gameBoard[x][y])){
+                    g.moveLeft(g.gameBoard[x][y]);
+                    pacman.move(-20,0);
+                }
                 break;
             case GLUT_KEY_RIGHT:
-                //myRectangle.move(10, 0);
+                x = x/20;
+                y = y/20;
+                if(g.gameBoard[x][y].getType() == pacMan && g.moveRight(g.gameBoard[x][y])){
+                    g.moveRight(g.gameBoard[x][y]);
+                    pacman.move(20,0);
+                }
                 break;
             case GLUT_KEY_UP:
-                //myRectangle.move(0, -10);
+                x = x/20;
+                y = y/20;
+                if(g.gameBoard[x][y].getType() == pacMan && g.moveUp(g.gameBoard[x][y])){
+                    g.moveUp(g.gameBoard[x][y]);
+                    pacman.move(0,-20);
+                }
                 break;
         }
     }
@@ -620,7 +646,6 @@ void timer(int extra) {
 
 /* Main function: GLUT runs as a console application starting at main()  */
 int main(int argc, char** argv) {
-
     init();
 
     glutInit(&argc, argv);          // Initialize GLUT

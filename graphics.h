@@ -10,6 +10,8 @@
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>
+#include "Game.h"
+
 #else
 #include <GL/glut.h>
 #endif

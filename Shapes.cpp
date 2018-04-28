@@ -157,7 +157,6 @@ void Circle::draw() const {
     glBegin(GL_TRIANGLE_FAN);
     glColor3f(fill.red, fill.green, fill.blue);
     glVertex2i(center.x, center.y);
-    glColor3f(border.red, border.green, border.blue);
     for (double i = 0; i < 2.0*PI+0.05; i += 2.0*PI/360.0) {
         glVertex2i(center.x + radius * cos(i),
                    center.y + radius * sin(i));
