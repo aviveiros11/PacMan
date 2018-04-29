@@ -11,7 +11,7 @@ enum mode {start, game, gameOver, highScore};
 
 int pDir = 0;
 
-int gDir = 0;
+int inkyDir = 0;
 
 int randDir;
 
@@ -583,19 +583,29 @@ void kbd(unsigned char key, int x, int y)
 void kbdS(int key, int x, int y) {
     x = pacman.getCenter().x;
     y = pacman.getCenter().y;
+    x = x/20;
+    y = y/20;
     if (screen == game) {
         switch (key) {
             case GLUT_KEY_DOWN:
+//                if (g.moveDown(g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y) / 20])) {
                 pDir = 3;
+//                }
                 break;
             case GLUT_KEY_LEFT:
+//                if (g.moveLeft(g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y) / 20])) {
                 pDir = 0;
+//                }
                 break;
             case GLUT_KEY_RIGHT:
+//                if (g.moveRight(g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y) / 20])) {
                 pDir = 1;
+//                }
                 break;
             case GLUT_KEY_UP:
+//                if (g.moveUp(g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y) / 20])) {
                 pDir = 2;
+//                }
                 break;
         }
     }
@@ -655,6 +665,26 @@ void timer(int extra) {
 
 
     if (screen == game) {
+        if (runFromStart) {
+//            string ready = "Ready";
+//            string set = "Set";
+//            string go = "GO!";
+//            glColor3f(1, 0, 0);
+//            glRasterPos2i(210, 200);
+//            for (char c : ready) {
+//                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+//            }
+            sleep(1);
+//            for (char c : set) {
+//                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+//            }
+            sleep(1);
+//            for (char c : go) {
+//                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+//            }
+            //sleep(1);
+            runFromStart = false;
+        }
         if (g.resetCalled == true) {
             g.resetCalled = false;
             pacman.setCenter(280, 410);
@@ -711,7 +741,7 @@ void timer(int extra) {
         //==============================================================================================================
 
         //Left
-        if (gDir == 0) {
+        if (inkyDir == 0) {
             if (g.gameBoard[gX][gY].getType() == ghost && g.moveLeft(g.gameBoard[gX][gY])){
                 g.moveLeft(g.gameBoard[gX][gY]);
                 inky.move(-20,0);
@@ -723,8 +753,8 @@ void timer(int extra) {
                 }
             }
         }
-        //Right
-        else if (gDir == 1) {
+            //Right
+        else if (inkyDir == 1) {
             if (g.gameBoard[gX][gY].getType() == ghost && g.moveRight(g.gameBoard[gX][gY])){
                 g.moveRight(g.gameBoard[gX][gY]);
                 inky.move(20,0);
@@ -736,8 +766,8 @@ void timer(int extra) {
                 }
             }
         }
-        //Down
-        else if (gDir == 3) {
+            //Down
+        else if (inkyDir == 3) {
             if (g.gameBoard[gX][gY].getType() == ghost && g.moveDown(g.gameBoard[gX][gY])){
                 g.moveDown(g.gameBoard[gX][gY]);
                 inky.move(0,20);
@@ -749,8 +779,8 @@ void timer(int extra) {
                 }
             }
         }
-        //Up
-        else if (gDir == 2) {
+            //Up
+        else if (inkyDir == 2) {
             if (g.gameBoard[gX][gY].getType() == ghost && g.moveUp(g.gameBoard[gX][gY])){
                 g.moveUp(g.gameBoard[gX][gY]);
                 inky.move(0,-20);
@@ -762,8 +792,8 @@ void timer(int extra) {
                 }
             }
         }
-        gDir = randDir;
-        cout << gDir << endl;
+        inkyDir = randDir;
+        cout << inkyDir << endl;
     }
 
     glutPostRedisplay();
