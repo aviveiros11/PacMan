@@ -1,10 +1,21 @@
 #include "graphics.h"
 #include "shapes.h"
 #include <string>
+#include <random>
 #include "Game.h"
+#include <unistd.h>
 using namespace std;
 
 enum mode {start, game, gameOver, highScore};
+//enum Direction {left, right, up, down};
+
+int pDir = 0;
+
+int gDir = 0;
+
+int randDir;
+
+bool runFromStart = true;
 
 mode screen;
 GLdouble width, height;
@@ -173,7 +184,7 @@ void init() {
 
     //================================================================================================================
 
-    secondQuadRec5.setDimensions(100, 40);                                                                            
+    secondQuadRec5.setDimensions(100, 40);
     secondQuadRec5.setFillColor(0, 0, 1.0);
     secondQuadRec5.setCenter(270, 170);
 
@@ -228,7 +239,7 @@ void init() {
     //================================================================================================================
 
     thirdQuadRec6.setDimensions(80, 20);
-    thirdQuadRec6.setFillColor(0, 0, 1.0);                                                                            
+    thirdQuadRec6.setFillColor(0, 0, 1.0);
     thirdQuadRec6.setCenter(340, 280);
 
     //================================================================================================================
@@ -239,7 +250,7 @@ void init() {
 
     //================================================================================================================
 
-    thirdQuadRec8.setDimensions(80, 40);                                                                              
+    thirdQuadRec8.setDimensions(80, 40);
     thirdQuadRec8.setFillColor(0, 0, 1.0);
     thirdQuadRec8.setCenter(390, 280);
 
@@ -264,7 +275,7 @@ void init() {
     //================================================================================================================
 
     fourthQuadRec3.setDimensions(60, 40);
-    fourthQuadRec3.setFillColor(0, 0, 1.0);                                                                           
+    fourthQuadRec3.setFillColor(0, 0, 1.0);
     fourthQuadRec3.setCenter(210, 370);
 
     //================================================================================================================
@@ -288,7 +299,7 @@ void init() {
     //================================================================================================================
 
     fourthQuadRec7.setDimensions(60, 80);
-    fourthQuadRec7.setFillColor(0, 0, 1.0);                                                                           
+    fourthQuadRec7.setFillColor(0, 0, 1.0);
     fourthQuadRec7.setCenter(470, 370);
 
     //======START Q5==========================================================================================================
@@ -407,9 +418,7 @@ void displayGame() {
     for(int y = 0; y < g.gameBoard.size(); y++){
         for (int x = 0; x < g.gameBoard[0].size(); x++){
             if (g.gameBoard[x][y].getType() == pellet) {
-//                if (g.gameBoard[x][y].pelletStatus == true) {
-                    g.gameBoard[x][y].drawPellet((20 * x), 10 + (20 * y), 4);
-//                }
+                g.gameBoard[x][y].drawPellet((20 * x), 10 + (20 * y), 3);
             }
         }
     }
@@ -577,36 +586,16 @@ void kbdS(int key, int x, int y) {
     if (screen == game) {
         switch (key) {
             case GLUT_KEY_DOWN:
-                x = x/20;
-                y = y/20;
-                if(g.gameBoard[x][y].getType() == pacMan && g.moveDown(g.gameBoard[x][y])){
-                    g.moveDown(g.gameBoard[x][y]);
-                    pacman.move(0,20);
-                }
+                pDir = 3;
                 break;
             case GLUT_KEY_LEFT:
-                x = x/20;
-                y = y/20;
-                if(g.gameBoard[x][y].getType() == pacMan && g.moveLeft(g.gameBoard[x][y])){
-                    g.moveLeft(g.gameBoard[x][y]);
-                    pacman.move(-20,0);
-                }
+                pDir = 0;
                 break;
             case GLUT_KEY_RIGHT:
-                x = x/20;
-                y = y/20;
-                if(g.gameBoard[x][y].getType() == pacMan && g.moveRight(g.gameBoard[x][y])){
-                    g.moveRight(g.gameBoard[x][y]);
-                    pacman.move(20,0);
-                }
+                pDir = 1;
                 break;
             case GLUT_KEY_UP:
-                x = x/20;
-                y = y/20;
-                if(g.gameBoard[x][y].getType() == pacMan && g.moveUp(g.gameBoard[x][y])){
-                    g.moveUp(g.gameBoard[x][y]);
-                    pacman.move(0,-20);
-                }
+                pDir = 2;
                 break;
         }
     }
@@ -664,12 +653,121 @@ void mouse(int button, int state, int x, int y) {
 
 void timer(int extra) {
 
-    if (screen == start) {
 
+    if (screen == game) {
+        if (g.resetCalled == true) {
+            g.resetCalled = false;
+            pacman.setCenter(280, 410);
+            blinky.setCenter(240,290);
+            pinky.setCenter(300,290);
+            inky.setCenter(220,230);
+            clyde.setCenter(320,230);
+            runFromStart = true;
+        }
+
+
+        //pac coords
+        int x, y;
+        x = pacman.getCenter().x;
+        y = pacman.getCenter().y;
+        x = x/20;
+        y = y/20;
+
+        //ghost coords
+        int gX, gY;
+        gX = inky.getCenter().x;
+        gY = inky.getCenter().y;
+        gX = gX/20;
+        gY = gY/20;
+        //Left
+        if (pDir == 0) {
+            if (g.gameBoard[x][y].getType() == pacMan && g.moveLeft(g.gameBoard[x][y])){
+                g.moveLeft(g.gameBoard[x][y]);
+                pacman.move(-20,0);
+            }
+        }
+        //Right
+        if (pDir == 1) {
+            if (g.gameBoard[x][y].getType() == pacMan && g.moveRight(g.gameBoard[x][y])){
+                g.moveRight(g.gameBoard[x][y]);
+                pacman.move(20,0);
+            }
+        }
+        //Up
+        if (pDir == 2) {
+            if (g.gameBoard[x][y].getType() == pacMan && g.moveUp(g.gameBoard[x][y])){
+                g.moveUp(g.gameBoard[x][y]);
+                pacman.move(0,-20);
+            }
+        }
+        //Down
+        if (pDir == 3) {
+            if (g.gameBoard[x][y].getType() == pacMan && g.moveDown(g.gameBoard[x][y])){
+                g.moveDown(g.gameBoard[x][y]);
+                pacman.move(0,20);
+            }
+        }
+
+        //==============================================================================================================
+
+        //Left
+        if (gDir == 0) {
+            if (g.gameBoard[gX][gY].getType() == ghost && g.moveLeft(g.gameBoard[gX][gY])){
+                g.moveLeft(g.gameBoard[gX][gY]);
+                inky.move(-20,0);
+            } else if (!g.moveLeft(g.gameBoard[gX][gY])) {
+                randDir = rand() % 4;
+                while (randDir == 1) {
+                    cout << "test1" << endl;
+                    randDir = rand() % 4;
+                }
+            }
+        }
+        //Right
+        else if (gDir == 1) {
+            if (g.gameBoard[gX][gY].getType() == ghost && g.moveRight(g.gameBoard[gX][gY])){
+                g.moveRight(g.gameBoard[gX][gY]);
+                inky.move(20,0);
+            } else if (!g.moveRight(g.gameBoard[gX][gY])) {
+                randDir = rand() % 4;
+                while (randDir == 0) {
+                    cout << "test2" << endl;
+                    randDir = rand() % 4;
+                }
+            }
+        }
+        //Down
+        else if (gDir == 3) {
+            if (g.gameBoard[gX][gY].getType() == ghost && g.moveDown(g.gameBoard[gX][gY])){
+                g.moveDown(g.gameBoard[gX][gY]);
+                inky.move(0,20);
+            } else if (!g.moveDown(g.gameBoard[gX][gY])) {
+                randDir = rand() % 4;
+                while (randDir == 2) {
+                    cout << "test3" << endl;
+                    randDir = rand() % 4;
+                }
+            }
+        }
+        //Up
+        else if (gDir == 2) {
+            if (g.gameBoard[gX][gY].getType() == ghost && g.moveUp(g.gameBoard[gX][gY])){
+                g.moveUp(g.gameBoard[gX][gY]);
+                inky.move(0,-20);
+            } else if (!g.moveUp(g.gameBoard[gX][gY])) {
+                randDir = rand() % 4;
+                while (randDir == 3) {
+                    cout << "test4" << endl;
+                    randDir = rand() % 4;
+                }
+            }
+        }
+        gDir = randDir;
+        cout << gDir << endl;
     }
 
     glutPostRedisplay();
-    glutTimerFunc(30, timer, 0);
+    glutTimerFunc(200, timer, 0);
 }
 
 /* Main function: GLUT runs as a console application starting at main()  */

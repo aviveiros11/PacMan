@@ -313,6 +313,7 @@ void Game::setGameBoard(vector<vector<GamePiece>> &g){
 }
 
 void Game::resetGameBoard() {
+    resetCalled = true;
     for(int y = 0; y < gameBoard.size(); y++){
         for (int x = 0; x < gameBoard[0].size(); x++){
             if (gameBoard[x][y].getType() == pacMan) {
@@ -335,6 +336,7 @@ void Game::resetGameBoard() {
                 //delete the object being stored there, set the type to empty and store that as a temp object.
                 //g.gameBoard[xPos][(yPos + 1)]= nullptr;
                 gameBoard[gCopy.getStartXPos()][gCopy.getStartYPos()] = gCopy;
+                gameBoard[gCopy.getStartXPos()][gCopy.getStartYPos()].currentStatus = noPellet;
             }
         }
     }
@@ -388,15 +390,15 @@ bool Game::moveUp(GamePiece &g) {
                 --numLives;
                 resetGameBoard();
             } else {
-                if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() == pellet) {
-                    g.currentStatus = yesPellet;
-                } else {
-                    g.currentStatus = noPellet;
-                }
                 Path rep;
                 if (g.currentStatus == noPellet) {
                     rep.setType(empty);
                     rep.setPelletStatus(false);
+                }
+                if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() == pellet) {
+                    g.currentStatus = yesPellet;
+                } else {
+                    g.currentStatus = noPellet;
                 }
 //                GamePiece gCopy = gameBoard[g.getXPos()][g.getYPos()];
                 GamePiece gCopy = g;
@@ -470,15 +472,15 @@ bool Game::moveLeft(GamePiece &g) {
                 --numLives;
                 resetGameBoard();
             } else {
-                if (gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() == pellet) {
-                    g.currentStatus = yesPellet;
-                } else {
-                    g.currentStatus = noPellet;
-                }
                 Path rep;
                 if (g.currentStatus == noPellet) {
                     rep.setType(empty);
                     rep.setPelletStatus(false);
+                }
+                if (gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() == pellet) {
+                    g.currentStatus = yesPellet;
+                } else {
+                    g.currentStatus = noPellet;
                 }
 //                GamePiece gCopy = gameBoard[g.getXPos()][g.getYPos()];
                 GamePiece gCopy = g;
@@ -552,15 +554,15 @@ bool Game::moveDown(GamePiece &g) {
                 --numLives;
                 resetGameBoard();
             } else {
-                if (gameBoard[(g.getXPos())][g.getYPos() + 1].getType() == pellet) {
-                    g.currentStatus = yesPellet;
-                } else {
-                    g.currentStatus = noPellet;
-                }
                 Path rep;
                 if (g.currentStatus == noPellet) {
                     rep.setType(empty);
                     rep.setPelletStatus(false);
+                }
+                if (gameBoard[(g.getXPos())][g.getYPos() + 1].getType() == pellet) {
+                    g.currentStatus = yesPellet;
+                } else {
+                    g.currentStatus = noPellet;
                 }
 //                GamePiece gCopy = gameBoard[g.getXPos()][g.getYPos()];
                 GamePiece gCopy = g;
@@ -634,15 +636,15 @@ bool Game::moveRight(GamePiece &g) {
                 --numLives;
                 resetGameBoard();
             } else {
-                if (gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() == pellet) {
-                    g.currentStatus = yesPellet;
-                } else {
-                    g.currentStatus = noPellet;
-                }
                 Path rep;
                 if (g.currentStatus == noPellet) {
                     rep.setType(empty);
                     rep.setPelletStatus(false);
+                }
+                if (gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() == pellet) {
+                    g.currentStatus = yesPellet;
+                } else {
+                    g.currentStatus = noPellet;
                 }
 //                GamePiece gCopy = gameBoard[g.getXPos()][g.getYPos()];
                 GamePiece gCopy = g;

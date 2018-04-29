@@ -22,6 +22,7 @@ private:
     std::string player;
 
 public:
+    bool resetCalled = false;
     //std::vector<GamePiece> pieces;
 
 //    PacMan pm;
