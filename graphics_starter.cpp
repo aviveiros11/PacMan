@@ -736,291 +736,279 @@ void timer(int extra) {
 
         //=============================================== INKY ===============================================================
 
-        //Inky coords
-        int inkyX, inkyY;
-        inkyX = inky.getCenter().x;
-        inkyY = inky.getCenter().y;
-        inkyX = inkyX / 20;
-        inkyY = inkyY / 20;
+        if (!g.resetCalled) {
+            //Inky coords
+            int inkyX, inkyY;
+            inkyX = inky.getCenter().x;
+            inkyY = inky.getCenter().y;
+            inkyX = inkyX / 20;
+            inkyY = inkyY / 20;
 
-        //Left
-        if (inkyDir == 0) {
-            int randDir;
-            if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveLeft(g.gameBoard[inkyX][inkyY])) {
-                g.moveLeft(g.gameBoard[inkyX][inkyY]);
-                inky.move(-20, 0);
-            } else if (!g.moveLeft(g.gameBoard[inkyX][inkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 1) {
-                    cout << "test1" << endl;
+            //Left
+            if (inkyDir == 0) {
+                int randDir;
+                if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveLeft(g.gameBoard[inkyX][inkyY])) {
+                    g.moveLeft(g.gameBoard[inkyX][inkyY]);
+                    inky.move(-20, 0);
+                } else if (!g.moveLeft(g.gameBoard[inkyX][inkyY])) {
                     randDir = rand() % 4;
+                    while (randDir == 1) {
+                        randDir = rand() % 4;
+                    }
+                    inkyDir = randDir;
                 }
-                inkyDir = randDir;
             }
-        }
-            //Right
-        else if (inkyDir == 1) {
-            int randDir;
-            if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveRight(g.gameBoard[inkyX][inkyY])) {
-                g.moveRight(g.gameBoard[inkyX][inkyY]);
-                inky.move(20, 0);
-            } else if (!g.moveRight(g.gameBoard[inkyX][inkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 0) {
-                    cout << "test2" << endl;
+                //Right
+            else if (inkyDir == 1) {
+                int randDir;
+                if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveRight(g.gameBoard[inkyX][inkyY])) {
+                    g.moveRight(g.gameBoard[inkyX][inkyY]);
+                    inky.move(20, 0);
+                } else if (!g.moveRight(g.gameBoard[inkyX][inkyY])) {
                     randDir = rand() % 4;
+                    while (randDir == 0) {
+                        randDir = rand() % 4;
+                    }
+                    inkyDir = randDir;
                 }
-                inkyDir = randDir;
-            }
 
-        }
-            //Down
-        else if (inkyDir == 3) {
-            int randDir;
-            if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveDown(g.gameBoard[inkyX][inkyY])) {
-                g.moveDown(g.gameBoard[inkyX][inkyY]);
-                inky.move(0, 20);
-            } else if (!g.moveDown(g.gameBoard[inkyX][inkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 2) {
-                    cout << "test3" << endl;
+            }
+                //Down
+            else if (inkyDir == 3) {
+                int randDir;
+                if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveDown(g.gameBoard[inkyX][inkyY])) {
+                    g.moveDown(g.gameBoard[inkyX][inkyY]);
+                    inky.move(0, 20);
+                } else if (!g.moveDown(g.gameBoard[inkyX][inkyY])) {
                     randDir = rand() % 4;
+                    while (randDir == 2) {
+                        randDir = rand() % 4;
+                    }
+                    inkyDir = randDir;
                 }
-                inkyDir = randDir;
+            }
+                //Up
+            else if (inkyDir == 2) {
+                int randDir;
+                if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveUp(g.gameBoard[inkyX][inkyY])) {
+                    g.moveUp(g.gameBoard[inkyX][inkyY]);
+                    inky.move(0, -20);
+                } else if (!g.moveUp(g.gameBoard[inkyX][inkyY])) {
+                    randDir = rand() % 4;
+                    while (randDir == 3) {
+                        randDir = rand() % 4;
+                    }
+                    inkyDir = randDir;
+                }
             }
         }
-            //Up
-        else if (inkyDir == 2) {
-            int randDir;
-            if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveUp(g.gameBoard[inkyX][inkyY])) {
-                g.moveUp(g.gameBoard[inkyX][inkyY]);
-                inky.move(0, -20);
-            } else if (!g.moveUp(g.gameBoard[inkyX][inkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 3) {
-                    cout << "test4" << endl;
-                    randDir = rand() % 4;
-                }
-                inkyDir = randDir;
-            }
-        }
-        cout << inkyDir << endl;
 
         //=============================================== CLYDE (Orange) =======================================================
 
-        //Clyde coords (Orange)
-        int clydeX, clydeY;
-        clydeX = clyde.getCenter().x;
-        clydeY = clyde.getCenter().y;
-        clydeX = clydeX / 20;
-        clydeY = clydeY / 20;
+        if (!g.resetCalled) {
+            //Clyde coords (Orange)
+            int clydeX, clydeY;
+            clydeX = clyde.getCenter().x;
+            clydeY = clyde.getCenter().y;
+            clydeX = clydeX / 20;
+            clydeY = clydeY / 20;
 
-        //Left
-        if (clydeDir == 0) {
-            int randDir;
-            if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveLeft(g.gameBoard[clydeX][clydeY])) {
-                g.moveLeft(g.gameBoard[clydeX][clydeY]);
-                clyde.move(-20, 0);
-            } else if (!g.moveLeft(g.gameBoard[clydeX][clydeY])) {
-                randDir = rand() % 4;
-                while (randDir == 1) {
-                    cout << "test1" << endl;
+            //Left
+            if (clydeDir == 0) {
+                int randDir;
+                if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveLeft(g.gameBoard[clydeX][clydeY])) {
+                    g.moveLeft(g.gameBoard[clydeX][clydeY]);
+                    clyde.move(-20, 0);
+                } else if (!g.moveLeft(g.gameBoard[clydeX][clydeY])) {
                     randDir = rand() % 4;
+                    while (randDir == 1) {
+                        randDir = rand() % 4;
+                    }
+                    clydeDir = randDir;
                 }
-                clydeDir = randDir;
-            }
 
-        }
-            //Right
-        else if (clydeDir == 1) {
-            int randDir;
-            if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveRight(g.gameBoard[clydeX][clydeY])) {
-                g.moveRight(g.gameBoard[clydeX][clydeY]);
-                clyde.move(20, 0);
-            } else if (!g.moveRight(g.gameBoard[clydeX][clydeY])) {
-                randDir = rand() % 4;
-                while (randDir == 0) {
-                    cout << "test2" << endl;
+            }
+                //Right
+            else if (clydeDir == 1) {
+                int randDir;
+                if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveRight(g.gameBoard[clydeX][clydeY])) {
+                    g.moveRight(g.gameBoard[clydeX][clydeY]);
+                    clyde.move(20, 0);
+                } else if (!g.moveRight(g.gameBoard[clydeX][clydeY])) {
                     randDir = rand() % 4;
+                    while (randDir == 0) {
+                        randDir = rand() % 4;
+                    }
+                    clydeDir = randDir;
                 }
-                clydeDir = randDir;
+            }
+                //Down
+            else if (clydeDir == 3) {
+                int randDir;
+                if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveDown(g.gameBoard[clydeX][clydeY])) {
+                    g.moveDown(g.gameBoard[clydeX][clydeY]);
+                    clyde.move(0, 20);
+                } else if (!g.moveDown(g.gameBoard[clydeX][clydeY])) {
+                    randDir = rand() % 4;
+                    while (randDir == 2) {
+                        randDir = rand() % 4;
+                    }
+                    clydeDir = randDir;
+                }
+            }
+                //Up
+            else if (clydeDir == 2) {
+                int randDir;
+                if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveUp(g.gameBoard[clydeX][clydeY])) {
+                    g.moveUp(g.gameBoard[clydeX][clydeY]);
+                    clyde.move(0, -20);
+                } else if (!g.moveUp(g.gameBoard[clydeX][clydeY])) {
+                    randDir = rand() % 4;
+                    while (randDir == 3) {
+                        randDir = rand() % 4;
+                    }
+                    clydeDir = randDir;
+                }
             }
         }
-            //Down
-        else if (clydeDir == 3) {
-            int randDir;
-            if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveDown(g.gameBoard[clydeX][clydeY])) {
-                g.moveDown(g.gameBoard[clydeX][clydeY]);
-                clyde.move(0, 20);
-            } else if (!g.moveDown(g.gameBoard[clydeX][clydeY])) {
-                randDir = rand() % 4;
-                while (randDir == 2) {
-                    cout << "test3" << endl;
-                    randDir = rand() % 4;
-                }
-                clydeDir = randDir;
-            }
-        }
-            //Up
-        else if (clydeDir == 2) {
-            int randDir;
-            if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveUp(g.gameBoard[clydeX][clydeY])) {
-                g.moveUp(g.gameBoard[clydeX][clydeY]);
-                clyde.move(0, -20);
-            } else if (!g.moveUp(g.gameBoard[clydeX][clydeY])) {
-                randDir = rand() % 4;
-                while (randDir == 3) {
-                    cout << "test4" << endl;
-                    randDir = rand() % 4;
-                }
-                clydeDir = randDir;
-            }
-        }
-        cout << clydeDir << endl;
 
         //=============================================== BLINKY (Red) =======================================================
 
-        //Blinky coords (Orange)
-        int blinkyX, blinkyY;
-        blinkyX = blinky.getCenter().x;
-        blinkyY = blinky.getCenter().y;
-        blinkyX = blinkyX / 20;
-        blinkyY = blinkyY / 20;
+        if (!g.resetCalled) {
+            //Blinky coords (Orange)
+            int blinkyX, blinkyY;
+            blinkyX = blinky.getCenter().x;
+            blinkyY = blinky.getCenter().y;
+            blinkyX = blinkyX / 20;
+            blinkyY = blinkyY / 20;
 
-        //Left
-        if (blinkyDir == 0) {
-            int randDir;
-            if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveLeft(g.gameBoard[blinkyX][blinkyY])) {
-                g.moveLeft(g.gameBoard[blinkyX][blinkyY]);
-                blinky.move(-20, 0);
-            } else if (!g.moveLeft(g.gameBoard[blinkyX][blinkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 1) {
-                    cout << "test1" << endl;
+            //Left
+            if (blinkyDir == 0) {
+                int randDir;
+                if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveLeft(g.gameBoard[blinkyX][blinkyY])) {
+                    g.moveLeft(g.gameBoard[blinkyX][blinkyY]);
+                    blinky.move(-20, 0);
+                } else if (!g.moveLeft(g.gameBoard[blinkyX][blinkyY])) {
                     randDir = rand() % 4;
+                    while (randDir == 1) {
+                        randDir = rand() % 4;
+                    }
+                    blinkyDir = randDir;
                 }
-                blinkyDir = randDir;
-            }
 
-        }
-            //Right
-        else if (blinkyDir == 1) {
-            int randDir;
-            if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveRight(g.gameBoard[blinkyX][blinkyY])) {
-                g.moveRight(g.gameBoard[blinkyX][blinkyY]);
-                blinky.move(20, 0);
-            } else if (!g.moveRight(g.gameBoard[blinkyX][blinkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 0) {
-                    cout << "test2" << endl;
+            }
+                //Right
+            else if (blinkyDir == 1) {
+                int randDir;
+                if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveRight(g.gameBoard[blinkyX][blinkyY])) {
+                    g.moveRight(g.gameBoard[blinkyX][blinkyY]);
+                    blinky.move(20, 0);
+                } else if (!g.moveRight(g.gameBoard[blinkyX][blinkyY])) {
                     randDir = rand() % 4;
+                    while (randDir == 0) {
+                        randDir = rand() % 4;
+                    }
+                    blinkyDir = randDir;
                 }
-                blinkyDir = randDir;
+            }
+                //Down
+            else if (blinkyDir == 3) {
+                int randDir;
+                if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveDown(g.gameBoard[blinkyX][blinkyY])) {
+                    g.moveDown(g.gameBoard[blinkyX][blinkyY]);
+                    blinky.move(0, 20);
+                } else if (!g.moveDown(g.gameBoard[blinkyX][blinkyY])) {
+                    randDir = rand() % 4;
+                    while (randDir == 2) {
+                        randDir = rand() % 4;
+                    }
+                    blinkyDir = randDir;
+                }
+            }
+                //Up
+            else if (blinkyDir == 2) {
+                int randDir;
+                if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveUp(g.gameBoard[blinkyX][blinkyY])) {
+                    g.moveUp(g.gameBoard[blinkyX][blinkyY]);
+                    blinky.move(0, -20);
+                } else if (!g.moveUp(g.gameBoard[blinkyX][blinkyY])) {
+                    randDir = rand() % 4;
+                    while (randDir == 3) {
+                        randDir = rand() % 4;
+                    }
+                    blinkyDir = randDir;
+                }
             }
         }
-            //Down
-        else if (blinkyDir == 3) {
-            int randDir;
-            if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveDown(g.gameBoard[blinkyX][blinkyY])) {
-                g.moveDown(g.gameBoard[blinkyX][blinkyY]);
-                blinky.move(0, 20);
-            } else if (!g.moveDown(g.gameBoard[blinkyX][blinkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 2) {
-                    cout << "test3" << endl;
-                    randDir = rand() % 4;
-                }
-                blinkyDir = randDir;
-            }
-        }
-            //Up
-        else if (blinkyDir == 2) {
-            int randDir;
-            if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveUp(g.gameBoard[blinkyX][blinkyY])) {
-                g.moveUp(g.gameBoard[blinkyX][blinkyY]);
-                blinky.move(0, -20);
-            } else if (!g.moveUp(g.gameBoard[blinkyX][blinkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 3) {
-                    cout << "test4" << endl;
-                    randDir = rand() % 4;
-                }
-                blinkyDir = randDir;
-            }
-        }
-        cout << blinkyDir << endl;
 
         //=============================================== PINKY (Pinky) =======================================================
 
-        //Pinky coords (Orange)
-        int pinkyX, pinkyY;
-        pinkyX = pinky.getCenter().x;
-        pinkyY = pinky.getCenter().y;
-        pinkyX = pinkyX / 20;
-        pinkyY = pinkyY / 20;
+        if (!g.resetCalled) {
+            //Pinky coords (Orange)
+            int pinkyX, pinkyY;
+            pinkyX = pinky.getCenter().x;
+            pinkyY = pinky.getCenter().y;
+            pinkyX = pinkyX / 20;
+            pinkyY = pinkyY / 20;
 
-        //Left
-        if (pinkyDir == 0) {
-            int randDir;
-            if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveLeft(g.gameBoard[pinkyX][pinkyY])) {
-                g.moveLeft(g.gameBoard[pinkyX][pinkyY]);
-                pinky.move(-20, 0);
-            } else if (!g.moveLeft(g.gameBoard[pinkyX][pinkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 1) {
-                    cout << "test1" << endl;
+            //Left
+            if (pinkyDir == 0) {
+                int randDir;
+                if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveLeft(g.gameBoard[pinkyX][pinkyY])) {
+                    g.moveLeft(g.gameBoard[pinkyX][pinkyY]);
+                    pinky.move(-20, 0);
+                } else if (!g.moveLeft(g.gameBoard[pinkyX][pinkyY])) {
                     randDir = rand() % 4;
+                    while (randDir == 1) {
+                        randDir = rand() % 4;
+                    }
+                    pinkyDir = randDir;
                 }
-                pinkyDir = randDir;
-            }
 
-        }
-            //Right
-        else if (pinkyDir == 1) {
-            int randDir;
-            if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveRight(g.gameBoard[pinkyX][pinkyY])) {
-                g.moveRight(g.gameBoard[pinkyX][pinkyY]);
-                pinky.move(20, 0);
-            } else if (!g.moveRight(g.gameBoard[pinkyX][pinkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 0) {
-                    cout << "test2" << endl;
+            }
+                //Right
+            else if (pinkyDir == 1) {
+                int randDir;
+                if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveRight(g.gameBoard[pinkyX][pinkyY])) {
+                    g.moveRight(g.gameBoard[pinkyX][pinkyY]);
+                    pinky.move(20, 0);
+                } else if (!g.moveRight(g.gameBoard[pinkyX][pinkyY])) {
                     randDir = rand() % 4;
+                    while (randDir == 0) {
+                        randDir = rand() % 4;
+                    }
+                    pinkyDir = randDir;
                 }
-                pinkyDir = randDir;
+            }
+                //Down
+            else if (pinkyDir == 3) {
+                int randDir;
+                if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveDown(g.gameBoard[pinkyX][pinkyY])) {
+                    g.moveDown(g.gameBoard[pinkyX][pinkyY]);
+                    pinky.move(0, 20);
+                } else if (!g.moveDown(g.gameBoard[pinkyX][pinkyY])) {
+                    randDir = rand() % 4;
+                    while (randDir == 2) {
+                        randDir = rand() % 4;
+                    }
+                    pinkyDir = randDir;
+                }
+            }
+                //Up
+            else if (pinkyDir == 2) {
+                int randDir;
+                if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveUp(g.gameBoard[pinkyX][pinkyY])) {
+                    g.moveUp(g.gameBoard[pinkyX][pinkyY]);
+                    pinky.move(0, -20);
+                } else if (!g.moveUp(g.gameBoard[pinkyX][pinkyY])) {
+                    randDir = rand() % 4;
+                    while (randDir == 3) {
+                        randDir = rand() % 4;
+                    }
+                    pinkyDir = randDir;
+                }
             }
         }
-            //Down
-        else if (pinkyDir == 3) {
-            int randDir;
-            if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveDown(g.gameBoard[pinkyX][pinkyY])) {
-                g.moveDown(g.gameBoard[pinkyX][pinkyY]);
-                pinky.move(0, 20);
-            } else if (!g.moveDown(g.gameBoard[pinkyX][pinkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 2) {
-                    cout << "test3" << endl;
-                    randDir = rand() % 4;
-                }
-                pinkyDir = randDir;
-            }
-        }
-            //Up
-        else if (pinkyDir == 2) {
-            int randDir;
-            if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveUp(g.gameBoard[pinkyX][pinkyY])) {
-                g.moveUp(g.gameBoard[pinkyX][pinkyY]);
-                pinky.move(0, -20);
-            } else if (!g.moveUp(g.gameBoard[pinkyX][pinkyY])) {
-                randDir = rand() % 4;
-                while (randDir == 3) {
-                    cout << "test4" << endl;
-                    randDir = rand() % 4;
-                }
-                pinkyDir = randDir;
-            }
-        }
-        cout << pinkyDir << endl;
 
     }
 
