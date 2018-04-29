@@ -198,6 +198,7 @@ Game::Game() {//: pm(), ghost1(12, 14), ghost2(15, 14), ghost3(11, 11), ghost4(1
         gameBoard[i][16] = path;
     }
 
+
     //------------------------------------------------------------------------------------------------------------------
     ///Place empty Path objects around center of board (Columns)
 
@@ -224,6 +225,14 @@ Game::Game() {//: pm(), ghost1(12, 14), ghost2(15, 14), ghost3(11, 11), ghost4(1
     for (int i = 11; i < 17; i++) {
         Path path(empty, false);
         gameBoard[18][i] = path;
+    }
+    for (int i = 13; i < 15; i++) {
+        Path path(empty, false);
+        gameBoard[10][i] = path;
+    }
+    for (int i = 13; i < 15; i++) {
+        Path path(empty, false);
+        gameBoard[17][i] = path;
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -383,7 +392,7 @@ ostream& operator <<(ostream& outs, const Game &g) {
 
 bool Game::moveUp(GamePiece &g) {
     if (g.getType() == ghost && numLives >= 1) {
-        if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() != wall) {
+        if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() != wall && gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() != ghost) {
             //Create copy of piece being moved
             if (gameBoard[g.getXPos()][(g.getYPos() - 1)].getType() == pacMan) {
                 //send pacman back to his starting position
@@ -465,7 +474,7 @@ bool Game::moveUp(GamePiece &g) {
 
 bool Game::moveLeft(GamePiece &g) {
     if (g.getType() == ghost && numLives >= 1) {
-        if (gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() != wall) { //If piece to the left is not wall
+        if (gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() != wall && gameBoard[(g.getXPos() - 1)][g.getYPos()].getType() != ghost) { //If piece to the left is not wall
             //Create copy of piece being moved
             if (gameBoard[g.getXPos() - 1][g.getYPos()].getType() == pacMan) {
                 //send pacman back to his starting position
@@ -547,7 +556,7 @@ bool Game::moveLeft(GamePiece &g) {
 
 bool Game::moveDown(GamePiece &g) {
     if (g.getType() == ghost && numLives >= 1) {
-        if (gameBoard[(g.getXPos())][g.getYPos() + 1].getType() != wall) { //If piece to the left is not wall
+        if (gameBoard[(g.getXPos())][g.getYPos() + 1].getType() != wall && gameBoard[(g.getXPos())][g.getYPos() + 1].getType() != ghost) { //If piece to the left is not wall
             //Create copy of piece being moved
             if (gameBoard[g.getXPos()][g.getYPos() + 1].getType() == pacMan) {
                 //send pacman back to his starting position
@@ -629,7 +638,7 @@ bool Game::moveDown(GamePiece &g) {
 
 bool Game::moveRight(GamePiece &g) {
     if (g.getType() == ghost && numLives >= 1) {
-        if (gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() != wall) { //If piece to the left is not wall
+        if (gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() != wall && gameBoard[(g.getXPos() + 1)][g.getYPos()].getType() != ghost) { //If piece to the left is not wall
             //Create copy of piece being moved
             if (gameBoard[g.getXPos() + 1][g.getYPos()].getType() == pacMan) {
                 //send pacman back to his starting position
