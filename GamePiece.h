@@ -8,7 +8,10 @@
 
 #include <iostream>
 #include <iomanip>
+#include <math.h>
+#include <GLUT/glut.h>
 
+#include "shapes.h"
 
 enum Type {ghost, wall, pellet, pacMan, empty};
 
@@ -48,7 +51,22 @@ public:
     void setYPos(int yPos);
     void setType(Type type);
 
+    /**
+     * Overloaded Operator (binary)
+     * Friend of the class (not a member)
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: Returns a text-based visualization of each GamePiece.
+    */
     friend std::ostream& operator <<(std::ostream& outs, const GamePiece &g);
+
+    /**
+     * Draws pellets for graphics
+     * Requires: Nothing
+     * Modifies: nothing
+     * Effects: draws pellets for graphics.  Will only draw pellet if the GamePiece is a type pellet.
+     */
+    void drawPellet(GLfloat x, GLfloat y, GLfloat radius);
 };
 
 class Wall : public GamePiece {

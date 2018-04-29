@@ -16,7 +16,6 @@ Circle pinky(8);
 Circle inky(8);
 Circle clyde(8);
 
-
 Tangle startBtn;
 Tangle highScoBtn;
 Tangle mainMenuBtn;
@@ -401,10 +400,19 @@ void displayStart() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
 
-
 }
 
 void displayGame() {
+
+    for(int y = 0; y < g.gameBoard.size(); y++){
+        for (int x = 0; x < g.gameBoard[0].size(); x++){
+            if (g.gameBoard[x][y].getType() == pellet) {
+//                if (g.gameBoard[x][y].pelletStatus == true) {
+                    g.gameBoard[x][y].drawPellet((20 * x), 10 + (20 * y), 4);
+//                }
+            }
+        }
+    }
 
     //Draw Sides
     topWall.draw();
@@ -477,8 +485,6 @@ void displayGame() {
     for (char c : lives) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
-
-
 }
 
 void displayGameOver() {
@@ -581,7 +587,7 @@ void kbdS(int key, int x, int y) {
             case GLUT_KEY_LEFT:
                 x = x/20;
                 y = y/20;
-                if(g.moveLeft(g.gameBoard[x][y])){
+                if(g.gameBoard[x][y].getType() == pacMan && g.moveLeft(g.gameBoard[x][y])){
                     g.moveLeft(g.gameBoard[x][y]);
                     pacman.move(-20,0);
                 }

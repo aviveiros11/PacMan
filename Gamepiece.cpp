@@ -106,3 +106,13 @@ bool Path::getPelletStatus() const {
     return pelletStatus;
 }
 
+void GamePiece::drawPellet(GLfloat x, GLfloat y, GLfloat radius){
+    glBegin(GL_TRIANGLE_FAN);
+    glColor3f(1, 1, 1);
+    glVertex2i(x, y);
+    for (double i = 0; i < 2.0*PI+0.05; i += 2.0*PI/360.0) {
+        glVertex2i(x + radius * cos(i),
+                   y + radius * sin(i));
+    }
+    glEnd();
+}
