@@ -364,12 +364,50 @@ void Game::resetGameBoard() {
 }
 
 void Game::saveHighScore(int highScore, string player) {
-    ofstream highScores("HighScores.txt", ios::app);
+    ifstream highScores("HighScores.txt");
+    string playerval = "";
+    int scoreval = 0;
+    int insertindex;
+    vector<string> players;
+    vector<int> scores;
     if(highScores){
-        highScores << player << endl;
-        highScores << highScore << endl;
+        while(highScores && highScores.peek() != EOF) {
+            highScores >> playerval;
+            //getline(highScores, playerval);
+            players.push_back(playerval);
+            highScores >> scoreval;
+            scores.push_back(scoreval);
+            cout << playerval << endl;
+            cout << scoreval << endl;
+
+
+        }
+    }
+    for(int i = 0; i<scores.size(); i++){
+        if(highScore >= scores[i]){
+            scores.insert(scores.begin() +i , highScore);
+            insertindex = i;
+            break;
+        }
+        else if(highScore <= scores[i]){
+            players.insert(players.begin() +insertindex , player);
+            insertindex = i;
+            break;
+        }
+
     }
     highScores.close();
+
+    ofstream highScoresWrite("HighScores.txt", ios::out);
+    if(highScoresWrite){
+        for(int i = 0; i<players.size(); i++){
+            highScoresWrite << players[i] << "\n";
+            highScoresWrite << scores[i] << "\n";
+
+        }
+    }
+    highScoresWrite.close();
+
 }
 
 string Game::displayHighScore() {
