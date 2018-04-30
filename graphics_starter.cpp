@@ -103,23 +103,23 @@ void init() {
     screen = start;
 
     startBtn.setDimensions(30, 150);
-    startBtn.setFillColor(1,0,0);
+    startBtn.setFillColor(255,238,0);
     startBtn.setCenter(280, 280);
 
     highScoBtn.setDimensions(30, 150);
-    highScoBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    highScoBtn.setFillColor(250/255.0,192/255.0,203/255.0);
     highScoBtn.setCenter(280, 330);
 
     mainMenuBtn.setDimensions(30, 150);
-    mainMenuBtn.setFillColor(250/255.0,192/255.0,203/255.0);
+    mainMenuBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
     mainMenuBtn.setCenter(280, 60);
 
     instructionsBtn.setDimensions(30, 150);
-    instructionsBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    instructionsBtn.setFillColor(0.5,1,1);
     instructionsBtn.setCenter(280, 380);
 
     exitBtn.setDimensions(30, 150);
-    exitBtn.setFillColor(0.5,1,1);
+    exitBtn.setFillColor(1,0.5,0);
     exitBtn.setCenter(280, 430);
 
     victoryBackground.setDimensions(20, 160);
