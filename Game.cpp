@@ -365,44 +365,66 @@ void Game::resetGameBoard() {
 
 void Game::saveHighScore(int highScore, string player) {
     ifstream highScores("HighScores.txt");
+    string junk;
     string playerval = "";
     int scoreval = 0;
     int insertindex;
     vector<string> players;
     vector<int> scores;
-    if(highScores){
-        while(highScores && highScores.peek() != EOF) {
-            highScores >> playerval;
-            //getline(highScores, playerval);
-            players.push_back(playerval);
+    int numLines = 0;
+    char newLine = ';';
+    while (numLines == 0 || numLines == 1) {
+        while(highScores.peek() != EOF) {
+            getline(highScores, playerval);
             highScores >> scoreval;
+            getline(highScores, junk);
+            players.push_back(playerval);
             scores.push_back(scoreval);
-            cout << playerval << endl;
-            cout << scoreval << endl;
-
-
+            numLines += 2;
+        }
+        if (numLines == 0 || !highScores) {
+            ofstream highScoresWrite("HighScores.txt", ios::out);
+            highScoresWrite << "filler" << "\n";
+            highScoresWrite << -1;
+            highScoresWrite.close();
+            numLines++;
+            highScores.seekg(0, highScores.beg);
         }
     }
-    for(int i = 0; i<scores.size(); i++){
-        if(highScore >= scores[i]){
-            scores.insert(scores.begin() +i , highScore);
-            insertindex = i;
-            break;
-        }
-        else if(highScore <= scores[i]){
-            players.insert(players.begin() +insertindex , player);
-            insertindex = i;
-            break;
-        }
 
+    for(int i = 0; i < scores.size(); i++){
+        if(highScore >= scores[i]){
+            scores.insert(scores.begin() + i , highScore);
+            insertindex = i;
+            break;
+        }
+        if(i == scores.size() - 1){
+            scores.push_back(highScore);
+            insertindex = -1;
+            break;
+        }
+    }
+    if (insertindex == -1) {
+        players.push_back(player);
+    } else {
+        players.insert(players.begin() + insertindex, player);
     }
     highScores.close();
 
+    //------------------------------------------------------------------------------------------------------------------
+
     ofstream highScoresWrite("HighScores.txt", ios::out);
     if(highScoresWrite){
-        for(int i = 0; i<players.size(); i++){
-            highScoresWrite << players[i] << "\n";
-            highScoresWrite << scores[i] << "\n";
+        for(int i = 0; i < scores.size(); i++){
+            if (players[i] != "filler") {
+                highScoresWrite << players[i] << "\n";
+            }
+            if (scores[i] >= 0) {
+                highScoresWrite << scores[i];
+            }
+            if (i != scores.size() - 1) {
+                highScoresWrite << '\n';
+            }
 
         }
     }
@@ -419,7 +441,7 @@ string Game::displayHighScore() {
         getline(highScores, lineStr);
         alternate = !alternate;
         if (alternate) {
-            lineStr = "+ " + lineStr + " ........................................................................................ ";
+            lineStr = "+ " + lineStr + " ............................................................................................. ";
         } else {
             lineStr += '\n';
         }

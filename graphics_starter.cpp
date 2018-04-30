@@ -41,6 +41,7 @@ Tangle instructionsBtn;
 Tangle exitBtn;
 
 Tangle victoryBackground;
+Circle fatDaddyPacMan(25);
 
 //Side Walls
 Tangle topWall;
@@ -126,6 +127,9 @@ void init() {
     victoryBackground.setDimensions(20, 160);
     victoryBackground.setFillColor(0, 0, 0);
     victoryBackground.setCenter(270, 320 + 10);
+
+    fatDaddyPacMan.setCenter(115, 170);
+    fatDaddyPacMan.setFillColor(255,238,0);
 
     //==============================================================================================================
 
@@ -413,11 +417,31 @@ void initGL() {
 
 void displayStart() {
 
+    //glClearColor(1,1,0,0);
+
+    //glClear(GL_COLOR_BUFFER_BIT);
+
+    fatDaddyPacMan.draw();
+
+    glBegin(GL_TRIANGLES);
+    glColor3f(0,0,0);
+    glVertex2f(115,170);
+    glVertex2f(170,120);
+    glVertex2f(170,220);
+    glEnd();
+
     string message = "Welcome to paC++!";
     glColor3f(1.0, 1.0, 1.0);
-    glRasterPos2i(200, 200);
+    glRasterPos2i(200, 75);
     for (char c : message) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
+
+    string namesMsg = "stin Viveiros, Max Peck, Liam Hogan, Jean-Baptiste Bohl";
+    glColor3f(1.0, 1.0, 1.0);
+    glRasterPos2i(119, 174);
+    for (char c : namesMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
 
     startBtn.draw();
@@ -429,9 +453,9 @@ void displayStart() {
     }
 
     highScoBtn.draw();
-    string highScoMsg = "Scores";
+    string highScoMsg = "High Scores";
     glColor3f(0.0, 0.0, 0.0);
-    glRasterPos2i(253, 335);
+    glRasterPos2i(233, 335);
     for (char c : highScoMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
@@ -574,7 +598,6 @@ void displayGame() {
 //======================================================================================================================
 
 void displayGameOver() {
-    //TODO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET RID OF THIS LINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//TODO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET RID OF THIS LINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     mainMenuBtn.draw();
     string mainMenuMsg = "Back to Menu";
     glColor3f(0.0, 0.0, 0.0);
@@ -666,9 +689,9 @@ void displayHighScore() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
 
-    string highScoreTitleMsg = "Scores";
+    string highScoreTitleMsg = "High Scores";
     glColor3f(1.0, 1.0, 1.0);
-    glRasterPos2i(250, 120);
+    glRasterPos2i(230, 120);
     for (char c : highScoreTitleMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
@@ -831,7 +854,7 @@ void kbd(unsigned char key, int x, int y)
 
     glutPostRedisplay();
 
-    return;
+    //return;
 }
 
 //======================================================================================================================
@@ -872,7 +895,7 @@ void kbdS(int key, int x, int y) {
 
     glutPostRedisplay();
 
-    return;
+    //return;
 }
 
 //======================================================================================================================
@@ -977,23 +1000,8 @@ void timer(int extra) {
         if (games[currentGame].gameStatus != paused) {
 
             if (games[currentGame].runFromStartingPositions) {
-//            string ready = "Ready";
-//            string set = "Set";
-//            string go = "GO!";
-//            glColor3f(1, 0, 0);
-//            glRasterPos2i(210, 200);
-//            for (char c : ready) {
-//                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
-//            }
-                sleep(1);
-//            for (char c : set) {
-//                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
-//            }
-                sleep(1);
-//            for (char c : go) {
-//                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
-//            }
-                //sleep(1);
+                sleep(2);
+
                 pDir = 0;
                 nextPDir = 0;
                 games[currentGame].runFromStartingPositions = false;
@@ -1023,7 +1031,7 @@ void timer(int extra) {
                 games[currentGame].gameStatus = over;
             }
 
-            //games[currentGame].gameStatus = won;//--------------------------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------------------------------
 
             //pac coords
             int x, y;
