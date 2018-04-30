@@ -5,17 +5,18 @@
 #include "Game.h"
 #include <unistd.h>
 #include <chrono>
+#include <ctime>
 using namespace std;
 
 enum mode {start, game, gameOver, highScore, instructions};
 
-int pDir = 0;         // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
-int nextPDir = 0;     // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
+int pDir = 0;
+int nextPDir = 0;
 
-int inkyDir = 0;      // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
-int clydeDir = 1;     // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
-int pinkyDir = 1;     // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
-int blinkyDir = 0;    // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
+int inkyDir = 0;
+int clydeDir = 1;
+int pinkyDir = 1;
+int blinkyDir = 0;
 
 auto startTimer = std::chrono::high_resolution_clock::now();
 auto finishTimer = std::chrono::high_resolution_clock::now();
@@ -428,9 +429,9 @@ void displayStart() {
     }
 
     highScoBtn.draw();
-    string highScoMsg = "High Scores";
+    string highScoMsg = "Scores";
     glColor3f(0.0, 0.0, 0.0);
-    glRasterPos2i(233, 335);
+    glRasterPos2i(253, 335);
     for (char c : highScoMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
@@ -665,9 +666,9 @@ void displayHighScore() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
 
-    string highScoreTitleMsg = "High Scores";
+    string highScoreTitleMsg = "Scores";
     glColor3f(1.0, 1.0, 1.0);
-    glRasterPos2i(230, 120);
+    glRasterPos2i(250, 120);
     for (char c : highScoreTitleMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
@@ -922,23 +923,29 @@ void cursor(int x, int y) {
 void mouse(int button, int state, int x, int y) {
 
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && screen == start && y > 265 && y < 295 && x > 205 && x < 355) {
-        Game g;
+        time_t rawtime;
+        struct tm * timeinfo;
+        char buffer[80];
+
+        time (&rawtime);
+        timeinfo = localtime(&rawtime);
+
+        strftime(buffer,sizeof(buffer),"%m/%d/%Y - %I:%M",timeinfo);
+        string dateTimeStr(buffer);
+
+        Game g(dateTimeStr, 0);
+
         games.push_back(g);
         currentGame++;
         pacman.setCenter(280, 410);
-        pacman.setFillColor(255,238,0);
 
         blinky.setCenter(240,290);
-        blinky.setFillColor(1,0,0);
 
         pinky.setCenter(300,290);
-        pinky.setFillColor(250/255.0,192/255.0,203/255.0);
 
         inky.setCenter(220,230);
-        inky.setFillColor(0.5,1,1);
 
         clyde.setCenter(320,230);
-        clyde.setFillColor(1,0.5,0);
         screen = game;
     }
 
@@ -997,6 +1004,8 @@ void timer(int extra) {
             }
 
             if (games[currentGame].gameStatus == over || games[currentGame].gameStatus == won) {
+                games[currentGame].saveHighScore(games[currentGame].getHighScore(), games[currentGame].getPlayer());
+
                 screen = gameOver;
                 finishTimer = std::chrono::high_resolution_clock::now();
                 sleep(2);
@@ -1013,8 +1022,6 @@ void timer(int extra) {
             if (games[currentGame].getLives() == 0 && games[currentGame].gameStatus != won) {
                 games[currentGame].gameStatus = over;
             }
-
-            //games[currentGame].gameStatus = won;//TODO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET RID OF THIS LINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
             //--------------------------------------------------------------------------------------------------------------
 

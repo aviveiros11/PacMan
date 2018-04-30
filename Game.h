@@ -24,10 +24,10 @@ private:
     std::string player;
 
 public:
-    bool resetCalled = false;               // <---- TODO: ADD THESE TO CONSTRUCTOR
-    GameStatus gameStatus = inProgress;     // <---- TODO: ADD THESE TO CONSTRUCTOR
-    bool firstPlay = true;                  // <---- TODO: ADD THESE TO CONSTRUCTOR
-    bool runFromStartingPositions = true;   // <---- TODO: ADD THESE TO CONSTRUCTOR
+    bool resetCalled;
+    GameStatus gameStatus;
+    bool firstPlay;
+    bool runFromStartingPositions;
     //std::vector<GamePiece> pieces;
 
 //    PacMan pm;

@@ -8,7 +8,7 @@
 //#include "PacMan.h"
 using namespace std;
 
-Game::Game() {//: pm(), ghost1(12, 14), ghost2(15, 14), ghost3(11, 11), ghost4(16, 11) {
+Game::Game() {
     highscore = 0;
     numLives = 3;
 
@@ -274,6 +274,10 @@ Game::Game() {//: pm(), ghost1(12, 14), ghost2(15, 14), ghost3(11, 11), ghost4(1
     gameBoard = gameBoard;
     numLives = 3;
     player = "Lisa-Dion";
+    resetCalled = false;
+    gameStatus = inProgress;
+    firstPlay = true;
+    runFromStartingPositions = true;
 }
 
 Game::Game(std::string p, int h) {
@@ -282,6 +286,14 @@ Game::Game(std::string p, int h) {
     highscore = h;
     numLives = 3;
     player = p;
+
+    highscore = 0;
+    gameBoard = gameBoard;
+    numLives = 3;
+    resetCalled = false;
+    gameStatus = inProgress;
+    firstPlay = true;
+    runFromStartingPositions = true;
 
 }
 
@@ -362,18 +374,16 @@ void Game::saveHighScore(int highScore, string player) {
 
 string Game::displayHighScore() {
     ifstream highScores("HighScores.txt");
-    bool addTwoNewLines = false;
+    bool alternate = false;
     string lineStr;
     string fileStr;
     while (highScores && highScores.peek() != EOF) {
         getline(highScores, lineStr);
-        lineStr += '\n';
-        addTwoNewLines = !addTwoNewLines;
-        if (addTwoNewLines) {
-            //lineStr2 += '\n';
-            lineStr += "   ";
-            lineStr = "+ " + lineStr;
+        alternate = !alternate;
+        if (alternate) {
+            lineStr = "+ " + lineStr + " ........................................................................................ ";
         } else {
+            lineStr += '\n';
         }
         fileStr += lineStr;
     }
