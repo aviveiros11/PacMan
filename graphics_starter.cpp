@@ -7,27 +7,26 @@
 #include <chrono>
 using namespace std;
 
-enum mode {start, game, gameOver, highScore};
-//enum Direction {left, right, up, down};
+enum mode {start, game, gameOver, highScore, instructions};
 
-int pDir = 0;
-int nextPDir = 0;
-
-int inkyDir = 0;
-int clydeDir = 1;
-int pinkyDir = 1;
-int blinkyDir = 0;
-
-bool runFromStart = true;
-bool firstTime = true;
+int pDir = 0;         // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
+int nextPDir = 0;     // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
+                      //       TODO: Should we make these field values of game.h?  It make them the same for each new game
+int inkyDir = 0;      // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
+int clydeDir = 1;     // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
+int pinkyDir = 1;     // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
+int blinkyDir = 0;    // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
 
 auto startTimer = std::chrono::high_resolution_clock::now();
 auto finishTimer = std::chrono::high_resolution_clock::now();
 
+int currentGame = -1;
+Game g;
+vector<Game> games;
+
 mode screen;
 GLdouble width, height;
 int wd;
-Game g;
 Circle pacman(8);
 Circle blinky(8);
 Circle pinky(8);
@@ -37,6 +36,8 @@ Circle clyde(8);
 Tangle startBtn;
 Tangle highScoBtn;
 Tangle mainMenuBtn;
+Tangle instructionsBtn;
+Tangle exitBtn;
 
 //Side Walls
 Tangle topWall;
@@ -110,6 +111,14 @@ void init() {
     mainMenuBtn.setDimensions(30, 150);
     mainMenuBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
     mainMenuBtn.setCenter(280, 60);
+
+    instructionsBtn.setDimensions(30, 150);
+    instructionsBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    instructionsBtn.setCenter(280, 380);
+
+    exitBtn.setDimensions(30, 150);
+    exitBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    exitBtn.setCenter(280, 430);
 
     //==============================================================================================================
 
@@ -397,7 +406,7 @@ void initGL() {
 
 void displayStart() {
 
-    string message = "Welcome to paC++";
+    string message = "Welcome to paC++!";
     glColor3f(1.0, 1.0, 1.0);
     glRasterPos2i(200, 200);
     for (char c : message) {
@@ -419,16 +428,32 @@ void displayStart() {
     for (char c : highScoMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
+
+    instructionsBtn.draw();
+    string instructionsMsg = "Instructions";
+    glColor3f(0.0, 0.0, 0.0);
+    glRasterPos2i(233, 385);
+    for (char c : instructionsMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
+
+    exitBtn.draw();
+    string exitMsg = "Exit";
+    glColor3f(0.0, 0.0, 0.0);
+    glRasterPos2i(263, 435);
+    for (char c : exitMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
 }
 
 //======================================================================================================================
 
 void displayGame() {
 
-    for(int y = 0; y < g.gameBoard.size(); y++){
-        for (int x = 0; x < g.gameBoard[0].size(); x++){
-            if (g.gameBoard[x][y].getType() == pellet) {
-                g.gameBoard[x][y].drawPellet((20 * x), 10 + (20 * y), 3);
+    for(int y = 0; y < games[currentGame].gameBoard.size(); y++){
+        for (int x = 0; x < games[currentGame].gameBoard[0].size(); x++){
+            if (games[currentGame].gameBoard[x][y].getType() == pellet) {
+                games[currentGame].gameBoard[x][y].drawPellet((20 * x), 10 + (20 * y), 3);
             }
         }
     }
@@ -492,27 +517,27 @@ void displayGame() {
     inky.draw();
     clyde.draw();
 
-    string score = "Score: " + to_string(g.getHighScore());
+    string score = "Score: " + to_string(games[currentGame].getHighScore());
     glColor3f(1, 1, 1.0);
     glRasterPos2i(210, 140);
     for (char c : score) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
-    string lives = "Lives: " + to_string(g.getLives());
+    string lives = "Lives: " + to_string(games[currentGame].getLives());
     glColor3f(1, 1, 1.0);
     glRasterPos2i(300, 140);
     for (char c : lives) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
 
-    if (g.gameStatus == over || g.getLives() == 0) {
+    if (games[currentGame].gameStatus == over || games[currentGame].getLives() == 0) {
         string gameOvr = "GAME OVER";
         glColor3f(1, 0, 0);
         glRasterPos2i(215, 338);
         for (char c : gameOvr) {
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
         }
-    } else if (g.gameStatus == won || g.getLives() == 0) {
+    } else if (games[currentGame].gameStatus == won || games[currentGame].getLives() == 0) {
         string gameOvr = "VICTORY!";
         glColor3f(0, 1, 0);
         glRasterPos2i(225, 338);
@@ -548,10 +573,10 @@ void displayGameOver() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
     string outcome;
-    if (g.gameStatus == over) {
+    if (games[currentGame].gameStatus == over) {
         outcome = "lost";
         glColor3f(1, 0.0, 0.0);
-    } else if (g.gameStatus == won) {
+    } else if (games[currentGame].gameStatus == won) {
         outcome = "won";
         glColor3f(0, 1, 0.0);
     }
@@ -560,35 +585,35 @@ void displayGameOver() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
 
-    string scoreMsg = "+ Final Score: " + to_string(g.getHighScore());
+    string scoreMsg = "+ Final Score: " + to_string(games[currentGame].getHighScore());
     glColor3f(1, 1, 1);
     glRasterPos2i(50, 170);
     for (char c : scoreMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
 
-    string pelletsMsg = "+ Pellets Eaten: " + to_string(g.getHighScore() / 10);
+    string pelletsMsg = "+ Pellets Eaten: " + to_string(games[currentGame].getHighScore() / 10);
     glColor3f(1, 1, 1);
     glRasterPos2i(50, 195);
     for (char c : pelletsMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
 
-    string livesRemMsg = "+ Lives Remaining: " + to_string(g.getLives());
+    string livesRemMsg = "+ Lives Remaining: " + to_string(games[currentGame].getLives());
     glColor3f(1, 1, 1);
     glRasterPos2i(50, 220);
     for (char c : livesRemMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
 
-    string livesUsedMsg = "+ Lives Used: " + to_string(3 - g.getLives());
+    string livesUsedMsg = "+ Lives Used: " + to_string(3 - games[currentGame].getLives());
     glColor3f(1, 1, 1);
     glRasterPos2i(50, 245);
     for (char c : livesUsedMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
 
-    string collisionsMsg = "+ Collisions with Ghosts: " + to_string(3 - g.getLives());
+    string collisionsMsg = "+ Collisions with Ghosts: " + to_string(3 - games[currentGame].getLives());
     glColor3f(1, 1, 1);
     glRasterPos2i(50, 270);
     for (char c : collisionsMsg) {
@@ -602,9 +627,6 @@ void displayGameOver() {
     for (char c : timeMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
-
-
-
 
 }
 
@@ -630,6 +652,20 @@ void displayHighScore() {
             glRasterPos2i(233, y);
         }
     }
+}
+
+//======================================================================================================================
+
+void displayInstructions() {
+
+    mainMenuBtn.draw();
+    string mainMenuMsg = "Back to Menu";
+    glColor3f(0.0, 0.0, 0.0);
+    glRasterPos2i(225, 65);
+    for (char c : mainMenuMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
+
 }
 
 //======================================================================================================================
@@ -662,6 +698,7 @@ void display() {
             break;
         case highScore: displayHighScore();
             break;
+        case instructions: displayInstructions();
     }
 
     glFlush();  // Render now
@@ -704,25 +741,25 @@ void kbdS(int key, int x, int y) {
     if (screen == game) {
         switch (key) {
             case GLUT_KEY_DOWN:
-//                if (g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y / 20) + 1].getType() != wall) {
+//                if (games[currentGame].gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y / 20) + 1].getType() != wall) {
 //                pDir = 3;
 //                }
                 nextPDir = 3;
                 break;
             case GLUT_KEY_LEFT:
-//                if (g.gameBoard[(pacman.getCenter().x / 20) - 1][(pacman.getCenter().y / 20)].getType() != wall) {
+//                if (games[currentGame].gameBoard[(pacman.getCenter().x / 20) - 1][(pacman.getCenter().y / 20)].getType() != wall) {
 //                pDir = 0;
 //                }
                 nextPDir = 0;
                 break;
             case GLUT_KEY_RIGHT:
-//                if (g.gameBoard[(pacman.getCenter().x / 20) + 1][(pacman.getCenter().y / 20)].getType() != wall) {
+//                if (games[currentGame].gameBoard[(pacman.getCenter().x / 20) + 1][(pacman.getCenter().y / 20)].getType() != wall) {
 //                pDir = 1;
 //                }
                 nextPDir = 1;
                 break;
             case GLUT_KEY_UP:
-//                if (g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y / 20) - 1].getType() != wall) {
+//                if (games[currentGame].gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y / 20) - 1].getType() != wall) {
 //                pDir = 2;
 //                }
                 nextPDir = 2;
@@ -750,7 +787,19 @@ void cursor(int x, int y) {
         highScoBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
     }
 
-    if ((screen == highScore || screen == gameOver) && y > 45 && y < 75 && x > 205 && x < 355) {
+    if (screen == start && y > 365 && y < 395 && x > 205 && x < 355) {
+        instructionsBtn.setFillColor(255/255.0, 0, 0);
+    } else {
+        instructionsBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    }
+
+    if (screen == start && y > 415 && y < 445 && x > 205 && x < 355) {
+        exitBtn.setFillColor(255/255.0, 0, 0);
+    } else {
+        exitBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    }
+
+    if ((screen == highScore || screen == gameOver || screen == instructions) && y > 45 && y < 75 && x > 205 && x < 355) {
         mainMenuBtn.setFillColor(255/255.0, 0, 0);
     } else {
         mainMenuBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
@@ -771,6 +820,9 @@ void cursor(int x, int y) {
 void mouse(int button, int state, int x, int y) {
 
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && screen == start && y > 265 && y < 295 && x > 205 && x < 355) {
+        Game g;
+        games.push_back(g);
+        currentGame++;
         screen = game;
     }
 
@@ -778,7 +830,15 @@ void mouse(int button, int state, int x, int y) {
         screen = highScore;
     }
 
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (screen == highScore || screen == gameOver) && y > 45 && y < 75 && x > 205 && x < 355) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && screen == start && y > 365 && y < 395 && x > 205 && x < 355) {
+        screen = instructions;
+    }
+
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && screen == start && y > 415 && y < 445 && x > 205 && x < 355) {
+        exit(0);
+    }
+
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (screen == highScore || screen == gameOver || screen == instructions) && y > 45 && y < 75 && x > 205 && x < 355) {
         screen = start;
     }
 
@@ -791,7 +851,7 @@ void timer(int extra) {
 
     if (screen == game) {
 
-        if (runFromStart) {
+        if (games[currentGame].runFromStartingPositions) {
 //            string ready = "Ready";
 //            string set = "Set";
 //            string go = "GO!";
@@ -811,32 +871,32 @@ void timer(int extra) {
             //sleep(1);
             pDir = 0;
             nextPDir = 0;
-            runFromStart = false;
-            if (firstTime) {
+            games[currentGame].runFromStartingPositions = false;
+            if (games[currentGame].firstPlay) {
                 startTimer = std::chrono::high_resolution_clock::now();
-                firstTime = false;
+                games[currentGame].firstPlay = false;
             }
         }
 
-        if (g.gameStatus == over || g.gameStatus == won) {
+        if (games[currentGame].gameStatus == over || games[currentGame].gameStatus == won) {
             screen = gameOver;
             finishTimer = std::chrono::high_resolution_clock::now();
             sleep(2);
         }
 
-        g.gameStatus = won;
-        for(int y = 0; y < g.gameBoard.size(); y++){
-            for (int x = 0; x < g.gameBoard[0].size(); x++){
-                if (g.gameBoard[x][y].getType() == pellet) {
-                    g.gameStatus = inProgress;
+        games[currentGame].gameStatus = won;
+        for(int y = 0; y < games[currentGame].gameBoard.size(); y++){
+            for (int x = 0; x < games[currentGame].gameBoard[0].size(); x++){
+                if (games[currentGame].gameBoard[x][y].getType() == pellet) {
+                    games[currentGame].gameStatus = inProgress;
                 }
             }
         }
-        if (g.getLives() == 0 && g.gameStatus != won) {
-            g.gameStatus = over;
+        if (games[currentGame].getLives() == 0 && games[currentGame].gameStatus != won) {
+            games[currentGame].gameStatus = over;
         }
 
-        //g.gameStatus = won;//TODO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET RID OF THIS LINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        //games[currentGame].gameStatus = won;//TODO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET RID OF THIS LINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         //--------------------------------------------------------------------------------------------------------------
 
@@ -848,11 +908,11 @@ void timer(int extra) {
         y = y / 20;
         bool moved = false;
 
-        if (g.gameStatus == inProgress) {
+        if (games[currentGame].gameStatus == inProgress) {
             //Left
             if (nextPDir == 0) {
-                if (g.gameBoard[x][y].getType() == pacMan && g.moveLeft(g.gameBoard[x][y])) {
-                    g.moveLeft(g.gameBoard[x][y]);
+                if (games[currentGame].gameBoard[x][y].getType() == pacMan && games[currentGame].moveLeft(games[currentGame].gameBoard[x][y])) {
+                    games[currentGame].moveLeft(games[currentGame].gameBoard[x][y]);
                     pacman.move(-20, 0);
                     pDir = 0;
                     moved = true;
@@ -860,8 +920,8 @@ void timer(int extra) {
             }
             //Right
             if (nextPDir == 1) {
-                if (g.gameBoard[x][y].getType() == pacMan && g.moveRight(g.gameBoard[x][y])) {
-                    g.moveRight(g.gameBoard[x][y]);
+                if (games[currentGame].gameBoard[x][y].getType() == pacMan && games[currentGame].moveRight(games[currentGame].gameBoard[x][y])) {
+                    games[currentGame].moveRight(games[currentGame].gameBoard[x][y]);
                     pacman.move(20, 0);
                     pDir = 1;
                     moved = true;
@@ -869,8 +929,8 @@ void timer(int extra) {
             }
             //Up
             if (nextPDir == 2) {
-                if (g.gameBoard[x][y].getType() == pacMan && g.moveUp(g.gameBoard[x][y])) {
-                    g.moveUp(g.gameBoard[x][y]);
+                if (games[currentGame].gameBoard[x][y].getType() == pacMan && games[currentGame].moveUp(games[currentGame].gameBoard[x][y])) {
+                    games[currentGame].moveUp(games[currentGame].gameBoard[x][y]);
                     pacman.move(0, -20);
                     pDir = 2;
                     moved = true;
@@ -878,8 +938,8 @@ void timer(int extra) {
             }
             //Down
             if (nextPDir == 3) {
-                if (g.gameBoard[x][y].getType() == pacMan && g.moveDown(g.gameBoard[x][y])) {
-                    g.moveDown(g.gameBoard[x][y]);
+                if (games[currentGame].gameBoard[x][y].getType() == pacMan && games[currentGame].moveDown(games[currentGame].gameBoard[x][y])) {
+                    games[currentGame].moveDown(games[currentGame].gameBoard[x][y]);
                     pacman.move(0, 20);
                     pDir = 3;
                     moved = true;
@@ -891,29 +951,29 @@ void timer(int extra) {
             if (!moved) {
                 //Left
                 if (pDir == 0) {
-                    if (g.gameBoard[x][y].getType() == pacMan && g.moveLeft(g.gameBoard[x][y])) {
-                        g.moveLeft(g.gameBoard[x][y]);
+                    if (games[currentGame].gameBoard[x][y].getType() == pacMan && games[currentGame].moveLeft(games[currentGame].gameBoard[x][y])) {
+                        games[currentGame].moveLeft(games[currentGame].gameBoard[x][y]);
                         pacman.move(-20, 0);
                     }
                 }
                 //Right
                 if (pDir == 1) {
-                    if (g.gameBoard[x][y].getType() == pacMan && g.moveRight(g.gameBoard[x][y])) {
-                        g.moveRight(g.gameBoard[x][y]);
+                    if (games[currentGame].gameBoard[x][y].getType() == pacMan && games[currentGame].moveRight(games[currentGame].gameBoard[x][y])) {
+                        games[currentGame].moveRight(games[currentGame].gameBoard[x][y]);
                         pacman.move(20, 0);
                     }
                 }
                 //Up
                 if (pDir == 2) {
-                    if (g.gameBoard[x][y].getType() == pacMan && g.moveUp(g.gameBoard[x][y])) {
-                        g.moveUp(g.gameBoard[x][y]);
+                    if (games[currentGame].gameBoard[x][y].getType() == pacMan && games[currentGame].moveUp(games[currentGame].gameBoard[x][y])) {
+                        games[currentGame].moveUp(games[currentGame].gameBoard[x][y]);
                         pacman.move(0, -20);
                     }
                 }
                 //Down
                 if (pDir == 3) {
-                    if (g.gameBoard[x][y].getType() == pacMan && g.moveDown(g.gameBoard[x][y])) {
-                        g.moveDown(g.gameBoard[x][y]);
+                    if (games[currentGame].gameBoard[x][y].getType() == pacMan && games[currentGame].moveDown(games[currentGame].gameBoard[x][y])) {
+                        games[currentGame].moveDown(games[currentGame].gameBoard[x][y]);
                         pacman.move(0, 20);
                     }
                 }
@@ -922,7 +982,7 @@ void timer(int extra) {
 
         //=============================================== INKY ===============================================================
 
-        if (g.gameStatus == inProgress) {
+        if (games[currentGame].gameStatus == inProgress) {
             //Inky coords
             int inkyX, inkyY;
             inkyX = inky.getCenter().x;
@@ -931,12 +991,12 @@ void timer(int extra) {
             inkyY = inkyY / 20;
 
             //Left
-            if (inkyDir == 0 && !g.resetCalled) {
+            if (inkyDir == 0 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveLeft(g.gameBoard[inkyX][inkyY])) {
-                    g.moveLeft(g.gameBoard[inkyX][inkyY]);
+                if (games[currentGame].gameBoard[inkyX][inkyY].getType() == ghost && games[currentGame].moveLeft(games[currentGame].gameBoard[inkyX][inkyY])) {
+                    games[currentGame].moveLeft(games[currentGame].gameBoard[inkyX][inkyY]);
                     inky.move(-20, 0);
-                } else if (!g.moveLeft(g.gameBoard[inkyX][inkyY])) {
+                } else if (!games[currentGame].moveLeft(games[currentGame].gameBoard[inkyX][inkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 1) {
                         randDir = rand() % 4;
@@ -945,12 +1005,12 @@ void timer(int extra) {
                 }
             }
                 //Right
-            else if (inkyDir == 1 && !g.resetCalled) {
+            else if (inkyDir == 1 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveRight(g.gameBoard[inkyX][inkyY])) {
-                    g.moveRight(g.gameBoard[inkyX][inkyY]);
+                if (games[currentGame].gameBoard[inkyX][inkyY].getType() == ghost && games[currentGame].moveRight(games[currentGame].gameBoard[inkyX][inkyY])) {
+                    games[currentGame].moveRight(games[currentGame].gameBoard[inkyX][inkyY]);
                     inky.move(20, 0);
-                } else if (!g.moveRight(g.gameBoard[inkyX][inkyY])) {
+                } else if (!games[currentGame].moveRight(games[currentGame].gameBoard[inkyX][inkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 0) {
                         randDir = rand() % 4;
@@ -960,12 +1020,12 @@ void timer(int extra) {
 
             }
                 //Down
-            else if (inkyDir == 3 && !g.resetCalled) {
+            else if (inkyDir == 3 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveDown(g.gameBoard[inkyX][inkyY])) {
-                    g.moveDown(g.gameBoard[inkyX][inkyY]);
+                if (games[currentGame].gameBoard[inkyX][inkyY].getType() == ghost && games[currentGame].moveDown(games[currentGame].gameBoard[inkyX][inkyY])) {
+                    games[currentGame].moveDown(games[currentGame].gameBoard[inkyX][inkyY]);
                     inky.move(0, 20);
-                } else if (!g.moveDown(g.gameBoard[inkyX][inkyY])) {
+                } else if (!games[currentGame].moveDown(games[currentGame].gameBoard[inkyX][inkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 2) {
                         randDir = rand() % 4;
@@ -974,12 +1034,12 @@ void timer(int extra) {
                 }
             }
                 //Up
-            else if (inkyDir == 2 && !g.resetCalled) {
+            else if (inkyDir == 2 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[inkyX][inkyY].getType() == ghost && g.moveUp(g.gameBoard[inkyX][inkyY])) {
-                    g.moveUp(g.gameBoard[inkyX][inkyY]);
+                if (games[currentGame].gameBoard[inkyX][inkyY].getType() == ghost && games[currentGame].moveUp(games[currentGame].gameBoard[inkyX][inkyY])) {
+                    games[currentGame].moveUp(games[currentGame].gameBoard[inkyX][inkyY]);
                     inky.move(0, -20);
-                } else if (!g.moveUp(g.gameBoard[inkyX][inkyY])) {
+                } else if (!games[currentGame].moveUp(games[currentGame].gameBoard[inkyX][inkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 3) {
                         randDir = rand() % 4;
@@ -991,7 +1051,7 @@ void timer(int extra) {
 
         //=============================================== CLYDE (Orange) =======================================================
 
-        if (g.gameStatus == inProgress) {
+        if (games[currentGame].gameStatus == inProgress) {
             //Clyde coords (Orange)
             int clydeX, clydeY;
             clydeX = clyde.getCenter().x;
@@ -1000,12 +1060,12 @@ void timer(int extra) {
             clydeY = clydeY / 20;
 
             //Left
-            if (clydeDir == 0 && !g.resetCalled) {
+            if (clydeDir == 0 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveLeft(g.gameBoard[clydeX][clydeY])) {
-                    g.moveLeft(g.gameBoard[clydeX][clydeY]);
+                if (games[currentGame].gameBoard[clydeX][clydeY].getType() == ghost && games[currentGame].moveLeft(games[currentGame].gameBoard[clydeX][clydeY])) {
+                    games[currentGame].moveLeft(games[currentGame].gameBoard[clydeX][clydeY]);
                     clyde.move(-20, 0);
-                } else if (!g.moveLeft(g.gameBoard[clydeX][clydeY])) {
+                } else if (!games[currentGame].moveLeft(games[currentGame].gameBoard[clydeX][clydeY])) {
                     randDir = rand() % 4;
                     while (randDir == 1) {
                         randDir = rand() % 4;
@@ -1015,12 +1075,12 @@ void timer(int extra) {
 
             }
                 //Right
-            else if (clydeDir == 1 && !g.resetCalled) {
+            else if (clydeDir == 1 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveRight(g.gameBoard[clydeX][clydeY])) {
-                    g.moveRight(g.gameBoard[clydeX][clydeY]);
+                if (games[currentGame].gameBoard[clydeX][clydeY].getType() == ghost && games[currentGame].moveRight(games[currentGame].gameBoard[clydeX][clydeY])) {
+                    games[currentGame].moveRight(games[currentGame].gameBoard[clydeX][clydeY]);
                     clyde.move(20, 0);
-                } else if (!g.moveRight(g.gameBoard[clydeX][clydeY])) {
+                } else if (!games[currentGame].moveRight(games[currentGame].gameBoard[clydeX][clydeY])) {
                     randDir = rand() % 4;
                     while (randDir == 0) {
                         randDir = rand() % 4;
@@ -1029,12 +1089,12 @@ void timer(int extra) {
                 }
             }
                 //Down
-            else if (clydeDir == 3 && !g.resetCalled) {
+            else if (clydeDir == 3 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveDown(g.gameBoard[clydeX][clydeY])) {
-                    g.moveDown(g.gameBoard[clydeX][clydeY]);
+                if (games[currentGame].gameBoard[clydeX][clydeY].getType() == ghost && games[currentGame].moveDown(games[currentGame].gameBoard[clydeX][clydeY])) {
+                    games[currentGame].moveDown(games[currentGame].gameBoard[clydeX][clydeY]);
                     clyde.move(0, 20);
-                } else if (!g.moveDown(g.gameBoard[clydeX][clydeY])) {
+                } else if (!games[currentGame].moveDown(games[currentGame].gameBoard[clydeX][clydeY])) {
                     randDir = rand() % 4;
                     while (randDir == 2) {
                         randDir = rand() % 4;
@@ -1043,12 +1103,12 @@ void timer(int extra) {
                 }
             }
                 //Up
-            else if (clydeDir == 2 && !g.resetCalled) {
+            else if (clydeDir == 2 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[clydeX][clydeY].getType() == ghost && g.moveUp(g.gameBoard[clydeX][clydeY])) {
-                    g.moveUp(g.gameBoard[clydeX][clydeY]);
+                if (games[currentGame].gameBoard[clydeX][clydeY].getType() == ghost && games[currentGame].moveUp(games[currentGame].gameBoard[clydeX][clydeY])) {
+                    games[currentGame].moveUp(games[currentGame].gameBoard[clydeX][clydeY]);
                     clyde.move(0, -20);
-                } else if (!g.moveUp(g.gameBoard[clydeX][clydeY])) {
+                } else if (!games[currentGame].moveUp(games[currentGame].gameBoard[clydeX][clydeY])) {
                     randDir = rand() % 4;
                     while (randDir == 3) {
                         randDir = rand() % 4;
@@ -1060,7 +1120,7 @@ void timer(int extra) {
 
         //=============================================== BLINKY (Red) =======================================================
 
-        if (g.gameStatus == inProgress) {
+        if (games[currentGame].gameStatus == inProgress) {
             //Blinky coords (Orange)
             int blinkyX, blinkyY;
             blinkyX = blinky.getCenter().x;
@@ -1069,12 +1129,12 @@ void timer(int extra) {
             blinkyY = blinkyY / 20;
 
             //Left
-            if (blinkyDir == 0 && !g.resetCalled) {
+            if (blinkyDir == 0 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveLeft(g.gameBoard[blinkyX][blinkyY])) {
-                    g.moveLeft(g.gameBoard[blinkyX][blinkyY]);
+                if (games[currentGame].gameBoard[blinkyX][blinkyY].getType() == ghost && games[currentGame].moveLeft(games[currentGame].gameBoard[blinkyX][blinkyY])) {
+                    games[currentGame].moveLeft(games[currentGame].gameBoard[blinkyX][blinkyY]);
                     blinky.move(-20, 0);
-                } else if (!g.moveLeft(g.gameBoard[blinkyX][blinkyY])) {
+                } else if (!games[currentGame].moveLeft(games[currentGame].gameBoard[blinkyX][blinkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 1) {
                         randDir = rand() % 4;
@@ -1084,12 +1144,12 @@ void timer(int extra) {
 
             }
                 //Right
-            else if (blinkyDir == 1 && !g.resetCalled) {
+            else if (blinkyDir == 1 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveRight(g.gameBoard[blinkyX][blinkyY])) {
-                    g.moveRight(g.gameBoard[blinkyX][blinkyY]);
+                if (games[currentGame].gameBoard[blinkyX][blinkyY].getType() == ghost && games[currentGame].moveRight(games[currentGame].gameBoard[blinkyX][blinkyY])) {
+                    games[currentGame].moveRight(games[currentGame].gameBoard[blinkyX][blinkyY]);
                     blinky.move(20, 0);
-                } else if (!g.moveRight(g.gameBoard[blinkyX][blinkyY])) {
+                } else if (!games[currentGame].moveRight(games[currentGame].gameBoard[blinkyX][blinkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 0) {
                         randDir = rand() % 4;
@@ -1098,12 +1158,12 @@ void timer(int extra) {
                 }
             }
                 //Down
-            else if (blinkyDir == 3 && !g.resetCalled) {
+            else if (blinkyDir == 3 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveDown(g.gameBoard[blinkyX][blinkyY])) {
-                    g.moveDown(g.gameBoard[blinkyX][blinkyY]);
+                if (games[currentGame].gameBoard[blinkyX][blinkyY].getType() == ghost && games[currentGame].moveDown(games[currentGame].gameBoard[blinkyX][blinkyY])) {
+                    games[currentGame].moveDown(games[currentGame].gameBoard[blinkyX][blinkyY]);
                     blinky.move(0, 20);
-                } else if (!g.moveDown(g.gameBoard[blinkyX][blinkyY])) {
+                } else if (!games[currentGame].moveDown(games[currentGame].gameBoard[blinkyX][blinkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 2) {
                         randDir = rand() % 4;
@@ -1112,12 +1172,12 @@ void timer(int extra) {
                 }
             }
                 //Up
-            else if (blinkyDir == 2 && !g.resetCalled) {
+            else if (blinkyDir == 2 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[blinkyX][blinkyY].getType() == ghost && g.moveUp(g.gameBoard[blinkyX][blinkyY])) {
-                    g.moveUp(g.gameBoard[blinkyX][blinkyY]);
+                if (games[currentGame].gameBoard[blinkyX][blinkyY].getType() == ghost && games[currentGame].moveUp(games[currentGame].gameBoard[blinkyX][blinkyY])) {
+                    games[currentGame].moveUp(games[currentGame].gameBoard[blinkyX][blinkyY]);
                     blinky.move(0, -20);
-                } else if (!g.moveUp(g.gameBoard[blinkyX][blinkyY])) {
+                } else if (!games[currentGame].moveUp(games[currentGame].gameBoard[blinkyX][blinkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 3) {
                         randDir = rand() % 4;
@@ -1129,7 +1189,7 @@ void timer(int extra) {
 
         //=============================================== PINKY (Pinky) =======================================================
 
-        if (g.gameStatus == inProgress) {
+        if (games[currentGame].gameStatus == inProgress) {
             //Pinky coords (Orange)
             int pinkyX, pinkyY;
             pinkyX = pinky.getCenter().x;
@@ -1138,12 +1198,12 @@ void timer(int extra) {
             pinkyY = pinkyY / 20;
 
             //Left
-            if (pinkyDir == 0 && !g.resetCalled) {
+            if (pinkyDir == 0 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveLeft(g.gameBoard[pinkyX][pinkyY])) {
-                    g.moveLeft(g.gameBoard[pinkyX][pinkyY]);
+                if (games[currentGame].gameBoard[pinkyX][pinkyY].getType() == ghost && games[currentGame].moveLeft(games[currentGame].gameBoard[pinkyX][pinkyY])) {
+                    games[currentGame].moveLeft(games[currentGame].gameBoard[pinkyX][pinkyY]);
                     pinky.move(-20, 0);
-                } else if (!g.moveLeft(g.gameBoard[pinkyX][pinkyY])) {
+                } else if (!games[currentGame].moveLeft(games[currentGame].gameBoard[pinkyX][pinkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 1) {
                         randDir = rand() % 4;
@@ -1153,12 +1213,12 @@ void timer(int extra) {
 
             }
                 //Right
-            else if (pinkyDir == 1 && !g.resetCalled) {
+            else if (pinkyDir == 1 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveRight(g.gameBoard[pinkyX][pinkyY])) {
-                    g.moveRight(g.gameBoard[pinkyX][pinkyY]);
+                if (games[currentGame].gameBoard[pinkyX][pinkyY].getType() == ghost && games[currentGame].moveRight(games[currentGame].gameBoard[pinkyX][pinkyY])) {
+                    games[currentGame].moveRight(games[currentGame].gameBoard[pinkyX][pinkyY]);
                     pinky.move(20, 0);
-                } else if (!g.moveRight(g.gameBoard[pinkyX][pinkyY])) {
+                } else if (!games[currentGame].moveRight(games[currentGame].gameBoard[pinkyX][pinkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 0) {
                         randDir = rand() % 4;
@@ -1167,12 +1227,12 @@ void timer(int extra) {
                 }
             }
                 //Down
-            else if (pinkyDir == 3 && !g.resetCalled) {
+            else if (pinkyDir == 3 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveDown(g.gameBoard[pinkyX][pinkyY])) {
-                    g.moveDown(g.gameBoard[pinkyX][pinkyY]);
+                if (games[currentGame].gameBoard[pinkyX][pinkyY].getType() == ghost && games[currentGame].moveDown(games[currentGame].gameBoard[pinkyX][pinkyY])) {
+                    games[currentGame].moveDown(games[currentGame].gameBoard[pinkyX][pinkyY]);
                     pinky.move(0, 20);
-                } else if (!g.moveDown(g.gameBoard[pinkyX][pinkyY])) {
+                } else if (!games[currentGame].moveDown(games[currentGame].gameBoard[pinkyX][pinkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 2) {
                         randDir = rand() % 4;
@@ -1181,12 +1241,12 @@ void timer(int extra) {
                 }
             }
                 //Up
-            else if (pinkyDir == 2 && !g.resetCalled) {
+            else if (pinkyDir == 2 && !games[currentGame].resetCalled) {
                 int randDir;
-                if (g.gameBoard[pinkyX][pinkyY].getType() == ghost && g.moveUp(g.gameBoard[pinkyX][pinkyY])) {
-                    g.moveUp(g.gameBoard[pinkyX][pinkyY]);
+                if (games[currentGame].gameBoard[pinkyX][pinkyY].getType() == ghost && games[currentGame].moveUp(games[currentGame].gameBoard[pinkyX][pinkyY])) {
+                    games[currentGame].moveUp(games[currentGame].gameBoard[pinkyX][pinkyY]);
                     pinky.move(0, -20);
-                } else if (!g.moveUp(g.gameBoard[pinkyX][pinkyY])) {
+                } else if (!games[currentGame].moveUp(games[currentGame].gameBoard[pinkyX][pinkyY])) {
                     randDir = rand() % 4;
                     while (randDir == 3) {
                         randDir = rand() % 4;
@@ -1198,14 +1258,14 @@ void timer(int extra) {
 
         //--------------------------------------------------------------------------------------------------------------
 
-        if (g.resetCalled) {
-            g.resetCalled = false;
+        if (games[currentGame].resetCalled) {
+            games[currentGame].resetCalled = false;
             pacman.setCenter(280, 410);
             blinky.setCenter(240, 290);
             pinky.setCenter(300, 290);
             inky.setCenter(220, 230);
             clyde.setCenter(320, 230);
-            runFromStart = true;
+            games[currentGame].runFromStartingPositions = true;
         }
     }
 

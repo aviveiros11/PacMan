@@ -26,6 +26,8 @@ private:
 public:
     bool resetCalled = false;
     GameStatus gameStatus = inProgress;
+    bool firstPlay = true;
+    bool runFromStartingPositions = true;
     //std::vector<GamePiece> pieces;
 
 //    PacMan pm;
