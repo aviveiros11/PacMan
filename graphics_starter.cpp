@@ -103,7 +103,7 @@ void init() {
     screen = start;
 
     startBtn.setDimensions(30, 150);
-    startBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    startBtn.setFillColor(1,0,0);
     startBtn.setCenter(280, 280);
 
     highScoBtn.setDimensions(30, 150);
@@ -111,7 +111,7 @@ void init() {
     highScoBtn.setCenter(280, 330);
 
     mainMenuBtn.setDimensions(30, 150);
-    mainMenuBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    mainMenuBtn.setFillColor(250/255.0,192/255.0,203/255.0);
     mainMenuBtn.setCenter(280, 60);
 
     instructionsBtn.setDimensions(30, 150);
@@ -119,7 +119,7 @@ void init() {
     instructionsBtn.setCenter(280, 380);
 
     exitBtn.setDimensions(30, 150);
-    exitBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+    exitBtn.setFillColor(0.5,1,1);
     exitBtn.setCenter(280, 430);
 
     victoryBackground.setDimensions(20, 160);
@@ -525,13 +525,13 @@ void displayGame() {
 
     string score = "Score: " + to_string(games[currentGame].getHighScore());
     glColor3f(1, 1, 1.0);
-    glRasterPos2i(210, 140);
+    glRasterPos2i(200, 140);
     for (char c : score) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
     string lives = "Lives: " + to_string(games[currentGame].getLives());
     glColor3f(1, 1, 1.0);
-    glRasterPos2i(300, 140);
+    glRasterPos2i(290, 140);
     for (char c : lives) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
@@ -880,25 +880,25 @@ void cursor(int x, int y) {
     if (screen == start && y > 265 && y < 295 && x > 205 && x < 355) {
         startBtn.setFillColor(255/255.0, 0, 0);
     } else {
-        startBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+        startBtn.setFillColor(255,238,0);
     }
 
     if (screen == start && y > 315 && y < 345 && x > 205 && x < 355) {
         highScoBtn.setFillColor(255/255.0, 0, 0);
     } else {
-        highScoBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+        highScoBtn.setFillColor(250/255.0,192/255.0,203/255.0);
     }
 
     if (screen == start && y > 365 && y < 395 && x > 205 && x < 355) {
         instructionsBtn.setFillColor(255/255.0, 0, 0);
     } else {
-        instructionsBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+        instructionsBtn.setFillColor(0.5,1,1);
     }
 
     if (screen == start && y > 415 && y < 445 && x > 205 && x < 355) {
         exitBtn.setFillColor(255/255.0, 0, 0);
     } else {
-        exitBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
+        exitBtn.setFillColor(1,0.5,0);
     }
 
     if ((screen == highScore || screen == gameOver || screen == instructions) && y > 45 && y < 75 && x > 205 && x < 355) {
