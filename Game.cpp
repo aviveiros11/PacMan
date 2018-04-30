@@ -367,10 +367,13 @@ string Game::displayHighScore() {
     string fileStr;
     while (highScores && highScores.peek() != EOF) {
         getline(highScores, lineStr);
-        fileStr += '\n';
+        lineStr += '\n';
         addTwoNewLines = !addTwoNewLines;
         if (addTwoNewLines) {
-            fileStr += '\n';
+            //lineStr2 += '\n';
+            lineStr += "   ";
+            lineStr = "+ " + lineStr;
+        } else {
         }
         fileStr += lineStr;
     }

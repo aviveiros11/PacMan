@@ -39,6 +39,8 @@ Tangle mainMenuBtn;
 Tangle instructionsBtn;
 Tangle exitBtn;
 
+Tangle victoryBackground;
+
 //Side Walls
 Tangle topWall;
 Tangle leftWall;
@@ -119,6 +121,10 @@ void init() {
     exitBtn.setDimensions(30, 150);
     exitBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
     exitBtn.setCenter(280, 430);
+
+    victoryBackground.setDimensions(20, 160);
+    victoryBackground.setFillColor(0, 0, 0);
+    victoryBackground.setCenter(270, 320 + 10);
 
     //==============================================================================================================
 
@@ -530,6 +536,15 @@ void displayGame() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
 
+    if (games[currentGame].runFromStartingPositions) {
+        string getReadyMsg = "GET READY";
+        glColor3f(1, 1, 0);
+        glRasterPos2i(220, 338);
+        for (char c : getReadyMsg) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+        }
+    }
+
     if (games[currentGame].gameStatus == over || games[currentGame].getLives() == 0) {
         string gameOvrMsg = "GAME OVER";
         glColor3f(1, 0, 0);
@@ -538,6 +553,7 @@ void displayGame() {
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
         }
     } else if (games[currentGame].gameStatus == won || games[currentGame].getLives() == 0) {
+        victoryBackground.draw();
         string victoryMsg = "VICTORY!";
         glColor3f(0, 1, 0);
         glRasterPos2i(225, 338);
@@ -546,7 +562,7 @@ void displayGame() {
         }
     } else if (games[currentGame].gameStatus == paused) {
         string pausedMsg = "PAUSED";
-        glColor3f(1, 0, 0);
+        glColor3f(1, 1, 0);
         glRasterPos2i(235, 448);
         for (char c : pausedMsg) {
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
@@ -649,14 +665,21 @@ void displayHighScore() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
 
-    glColor3f(1.0, 0.0, 0.0);
-    int y = 90;
-    glRasterPos2i(233, y);
-    for (char c : Game::displayHighScore()) {
+    string highScoreTitleMsg = "High Scores";
+    glColor3f(1.0, 1.0, 1.0);
+    glRasterPos2i(230, 120);
+    for (char c : highScoreTitleMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
+
+    glColor3f(1.0, 1.0, 1.0);
+    int y = 170;
+    glRasterPos2i(50, y);
+    for (char c : Game::displayHighScore()) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
         if (c == '\n') {
             y += 25;
-            glRasterPos2i(233, y);
+            glRasterPos2i(50, y);
         }
     }
 }
@@ -673,6 +696,77 @@ void displayInstructions() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
 
+    string instructionsMsg = "Controls";
+    glColor3f(1, 1, 1);
+    glRasterPos2i(245, 120);
+    for (char c : instructionsMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
+
+    string pacManMsg = "+ Player/PacMan:";
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 170);
+    for (char c : pacManMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+    pacman.setCenter(175, 165);
+    pacman.draw();
+
+    string ghostsMsg = "+ Enemies/Ghosts:";
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 195);
+    for (char c : ghostsMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+    blinky.setCenter(175,190);
+    pinky.setCenter(200,190);
+    inky.setCenter(225,190);
+    clyde.setCenter(250,190);
+    blinky.draw();
+    pinky.draw();
+    inky.draw();
+    clyde.draw();
+
+    string pelletsMsg = "+ Pellets/Food:";
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 220);
+    for (char c : pelletsMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+    Path p1;
+    p1.drawPellet(175, 215, 3);
+    p1.drawPellet(195, 215, 3);
+    p1.drawPellet(215, 215, 3);
+    p1.drawPellet(235, 215, 3);
+    p1.drawPellet(255, 215, 3);
+    p1.drawPellet(275, 215, 3);
+    p1.drawPellet(295, 215, 3);
+
+    string objectiveMsg = "+ Objective: Move the PacMan in all directions to continue\nconsuming pellets.  Avoid ghosts!";
+    glColor3f(1, 1, 1);
+    int y = 270;
+    glRasterPos2i(50, y);
+    for (char c : objectiveMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+        if (c == '\n') {
+            y += 25;
+            glRasterPos2i(63, y);
+        }
+    }
+
+    string arrowMsg = "+ Arrow Keys: Use the arrow keys to move the PacMan around the board.";
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 345);
+    for (char c : arrowMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+
+    string spaceMsg = "+ Pause: Press the space bar to pause and resume the game.";
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 370);
+    for (char c : spaceMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
 }
 
 //======================================================================================================================
@@ -1313,7 +1407,9 @@ void timer(int extra) {
                 pinky.setCenter(300, 290);
                 inky.setCenter(220, 230);
                 clyde.setCenter(320, 230);
-                games[currentGame].runFromStartingPositions = true;
+                if (games[currentGame].getLives() > 0){
+                    games[currentGame].runFromStartingPositions = true;
+                }
             }
         }
     }
