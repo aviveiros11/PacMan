@@ -14,7 +14,7 @@
 #include "PacMan.h"
 #include "ghost.h"
 
-enum GameStatus {over, won, inProgress};
+enum GameStatus {over, won, inProgress, paused};
 
 class Game {
 
