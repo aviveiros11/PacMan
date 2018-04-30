@@ -14,6 +14,8 @@
 #include "PacMan.h"
 #include "ghost.h"
 
+enum GameStatus {over, won, inProgress};
+
 class Game {
 
 private:
@@ -23,6 +25,7 @@ private:
 
 public:
     bool resetCalled = false;
+    GameStatus gameStatus = inProgress;
     //std::vector<GamePiece> pieces;
 
 //    PacMan pm;

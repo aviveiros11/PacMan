@@ -4,12 +4,14 @@
 #include <random>
 #include "Game.h"
 #include <unistd.h>
+#include <chrono>
 using namespace std;
 
 enum mode {start, game, gameOver, highScore};
 //enum Direction {left, right, up, down};
 
 int pDir = 0;
+int nextPDir = 0;
 
 int inkyDir = 0;
 int clydeDir = 1;
@@ -17,7 +19,10 @@ int pinkyDir = 1;
 int blinkyDir = 0;
 
 bool runFromStart = true;
-bool ghostsOut = false;
+bool firstTime = true;
+
+auto startTimer = std::chrono::high_resolution_clock::now();
+auto finishTimer = std::chrono::high_resolution_clock::now();
 
 mode screen;
 GLdouble width, height;
@@ -388,6 +393,8 @@ void initGL() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black and opaque
 }
 
+//======================================================================================================================
+
 void displayStart() {
 
     string message = "Welcome to paC++";
@@ -412,8 +419,9 @@ void displayStart() {
     for (char c : highScoMsg) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
-
 }
+
+//======================================================================================================================
 
 void displayGame() {
 
@@ -496,11 +504,111 @@ void displayGame() {
     for (char c : lives) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
     }
+
+    if (g.gameStatus == over || g.getLives() == 0) {
+        string gameOvr = "GAME OVER";
+        glColor3f(1, 0, 0);
+        glRasterPos2i(215, 338);
+        for (char c : gameOvr) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+        }
+    } else if (g.gameStatus == won || g.getLives() == 0) {
+        string gameOvr = "VICTORY!";
+        glColor3f(0, 1, 0);
+        glRasterPos2i(225, 338);
+        for (char c : gameOvr) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+        }
+    }
 }
+
+//======================================================================================================================
 
 void displayGameOver() {
+    //TODO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET RID OF THIS LINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//TODO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET RID OF THIS LINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    mainMenuBtn.draw();
+    string mainMenuMsg = "Back to Menu";
+    glColor3f(0.0, 0.0, 0.0);
+    glRasterPos2i(225, 65);
+    for (char c : mainMenuMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
+
+    string gameSummary = "Game Summary";
+    glColor3f(1, 1, 1);
+    glRasterPos2i(215, 120);
+    for (char c : gameSummary) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+    }
+
+    string gameOutcomeMsg = "+ You       your game";
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 145);
+    for (char c : gameOutcomeMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+    string outcome;
+    if (g.gameStatus == over) {
+        outcome = "lost";
+        glColor3f(1, 0.0, 0.0);
+    } else if (g.gameStatus == won) {
+        outcome = "won";
+        glColor3f(0, 1, 0.0);
+    }
+    glRasterPos2i(88, 145);
+    for (char c : outcome) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+
+    string scoreMsg = "+ Final Score: " + to_string(g.getHighScore());
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 170);
+    for (char c : scoreMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+
+    string pelletsMsg = "+ Pellets Eaten: " + to_string(g.getHighScore() / 10);
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 195);
+    for (char c : pelletsMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+
+    string livesRemMsg = "+ Lives Remaining: " + to_string(g.getLives());
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 220);
+    for (char c : livesRemMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+
+    string livesUsedMsg = "+ Lives Used: " + to_string(3 - g.getLives());
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 245);
+    for (char c : livesUsedMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+
+    string collisionsMsg = "+ Collisions with Ghosts: " + to_string(3 - g.getLives());
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 270);
+    for (char c : collisionsMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+
+    std::chrono::duration<double> elapsed = finishTimer - startTimer;
+    string timeMsg = "+ Elapsed Time (Seconds): " + to_string(elapsed.count());
+    glColor3f(1, 1, 1);
+    glRasterPos2i(50, 295);
+    for (char c : timeMsg) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
+    }
+
+
+
 
 }
+
+//======================================================================================================================
 
 void displayHighScore() {
 
@@ -523,6 +631,8 @@ void displayHighScore() {
         }
     }
 }
+
+//======================================================================================================================
 
 /* Handler for window-repaint event. Call back when the window first appears and
  whenever the window needs to be re-painted. */
@@ -557,6 +667,8 @@ void display() {
     glFlush();  // Render now
 }
 
+//======================================================================================================================
+
 // http://www.theasciicode.com.ar/ascii-control-characters/escape-ascii-code-27.html
 void kbd(unsigned char key, int x, int y)
 {
@@ -582,6 +694,8 @@ void kbd(unsigned char key, int x, int y)
     return;
 }
 
+//======================================================================================================================
+
 void kbdS(int key, int x, int y) {
     x = pacman.getCenter().x;
     y = pacman.getCenter().y;
@@ -590,24 +704,28 @@ void kbdS(int key, int x, int y) {
     if (screen == game) {
         switch (key) {
             case GLUT_KEY_DOWN:
-//                if (g.moveDown(g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y) / 20])) {
-                pDir = 3;
+//                if (g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y / 20) + 1].getType() != wall) {
+//                pDir = 3;
 //                }
+                nextPDir = 3;
                 break;
             case GLUT_KEY_LEFT:
-//                if (g.moveLeft(g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y) / 20])) {
-                pDir = 0;
+//                if (g.gameBoard[(pacman.getCenter().x / 20) - 1][(pacman.getCenter().y / 20)].getType() != wall) {
+//                pDir = 0;
 //                }
+                nextPDir = 0;
                 break;
             case GLUT_KEY_RIGHT:
-//                if (g.moveRight(g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y) / 20])) {
-                pDir = 1;
+//                if (g.gameBoard[(pacman.getCenter().x / 20) + 1][(pacman.getCenter().y / 20)].getType() != wall) {
+//                pDir = 1;
 //                }
+                nextPDir = 1;
                 break;
             case GLUT_KEY_UP:
-//                if (g.moveUp(g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y) / 20])) {
-                pDir = 2;
+//                if (g.gameBoard[(pacman.getCenter().x / 20)][(pacman.getCenter().y / 20) - 1].getType() != wall) {
+//                pDir = 2;
 //                }
+                nextPDir = 2;
                 break;
         }
     }
@@ -616,6 +734,8 @@ void kbdS(int key, int x, int y) {
 
     return;
 }
+
+//======================================================================================================================
 
 void cursor(int x, int y) {
     if (screen == start && y > 265 && y < 295 && x > 205 && x < 355) {
@@ -630,7 +750,7 @@ void cursor(int x, int y) {
         highScoBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
     }
 
-    if (screen == highScore && y > 45 && y < 75 && x > 205 && x < 355) {
+    if ((screen == highScore || screen == gameOver) && y > 45 && y < 75 && x > 205 && x < 355) {
         mainMenuBtn.setFillColor(255/255.0, 0, 0);
     } else {
         mainMenuBtn.setFillColor(255/255.0, 189/255.0, 136/255.0);
@@ -644,6 +764,8 @@ void cursor(int x, int y) {
     glutPostRedisplay();
 }
 
+//======================================================================================================================
+
 // button will be GLUT_LEFT_BUTTON or GLUT_RIGHT_BUTTON
 // state will be GLUT_UP or GLUT_DOWN
 void mouse(int button, int state, int x, int y) {
@@ -656,15 +778,16 @@ void mouse(int button, int state, int x, int y) {
         screen = highScore;
     }
 
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && screen == highScore && y > 45 && y < 75 && x > 205 && x < 355) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (screen == highScore || screen == gameOver) && y > 45 && y < 75 && x > 205 && x < 355) {
         screen = start;
     }
 
     glutPostRedisplay();
 }
 
-void timer(int extra) {
+//======================================================================================================================
 
+void timer(int extra) {
 
     if (screen == game) {
 
@@ -686,8 +809,36 @@ void timer(int extra) {
 //                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, c);
 //            }
             //sleep(1);
+            pDir = 0;
+            nextPDir = 0;
             runFromStart = false;
+            if (firstTime) {
+                startTimer = std::chrono::high_resolution_clock::now();
+                firstTime = false;
+            }
         }
+
+        if (g.gameStatus == over || g.gameStatus == won) {
+            screen = gameOver;
+            finishTimer = std::chrono::high_resolution_clock::now();
+            sleep(2);
+        }
+
+        g.gameStatus = won;
+        for(int y = 0; y < g.gameBoard.size(); y++){
+            for (int x = 0; x < g.gameBoard[0].size(); x++){
+                if (g.gameBoard[x][y].getType() == pellet) {
+                    g.gameStatus = inProgress;
+                }
+            }
+        }
+        if (g.getLives() == 0 && g.gameStatus != won) {
+            g.gameStatus = over;
+        }
+
+        //g.gameStatus = won;//TODO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET RID OF THIS LINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        //--------------------------------------------------------------------------------------------------------------
 
         //pac coords
         int x, y;
@@ -695,39 +846,83 @@ void timer(int extra) {
         y = pacman.getCenter().y;
         x = x / 20;
         y = y / 20;
+        bool moved = false;
 
-        //Left
-        if (pDir == 0) {
-            if (g.gameBoard[x][y].getType() == pacMan && g.moveLeft(g.gameBoard[x][y])) {
-                g.moveLeft(g.gameBoard[x][y]);
-                pacman.move(-20, 0);
+        if (g.gameStatus == inProgress) {
+            //Left
+            if (nextPDir == 0) {
+                if (g.gameBoard[x][y].getType() == pacMan && g.moveLeft(g.gameBoard[x][y])) {
+                    g.moveLeft(g.gameBoard[x][y]);
+                    pacman.move(-20, 0);
+                    pDir = 0;
+                    moved = true;
+                }
             }
-        }
-        //Right
-        if (pDir == 1) {
-            if (g.gameBoard[x][y].getType() == pacMan && g.moveRight(g.gameBoard[x][y])) {
-                g.moveRight(g.gameBoard[x][y]);
-                pacman.move(20, 0);
+            //Right
+            if (nextPDir == 1) {
+                if (g.gameBoard[x][y].getType() == pacMan && g.moveRight(g.gameBoard[x][y])) {
+                    g.moveRight(g.gameBoard[x][y]);
+                    pacman.move(20, 0);
+                    pDir = 1;
+                    moved = true;
+                }
             }
-        }
-        //Up
-        if (pDir == 2) {
-            if (g.gameBoard[x][y].getType() == pacMan && g.moveUp(g.gameBoard[x][y])) {
-                g.moveUp(g.gameBoard[x][y]);
-                pacman.move(0, -20);
+            //Up
+            if (nextPDir == 2) {
+                if (g.gameBoard[x][y].getType() == pacMan && g.moveUp(g.gameBoard[x][y])) {
+                    g.moveUp(g.gameBoard[x][y]);
+                    pacman.move(0, -20);
+                    pDir = 2;
+                    moved = true;
+                }
             }
-        }
-        //Down
-        if (pDir == 3) {
-            if (g.gameBoard[x][y].getType() == pacMan && g.moveDown(g.gameBoard[x][y])) {
-                g.moveDown(g.gameBoard[x][y]);
-                pacman.move(0, 20);
+            //Down
+            if (nextPDir == 3) {
+                if (g.gameBoard[x][y].getType() == pacMan && g.moveDown(g.gameBoard[x][y])) {
+                    g.moveDown(g.gameBoard[x][y]);
+                    pacman.move(0, 20);
+                    pDir = 3;
+                    moved = true;
+                }
+            }
+
+            //--------------------------------------------------------------------------------------------------------------
+
+            if (!moved) {
+                //Left
+                if (pDir == 0) {
+                    if (g.gameBoard[x][y].getType() == pacMan && g.moveLeft(g.gameBoard[x][y])) {
+                        g.moveLeft(g.gameBoard[x][y]);
+                        pacman.move(-20, 0);
+                    }
+                }
+                //Right
+                if (pDir == 1) {
+                    if (g.gameBoard[x][y].getType() == pacMan && g.moveRight(g.gameBoard[x][y])) {
+                        g.moveRight(g.gameBoard[x][y]);
+                        pacman.move(20, 0);
+                    }
+                }
+                //Up
+                if (pDir == 2) {
+                    if (g.gameBoard[x][y].getType() == pacMan && g.moveUp(g.gameBoard[x][y])) {
+                        g.moveUp(g.gameBoard[x][y]);
+                        pacman.move(0, -20);
+                    }
+                }
+                //Down
+                if (pDir == 3) {
+                    if (g.gameBoard[x][y].getType() == pacMan && g.moveDown(g.gameBoard[x][y])) {
+                        g.moveDown(g.gameBoard[x][y]);
+                        pacman.move(0, 20);
+                    }
+                }
             }
         }
 
         //=============================================== INKY ===============================================================
 
-        if (!g.resetCalled) {
+        if (g.gameStatus == inProgress) {
             //Inky coords
             int inkyX, inkyY;
             inkyX = inky.getCenter().x;
@@ -796,7 +991,7 @@ void timer(int extra) {
 
         //=============================================== CLYDE (Orange) =======================================================
 
-        if (!g.resetCalled) {
+        if (g.gameStatus == inProgress) {
             //Clyde coords (Orange)
             int clydeX, clydeY;
             clydeX = clyde.getCenter().x;
@@ -865,7 +1060,7 @@ void timer(int extra) {
 
         //=============================================== BLINKY (Red) =======================================================
 
-        if (!g.resetCalled) {
+        if (g.gameStatus == inProgress) {
             //Blinky coords (Orange)
             int blinkyX, blinkyY;
             blinkyX = blinky.getCenter().x;
@@ -934,7 +1129,7 @@ void timer(int extra) {
 
         //=============================================== PINKY (Pinky) =======================================================
 
-        if (!g.resetCalled) {
+        if (g.gameStatus == inProgress) {
             //Pinky coords (Orange)
             int pinkyX, pinkyY;
             pinkyX = pinky.getCenter().x;
@@ -1000,6 +1195,9 @@ void timer(int extra) {
                 }
             }
         }
+
+        //--------------------------------------------------------------------------------------------------------------
+
         if (g.resetCalled) {
             g.resetCalled = false;
             pacman.setCenter(280, 410);
@@ -1009,16 +1207,16 @@ void timer(int extra) {
             clyde.setCenter(320, 230);
             runFromStart = true;
         }
-
     }
 
-glutPostRedisplay();
+    glutPostRedisplay();
     glutTimerFunc(100, timer, 0);
 }
 
+//======================================================================================================================
+
 /* Main function: GLUT runs as a console application starting at main()  */
 int main(int argc, char** argv) {
-    cout << g << endl;
     init();
 
     glutInit(&argc, argv);          // Initialize GLUT
