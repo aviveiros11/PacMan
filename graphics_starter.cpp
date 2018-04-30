@@ -11,7 +11,7 @@ enum mode {start, game, gameOver, highScore, instructions};
 
 int pDir = 0;         // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
 int nextPDir = 0;     // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
-                      //       TODO: Should we make these field values of game.h?  It make them the same for each new game
+
 int inkyDir = 0;      // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
 int clydeDir = 1;     // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
 int pinkyDir = 1;     // <---- TODO: Should we make these field values of game.h?  It make them the same for each new game
@@ -823,6 +823,20 @@ void mouse(int button, int state, int x, int y) {
         Game g;
         games.push_back(g);
         currentGame++;
+        pacman.setCenter(280, 410);
+        pacman.setFillColor(255,238,0);
+
+        blinky.setCenter(240,290);
+        blinky.setFillColor(1,0,0);
+
+        pinky.setCenter(300,290);
+        pinky.setFillColor(250/255.0,192/255.0,203/255.0);
+
+        inky.setCenter(220,230);
+        inky.setFillColor(0.5,1,1);
+
+        clyde.setCenter(320,230);
+        clyde.setFillColor(1,0.5,0);
         screen = game;
     }
 
