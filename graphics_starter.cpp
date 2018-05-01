@@ -437,7 +437,7 @@ void displayStart() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
     }
 
-    string namesMsg = "stin Viveiros, Max Peck, Liam Hogan, Jean-Baptiste Bohl";
+    string namesMsg = "stin Viveiros, Max Peck, Liam Hogan, Jean-Baptiste Bolh";
     glColor3f(1.0, 1.0, 1.0);
     glRasterPos2i(119, 174);
     for (char c : namesMsg) {
